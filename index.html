@@ -47,9 +47,9 @@
 <section class="couple"><div class="bgMotion floralMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
  <div class="heading"><small>THE TWO AT THE HEART OF IT ALL</small><h2>Meet Bride & Groom</h2></div>
  <div class="people">
-  <article class="person bride reveal leftIn"><div class="photo"><img src="assets/bride.png"></div><div><small>THE BRIDE</small><h3>Meghana</h3><p>D/o Smt. Trilochana Praful Shah</p></div></article>
+  <article class="person bride reveal leftIn"><div class="photo"><img src="assets/bride.png"></div><div><small>THE BRIDE</small><h3>Meghana</h3><p>D/o. Smt. Trilochana Praful Shah</p></div></article>
   <div class="heart reveal uploadedCoupleMR"><div class="coupleHeartLogo"><img src="assets/mr-logo-gold.png" alt="MR monogram"></div></div>
-  <article class="person groom reveal rightIn"><div class="photo"><img src="assets/groom.png"></div><div><small>THE GROOM</small><h3>Rihen</h3><p>S/o Smt. Bhadra Devendra Vora</p></div></article>
+  <article class="person groom reveal rightIn"><div class="photo"><img src="assets/groom.png"></div><div><small>THE GROOM</small><h3>Rihen</h3><p>S/o. Smt. Bhadra Devendra Vora</p></div></article>
  </div>
 </section>
 <section class="dateSection"><div class="bgMotion dateBgMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
@@ -87,5 +87,48 @@
 <button id="backToBeginning" class="backToBeginningFinal" type="button" aria-label="Back to beginning">
   <span>↑</span> BACK TO BEGINNING
 </button>
+
+
+<!-- TRUE INFINITE GALLERY FIX -->
+<style>
+.gallery{overflow:hidden}
+.gallery #track{display:flex!important;flex-wrap:nowrap!important;overflow:visible!important;will-change:transform;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;animation:none!important;transition:none}
+.gallery #track.is-dragging{cursor:grabbing}
+.gallery #track figure{flex:0 0 auto!important}
+.gallery #track img{pointer-events:none;-webkit-user-drag:none;user-select:none}
+@media(max-width:809.98px){.gallery #track{gap:14px!important}}
+</style>
+<script>
+window.addEventListener("load",function(){
+ const old=document.getElementById("track"); if(!old||old.dataset.trueInfinite)return;
+ const track=old.cloneNode(true); old.replaceWith(track); track.dataset.trueInfinite="1";
+ function cleanButton(id){const b=document.getElementById(id);if(!b)return null;const n=b.cloneNode(true);b.replaceWith(n);return n}
+ const prev=cleanButton("prev"),next=cleanButton("next");
+ const originals=[...track.children]; if(originals.length<2)return;
+ const fc=originals[0].cloneNode(true),lc=originals.at(-1).cloneNode(true);
+ fc.setAttribute("aria-hidden","true");lc.setAttribute("aria-hidden","true");
+ track.insertBefore(lc,track.firstElementChild);track.appendChild(fc);
+ let index=1,x=0,startX=0,dragX=0,dragging=false,moved=false,animating=false,timer;
+ const gap=()=>parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap)||0;
+ const step=()=>track.children[1].getBoundingClientRect().width+gap();
+ const offset=()=>{const g=track.closest(".gallery"),w=g?g.clientWidth:innerWidth,c=track.children[1].getBoundingClientRect().width;return Math.max(0,(w-c)/2)};
+ const tx=i=>offset()-i*step();
+ function pos(i,animate=true){index=i;x=tx(i);track.style.transition=animate?"transform 650ms cubic-bezier(.22,.61,.36,1)":"none";track.style.transform=`translate3d(${x}px,0,0)`;animating=animate}
+ function normalize(){const n=originals.length;if(index===n+1){index=1;pos(index,false)}else if(index===0){index=n;pos(index,false)}animating=false}
+ function stop(){clearInterval(timer)}
+ function auto(){stop();timer=setInterval(()=>{if(!dragging&&!animating&&!document.hidden)pos(index+1,true)},4200)}
+ function go(d){if(animating)return;stop();pos(index+d,true);auto()}
+ track.addEventListener("transitionend",normalize);
+ prev&&prev.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();go(-1)});
+ next&&next.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();go(1)});
+ track.addEventListener("pointerdown",e=>{if(animating)return;dragging=true;moved=false;startX=e.clientX;dragX=x;stop();track.classList.add("is-dragging");track.style.transition="none";try{track.setPointerCapture(e.pointerId)}catch(_){}});
+ track.addEventListener("pointermove",e=>{if(!dragging)return;const d=e.clientX-startX;if(Math.abs(d)>5)moved=true;x=dragX+d;track.style.transform=`translate3d(${x}px,0,0)`});
+ function end(e){if(!dragging)return;const d=e.clientX-startX;dragging=false;track.classList.remove("is-dragging");const th=Math.min(70,step()*.2);pos(Math.abs(d)>=th?index+(d<0?1:-1):index,true);auto()}
+ track.addEventListener("pointerup",end);track.addEventListener("pointercancel",end);
+ track.addEventListener("click",e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false;return}if(e.target.closest("figure")){e.preventDefault();e.stopPropagation();go(1)}});
+ addEventListener("resize",()=>pos(index,false),{passive:true});
+ requestAnimationFrame(()=>{pos(1,false);auto()});
+});
+</script>
 
 </body></html>
