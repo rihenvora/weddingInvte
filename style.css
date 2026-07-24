@@ -1,0 +1,2281 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=DM+Sans:wght@300;400;500&family=Italiana&family=Mrs+Saint+Delafield&display=swap');*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f9efe4;color:#523b32;font-family:"DM Sans",sans-serif;overflow-x:hidden}body.closed{overflow:hidden}#musicBtn{position:fixed;z-index:1000;right:20px;bottom:20px;width:45px;height:45px;border-radius:50%;border:1px solid #b58c63;background:#fff9;color:#8b6048;backdrop-filter:blur(10px)}.landing{height:100vh;position:relative;overflow:hidden;background:#d9c2b2;z-index:30}.world,.world img,.glow{position:absolute;inset:0;width:100%;height:100%}.world img{object-fit:cover;filter:saturate(.72) brightness(1.06)}.glow{background:radial-gradient(circle at 50% 35%,#fff8 0 12%,transparent 38%),linear-gradient(#e8c8b830,transparent 60%,#596b5b45)}.curtain{position:absolute;z-index:20;top:0;width:52%;height:100%;background-image:linear-gradient(90deg,#6c1f2d,#9a3546 15%,#5f1826 32%,#a33e4e 50%,#641c2a 68%,#9b3748 85%,#5b1724);box-shadow:inset 0 0 45px #2d0713aa,0 0 35px #30121b55;transition:transform 1.8s cubic-bezier(.76,0,.24,1)}.curtain:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 7%,#fff1 8%,transparent 15%);mix-blend-mode:screen}.curtain.left{left:0;transform-origin:left}.curtain.right{right:0;transform:scaleX(-1);transform-origin:right}.landing.open .curtain.left{transform:translateX(-96%) skewY(1deg)}.landing.open .curtain.right{transform:scaleX(-1) translateX(-96%) skewY(-1deg)}.landingCopy{position:absolute;z-index:25;inset:0;display:grid;place-content:center;text-align:center;color:#ffe9c9;text-shadow:0 2px 20px #2d0713;padding:20px;transition:.8s}.landing.open .landingCopy{opacity:0;transform:scale(1.1);pointer-events:none}.landingCopy small,.heading small,.inviteCopy small,.rsvp small,.venue small,.final small{font-size:9px;letter-spacing:.28em}.landing h1{font:700 clamp(50px,8vw,110px)/.75 "Bodoni Moda";margin:18px 0}.landing h1 i{font:400 .5em "Mrs Saint Delafield";display:block}.landing p{font:italic 20px "Bodoni Moda"}.landing button{margin:auto;padding:15px 24px;border:1px solid #f5d5a0;background:#fff2;color:#ffe9c9;letter-spacing:.15em;font-size:9px;cursor:pointer}.landing button b{margin-left:20px}.walk{height:400vh;position:relative}.sticky{position:sticky;top:0;height:100vh;overflow:hidden}.stage{perspective:1500px}.sky{position:absolute;inset:0;background:linear-gradient(#e8c9b9,#f5e2d5 55%,#d7e0d5)}.temple.bg{position:absolute;inset:-10%;width:120%;height:120%;object-fit:cover;filter:saturate(.72);opacity:.78}.god{position:absolute;z-index:4;top:50%;width:28vw;min-width:240px;text-align:center;opacity:0;will-change:transform,opacity;filter:blur(0)}.g1{left:4%}.g2{left:36%}.g3{right:4%}.shrine{width:210px;height:310px;margin:auto;border:1px solid #b88c5b;border-radius:50% 50% 8px 8px;background:linear-gradient(#fff9,#f4dfcbcc);box-shadow:0 25px 70px #68442e28,inset 0 0 50px #d9b67c33;display:grid;place-content:center}.symbol{font:80px "Bodoni Moda";color:#a56348;text-shadow:0 0 30px #e8b45b}.symbol.jain{color:#9c6c42}.god h2{font:400 25px "Italiana";color:#8f5846;margin:13px 0 5px}.god p{font:italic 15px "Bodoni Moda"}.walkTitle{position:absolute;z-index:7;left:50%;top:50%;transform:translate(-50%,-50%) scale(.5);opacity:0;text-align:center;width:90%;will-change:transform,opacity}.walkTitle small{letter-spacing:.3em;font-size:9px}.walkTitle h1{font:700 clamp(62px,12vw,170px)/.68 "Bodoni Moda";color:#9e5946;margin:18px}.walkTitle h1 span{display:block}.walkTitle h1 i{font:400 .22em "Italiana";color:#fff;letter-spacing:.35em}.walkTitle p{font:italic 20px "Bodoni Moda"}.footsteps{position:absolute;z-index:8;bottom:18px;left:50%;transform:translateX(-50%);font-size:12px;color:#9c6b4e}.invite{height:300vh}.inviteStage{background:linear-gradient(#6e806e,#91a08b 40%,#efe0d1)}.arches{position:absolute;inset:-10%;background:radial-gradient(ellipse at center,#f7e7d4 0 17%,transparent 17.3%),repeating-linear-gradient(90deg,#586d5b 0 8%,#6f826e 8% 16%);opacity:.4;transform:scale(1.4)}.inviteCopy{position:absolute;z-index:3;left:50%;top:50%;width:min(700px,86%);transform:translate(-50%,-50%) scale(.45);opacity:0;text-align:center;color:#fff9ed}.inviteCopy h2{margin:10px}.inviteCopy h2 em{display:block;font:400 clamp(35px,5vw,60px) "Mrs Saint Delafield"}.inviteCopy h2 strong{display:block;font:700 clamp(70px,12vw,150px)/.7 "Bodoni Moda";text-transform:uppercase}.inviteCopy p{max-width:560px;margin:35px auto;font:italic 19px/1.6 "Bodoni Moda"}.ornament{font-size:45px}.couple,.dateSection,.gallery{padding:100px 5vw;background:#fff8ef;background-image:radial-gradient(#a87a5420 .7px,transparent .7px);background-size:12px 12px}.heading{text-align:center}.heading h2{font:italic 400 clamp(45px,6vw,75px) "Bodoni Moda";color:#a05e49;margin:8px 0 60px}.heading p{font:italic 17px "Bodoni Moda"}.people{width:min(1050px,95vw);margin:auto;display:grid;grid-template-columns:1fr 140px 1fr;gap:30px;align-items:center}.person{text-align:center}.photo{width:min(340px,80vw);height:440px;margin:auto;border:1px solid #bc9060;padding:8px;border-radius:48% 48% 5px 5px;background:#fff;box-shadow:0 25px 55px #5f402b20;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;border-radius:48% 48% 3px 3px;filter:saturate(.76)}.person h3{font:400 68px "Mrs Saint Delafield";color:#a6604c;margin:5px}.person p{font:italic 16px "Bodoni Moda"}.heart{height:170px;width:120px;border:1px solid #ba8c5c;border-radius:60px;display:grid;place-content:center;text-align:center;font:30px "Italiana";background:#f5e2d2}.heart i{font:35px "Mrs Saint Delafield";display:block}.dateSection{text-align:center;background:#ead6c5}.scratchWrap{position:relative;width:min(580px,90vw);height:250px;margin:35px auto;border-radius:18px;overflow:hidden;box-shadow:0 30px 65px #51352330}.secret{position:absolute;inset:0;display:grid;place-content:center;background:#fff7ed}.secret small{letter-spacing:.25em}.secret strong{font:700 clamp(35px,6vw,58px) "Bodoni Moda";color:#9f604b;margin:8px}.secret span{font-size:10px;letter-spacing:.2em}.secret i{font-size:25px;margin-top:8px;color:#b07158}#scratch{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.hint{font:italic 14px "Bodoni Moda"}.rsvp{padding:100px 20px;background:#788d7c;text-align:center;color:#fff9ed}.rsvpCard{width:min(700px,90vw);margin:auto;border:1px solid #e9d6b7;padding:65px 30px;position:relative}.rsvpCard:before,.rsvpCard:after{content:"❦";position:absolute;font-size:38px}.rsvpCard:before{top:-20px;left:20px}.rsvpCard:after{bottom:-20px;right:20px;transform:rotate(180deg)}.rsvp h2{font:400 65px "Bodoni Moda";margin:10px}.rsvp h2 i{font-family:"Mrs Saint Delafield";font-size:90px}.rsvp p{font:italic 18px "Bodoni Moda"}.rsvp a,.venue a{display:inline-block;margin-top:20px;padding:15px 25px;background:#f4dfc3;color:#6d5142;text-decoration:none;font-size:9px;letter-spacing:.16em}.venue{min-height:90vh;display:grid;grid-template-columns:1.2fr .8fr;background:#f8eee4}.venuePic{overflow:hidden}.venuePic img{width:100%;height:100%;object-fit:cover;filter:saturate(.7)}.venueCopy{padding:80px 7vw;display:flex;flex-direction:column;justify-content:center}.venueCopy h2{font:400 60px/1 "Bodoni Moda";color:#9e5e49;margin:15px 0}.venueCopy h2 i{font:70px "Mrs Saint Delafield"}.venueCopy h3{font:18px "Italiana";margin-top:30px}.venueCopy p{font:italic 18px "Bodoni Moda"}.venueCopy a{align-self:flex-start;background:#758a79;color:white}.gallery{overflow:hidden}.track{display:flex;gap:24px;transition:transform .8s cubic-bezier(.16,1,.3,1);will-change:transform}.track figure{flex:0 0 min(360px,72vw);height:470px;margin:0;overflow:hidden;border-radius:180px 180px 8px 8px;border:7px solid white;box-shadow:0 20px 45px #51352322}.track img{width:100%;height:100%;object-fit:cover;filter:saturate(.75);transition:.7s}.track figure:hover img{transform:scale(1.06)}.galleryNav{display:flex;justify-content:center;align-items:center;gap:30px;margin-top:35px;font-size:8px;letter-spacing:.18em}.galleryNav button{border:1px solid #b58a60;background:transparent;border-radius:50%;width:44px;height:44px}.final{min-height:100vh;position:relative;overflow:hidden;display:grid;place-items:center;background:#e3c9b8;padding:70px 20px}.finalBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.65);opacity:.7}.final:after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#fff4 0 20%,transparent 65%),linear-gradient(transparent,#45584655)}.finalPeople{position:relative;z-index:3;display:grid;grid-template-columns:220px minmax(300px,520px) 220px;align-items:center;gap:25px}.mini{height:360px;border-radius:120px 120px 5px 5px;overflow:hidden;border:5px solid #fff8}.mini img{width:100%;height:100%;object-fit:cover}.finalText{text-align:center;background:#fff8;padding:55px 35px;border:1px solid #fff;color:#66483b;backdrop-filter:blur(8px)}.finalText h2{font:700 65px/.8 "Bodoni Moda";color:#9d5b47;margin:20px}.finalText h2 i{font-family:"Mrs Saint Delafield"}.finalText p{font:italic 17px "Bodoni Moda"}.finalText strong{font:25px "Italiana";display:block;margin:20px}.final>button{position:absolute;z-index:5;bottom:20px;border:0;background:transparent;color:#fff;font-size:8px;letter-spacing:.2em}.spark{position:absolute;z-index:2;bottom:-10px;width:5px;height:5px;border-radius:50%;background:#ffe09a;box-shadow:0 0 15px #ffd36d;animation:rise linear infinite}.reveal{opacity:0;transform:translateY(45px);filter:blur(5px);transition:1.1s cubic-bezier(.16,1,.3,1)}.reveal.show{opacity:1;transform:none;filter:none}.leftIn{transform:translateX(-80px)}.rightIn{transform:translateX(80px)}@keyframes rise{to{transform:translateY(-100vh);opacity:0}}@media(max-width:760px){.people{grid-template-columns:1fr}.heart{margin:auto}.venue{grid-template-columns:1fr}.venuePic{height:450px}.finalPeople{grid-template-columns:1fr}.mini{display:none}.god{width:70vw;left:15%!important;right:auto!important}.shrine{width:170px;height:250px}.walkTitle h1{font-size:62px}.curtain{width:53%}}
+/* V2 visual refinement */
+.curtain{width:50.15%;background:
+ linear-gradient(90deg,#46101e 0%,#8f3042 7%,#541322 15%,#a44455 24%,#5a1525 34%,#9d3b4e 44%,#50101f 53%,#9a374a 65%,#571322 76%,#a54254 88%,#48101e 100%);
+ border-top:10px solid #6d4b2e}
+.curtain.left{box-shadow:inset -18px 0 30px #24071099,inset 0 0 60px #24071088}
+.curtain.right{transform:none;box-shadow:inset 18px 0 30px #24071099,inset 0 0 60px #24071088}
+.curtain.left:after,.curtain.right:after{background:repeating-linear-gradient(90deg,transparent 0 6%,#fff1 7%,transparent 13%)}
+.curtain-edge{position:absolute;top:0;bottom:0;width:14px;background:repeating-linear-gradient(0deg,#c9a260 0 7px,#79542f 7px 13px);box-shadow:0 0 10px #2b0c12}
+.curtain.left .curtain-edge{right:0}.curtain.right .curtain-edge{left:0}
+.tieback{position:absolute;top:48%;font-style:normal;color:#e0bd77;font-size:22px;text-shadow:0 2px 7px #22050c}
+.curtain.left .tieback{right:7%}.curtain.right .tieback{left:7%}
+.landing.open .curtain.right{transform:translateX(96%) skewY(-1deg)}
+/* richer first three scenes */
+.stage{background:linear-gradient(180deg,#d8c8b7 0%,#ead9ca 43%,#b7c7ba 100%)}
+.stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 32%,#fff8 0 10%,transparent 34%),linear-gradient(90deg,#536b6040,transparent 24% 76%,#536b6040)}
+.temple.bg{opacity:.55;mix-blend-mode:multiply}
+.god .shrine{background:radial-gradient(circle at 50% 32%,#fffdf4 0 18%,#f2dfc8e8 55%,#d9b98ec7);border:2px solid #c19a65;box-shadow:0 25px 70px #4c392933,inset 0 0 0 7px #fff7,inset 0 0 55px #bd945d44}
+.g1 .shrine{background-color:#ead8c8}.g2 .shrine{background-color:#e2dfce}.g3 .shrine{background-color:#e8d2c8}
+.walkTitle{filter:drop-shadow(0 8px 22px #fff8)}
+/* R&K divider/card */
+.heart{position:relative;background:radial-gradient(circle at 50% 35%,#fffaf1 0 12%,#ead5bd 60%,#d6b78f 100%);border:1px solid #aa7c4d;box-shadow:0 18px 45px #70492d24,inset 0 0 0 6px #fff8;overflow:hidden}
+.heart:before,.heart:after{content:"❦";position:absolute;color:#9b704b;font-size:24px;left:50%;transform:translateX(-50%)}
+.heart:before{top:9px}.heart:after{bottom:9px;transform:translateX(-50%) rotate(180deg)}
+/* Say Yes: lighter luxury garden palette */
+.rsvp{position:relative;overflow:hidden;background:
+ radial-gradient(circle at 20% 20%,#f7e6d5aa 0 8%,transparent 24%),
+ radial-gradient(circle at 80% 70%,#d9e0cfaa 0 9%,transparent 28%),
+ linear-gradient(135deg,#c8b6a4,#879b88 52%,#d4b9a6);color:#fffaf0}
+.rsvpCard{background:#6e7e6b80;backdrop-filter:blur(9px);box-shadow:0 30px 70px #39483c35}
+.rsvp a{background:#fff3dc;color:#705443;box-shadow:0 10px 28px #3c473c2e}
+/* animated ambient backgrounds */
+.couple,.dateSection,.venue,.gallery,.rsvp{position:relative;overflow:hidden}
+.ambient{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.ambient i{position:absolute;width:150px;height:150px;border-radius:50%;border:1px solid #d5b98a55;opacity:.55;animation:ambientFloat 12s ease-in-out infinite}
+.ambient i:nth-child(1){left:5%;top:12%;width:90px;height:90px}
+.ambient i:nth-child(2){right:8%;top:22%;animation-delay:-3s}
+.ambient i:nth-child(3){left:22%;bottom:7%;width:55px;height:55px;animation-delay:-6s}
+.ambient i:nth-child(4){right:28%;bottom:12%;width:105px;height:105px;animation-delay:-9s}
+.ambient i:nth-child(5){left:47%;top:7%;width:40px;height:40px;animation-delay:-4s}
+.softAmbient i{background:radial-gradient(circle,#dcbf9240,transparent 65%);border-color:#b98e5a35}
+.rsvpAmbient i{border-color:#fff4;background:radial-gradient(circle,#fff2,transparent 65%)}
+.inviteAmbient i{border-color:#f5dec844}
+.couple>.heading,.couple>.people,.dateSection>.heading,.dateSection>.scratchWrap,.dateSection>.hint,.rsvp>.rsvpCard,.venue>.venuePic,.venue>.venueCopy,.gallery>.heading,.gallery>.track,.gallery>.galleryNav{position:relative;z-index:2}
+@keyframes ambientFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(18px,-32px,0) scale(1.12)}}
+/* final copy refinement */
+.finalText p{font-size:20px;line-height:1.5;max-width:390px;margin:15px auto}
+
+
+/* =========================================================
+   FINAL REQUESTED REFINEMENTS
+   IMPORTANT: original V2 foreground UI/layout intentionally preserved.
+   ========================================================= */
+
+/* Curtain-open R&M signature — no landing layout replacement */
+.rmReveal{
+ position:absolute;z-index:24;left:50%;top:50%;
+ transform:translate(-50%,-45%) scale(.72);
+ opacity:0;text-align:center;color:#8d5a46;pointer-events:none;
+ transition:opacity .8s .85s,transform 1.25s cubic-bezier(.16,1,.3,1) .75s
+}
+.rmReveal div{
+ width:190px;height:190px;border-radius:50%;
+ display:grid;place-content:center;
+ border:1px solid #b88d5d;background:#fff8e9dc;
+ box-shadow:0 0 0 7px #fff7,0 25px 70px #51352328,inset 0 0 45px #c59c6530;
+ font:48px "Italiana"
+}
+.rmReveal i{font:46px "Mrs Saint Delafield";font-weight:400}
+.rmReveal small{display:block;margin-top:11px;letter-spacing:.28em;font-size:8px}
+.landing.open .rmReveal{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+/* Background replacement while retaining original V2 content */
+.stage{
+ background:
+ linear-gradient(180deg,#e7d8ca55,#f6e8dc44 44%,#b9c9b955),
+ /* url("https://framerusercontent.com/images/m6r8eopxGbzyLR1bYUq6zvkRnw.webp?width=2046&height=3074") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+.sky{background:linear-gradient(180deg,#ead7c9aa,#f7e9dd88 52%,#b7c7b8aa)}
+.temple.bg{opacity:.48;filter:saturate(.62) contrast(.92)}
+.stage:before{
+ content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+ background:
+ radial-gradient(circle at 50% 18%,#fff9 0 7%,transparent 29%),
+ linear-gradient(90deg,#53675b44,transparent 22% 78%,#53675b44);
+ animation:sceneGlow 7s ease-in-out infinite alternate
+}
+.inviteStage{
+ background:
+ linear-gradient(135deg,#4f695eaa,#85968399 50%,#ead4c1cc),
+ /* url("https://framerusercontent.com/images/B5f8HoBhbFrJjeGqkq0pmPmd2BE.webp?width=1840&height=3392") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+.arches{opacity:.23;animation:archDrift 14s ease-in-out infinite alternate}
+
+/* Actual new scenic backgrounds instead of the old dotted/flat backgrounds */
+.couple{
+ background:
+ linear-gradient(135deg,#fff8efdc,#ead9ccdc 52%,#dfe6d9e8),
+ /* url("https://framerusercontent.com/images/1Zg49ggjH1NeMsuurkKzD6m20vo.webp?width=2046&height=3074") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+.dateSection{
+ background:
+ linear-gradient(135deg,#ead5c5d9,#f4e4d6dd 48%,#b8c9b9dd),
+ /* url("https://framerusercontent.com/images/nMi6QUEDQLWoopKcsbxHe7tv3w.webp?width=1200&height=1671") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+.venue{
+ background:
+ linear-gradient(135deg,#f8eee4ee,#dce6dbee),
+ /* url("https://framerusercontent.com/images/1Zg49ggjH1NeMsuurkKzD6m20vo.webp?width=1200&height=1803") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+.gallery{
+ background:
+ linear-gradient(135deg,#fff8efec,#ead8cae8 52%,#dfe5d9ea),
+ /* url("https://framerusercontent.com/images/m6r8eopxGbzyLR1bYUq6zvkRnw.webp?width=1600&height=2404") center/cover; */
+ url("./assets/meetgroom.webp") center/cover;
+}
+
+/* Keep THIS Say Yes palette — strengthened but same V2 look */
+.rsvp{
+ background:
+ radial-gradient(circle at 18% 18%,#f7e6d580 0 8%,transparent 27%),
+ radial-gradient(circle at 84% 76%,#d9e0cf80 0 10%,transparent 30%),
+ linear-gradient(135deg,#c8b6a4,#879b88 52%,#d4b9a6);
+}
+.rsvpCard{
+ background:#6e7e6b80;backdrop-filter:blur(10px);
+ box-shadow:0 30px 70px #39483c35,inset 0 0 0 1px #fff2
+}
+
+/* Yes heartbeat + WhatsApp living button */
+.rsvp h2 i{
+ display:inline-block;transform-origin:50% 60%;
+ animation:yesBeat 1.18s ease-in-out infinite;
+ text-shadow:0 8px 25px #513b3b33
+}
+.rsvp a{
+ position:relative;overflow:hidden;
+ animation:waBreathe 2s ease-in-out infinite
+}
+.rsvp a:after{
+ content:"";position:absolute;top:-80%;left:-45%;width:28%;height:260%;
+ background:#fff9;transform:rotate(22deg);animation:waSweep 2.8s infinite
+}
+@keyframes yesBeat{
+ 0%,100%{transform:scale(1) rotate(-1deg)}
+ 12%{transform:scale(1.18) rotate(1deg)}
+ 25%{transform:scale(1)}
+ 38%{transform:scale(1.11)}
+ 52%{transform:scale(1)}
+}
+@keyframes waBreathe{50%{transform:translateY(-5px) scale(1.025);box-shadow:0 15px 34px #30443740}}
+@keyframes waSweep{0%,35%{left:-45%}65%,100%{left:130%}}
+
+/* Non-intrusive animated backgrounds on every section after curtain */
+.bgMotion{position:absolute!important;inset:0;z-index:0!important;overflow:hidden;pointer-events:none}
+.bgMotion:before,.bgMotion:after{
+ content:"❦";position:absolute;color:#b68b623d;font:44px "Bodoni Moda";
+ animation:ornamentFloat 13s ease-in-out infinite
+}
+.bgMotion:before{left:7%;top:15%}
+.bgMotion:after{right:8%;bottom:12%;transform:rotate(180deg);animation-delay:-6s}
+.floralMotion{background:radial-gradient(circle at 12% 22%,#d7b88c28,transparent 18%),radial-gradient(circle at 88% 70%,#91a88d22,transparent 20%)}
+.dateBgMotion{background:radial-gradient(circle at 75% 18%,#fff6,transparent 18%)}
+.rsvpBgMotion:before,.rsvpBgMotion:after{color:#fff4}
+.venueBgMotion{background:linear-gradient(110deg,transparent 35%,#fff4 50%,transparent 65%);animation:lightTravel 10s linear infinite}
+.galleryBgMotion{background:radial-gradient(circle at 50% 10%,#fff7,transparent 25%)}
+.finalBgMotion{background:radial-gradient(circle at 50% 30%,#fff5,transparent 28%)}
+@keyframes ornamentFloat{50%{transform:translate(18px,-28px) rotate(12deg) scale(1.12)}}
+@keyframes lightTravel{0%{transform:translateX(-45%)}100%{transform:translateX(45%)}}
+@keyframes sceneGlow{to{opacity:.72}}
+@keyframes archDrift{to{transform:scale(1.5) translateY(-2%)}}
+
+/* Keep original content above background FX */
+.couple>.heading,.couple>.people,.dateSection>.heading,.dateSection>.scratchWrap,.dateSection>.hint,
+.rsvp>.rsvpCard,.venue>.venuePic,.venue>.venueCopy,.gallery>.heading,.gallery>.track,.gallery>.galleryNav,
+.final>.finalBg,.final>.finalPeople,.final>#sparks,.final>#backTop{position:relative;z-index:2}
+
+/* Scratch: partial scratching triggers graceful full reveal */
+.scratchWrap.autoDone{animation:scratchCardPop .9s cubic-bezier(.16,1,.3,1)}
+.scratchWrap.autoDone .secret{animation:secretCelebration 1.5s ease-out}
+.scratchWrap.autoDone:after{
+ content:"✦  ♡  ✦";position:absolute;z-index:5;left:50%;top:15%;
+ transform:translateX(-50%);color:#aa6b4e;font-size:27px;
+ animation:scratchStars 1.5s ease-out forwards;pointer-events:none
+}
+@keyframes scratchCardPop{45%{transform:scale(1.045)}}
+@keyframes secretCelebration{45%{box-shadow:inset 0 0 85px #e5bc6f99}}
+@keyframes scratchStars{
+ 0%{opacity:0;transform:translate(-50%,25px) scale(.4)}
+ 45%{opacity:1;transform:translate(-50%,-4px) scale(1.25)}
+ 100%{opacity:0;transform:translate(-50%,-50px) scale(1)}
+}
+
+/* Infinite carousel. Foreground card UI remains exactly V2. */
+.track.seamless{width:max-content;transition:none;animation:galleryLoop var(--loopDuration,34s) linear infinite}
+.track.seamless:hover{animation-play-state:paused}
+@keyframes galleryLoop{to{transform:translateX(calc(-1 * var(--loopWidth)))}}
+
+@media(max-width:760px){
+ .rmReveal div{width:145px;height:145px;font-size:38px}
+}
+
+/* SPACE FIX — preserve V2 UI, shorten only scroll-animation timelines */
+.walk.gods{height:220vh!important}
+.walk.invite{height:175vh!important}
+.couple,.dateSection,.gallery{padding-top:72px!important;padding-bottom:72px!important}
+.rsvp{padding-top:78px!important;padding-bottom:78px!important}
+.final{min-height:88vh!important;padding-top:55px!important;padding-bottom:55px!important}
+@media(max-width:760px){
+ .walk.gods{height:205vh!important}
+ .walk.invite{height:165vh!important}
+ .couple,.dateSection,.gallery{padding-top:58px!important;padding-bottom:58px!important}
+ .rsvp{padding-top:64px!important;padding-bottom:64px!important}
+ .venue{min-height:auto!important}
+ .final{min-height:82vh!important}
+}
+
+
+/* =========================================================
+   TARGETED FIX ONLY — approved foreground UI is unchanged
+   ========================================================= */
+
+/* 1) GODS: remove the doubled/overlapping palace image.
+   There is now ONE photographic layer (.temple.bg) plus a soft atmospheric sky. */
+.stage{
+  background:linear-gradient(180deg,#e8d8ca 0%,#f5e7db 48%,#c8d4c8 100%)!important;
+  isolation:isolate;
+}
+.stage .sky{
+  z-index:0!important;
+  background:
+    radial-gradient(circle at 50% 18%,rgba(255,250,237,.96) 0 7%,rgba(255,244,226,.42) 24%,transparent 48%),
+    linear-gradient(180deg,#dfcbbb 0%,#f5e5d8 52%,#b9cbbd 100%)!important;
+}
+.stage .temple.bg{
+  z-index:1!important;
+  inset:-4%!important;width:108%!important;height:108%!important;
+  opacity:.50!important;
+  mix-blend-mode:normal!important;
+  filter:saturate(.68) contrast(.90) brightness(1.08)!important;
+  transform-origin:center center;
+}
+.stage:before{
+  z-index:2!important;
+  background:
+    linear-gradient(90deg,rgba(73,93,78,.18),transparent 18% 82%,rgba(73,93,78,.18)),
+    radial-gradient(ellipse at center bottom,rgba(255,250,238,.55),transparent 55%)!important;
+}
+.stage .ambient{z-index:3!important}
+.stage .god,.stage .walkTitle,.stage .footsteps{z-index:5!important}
+
+/* 2) YOU ARE INVITED: cinematic "opening invitation" animation.
+   Existing typography/card UI is retained. */
+.inviteStage{
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(255,245,226,.20),transparent 30%),
+    linear-gradient(135deg,#50695e 0%,#788d7c 45%,#b89983 100%)!important;
+}
+.inviteStage:before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(115deg,transparent 15%,rgba(255,245,222,.18) 32%,transparent 47%),
+    linear-gradient(245deg,transparent 20%,rgba(255,255,255,.12) 38%,transparent 54%);
+  animation:inviteLight 7s ease-in-out infinite alternate;
+}
+.inviteCurtainFX{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.inviteCurtainFX i{position:absolute;top:-10%;bottom:-10%;width:42%;border:1px solid rgba(239,213,177,.22);background:linear-gradient(90deg,rgba(72,92,79,.72),rgba(118,137,116,.16));filter:drop-shadow(0 25px 50px rgba(35,50,41,.18));animation:inviteDoors 5.8s ease-in-out infinite}
+.inviteCurtainFX i:first-child{left:-25%;transform:skewX(-8deg)}
+.inviteCurtainFX i:last-child{right:-25%;transform:skewX(8deg) scaleX(-1);animation-delay:-2.9s}
+.inviteStage .arches{opacity:.15!important}
+.inviteCopy{
+  padding:46px 34px;
+  border:1px solid rgba(245,222,188,.42);
+  background:rgba(82,104,89,.18);
+  backdrop-filter:blur(4px);
+  box-shadow:0 35px 90px rgba(30,48,38,.18);
+  overflow:hidden;
+}
+.inviteCopy:before{
+  content:"";position:absolute;left:-120%;top:0;width:55%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,246,224,.20),transparent);
+  animation:inviteShimmer 4.8s ease-in-out infinite;
+}
+.inviteCopy h2 em{animation:inviteScript 3.8s ease-in-out infinite}
+.inviteCopy h2 strong{
+  text-shadow:0 8px 35px rgba(42,59,47,.25);
+  animation:inviteWord 3.8s cubic-bezier(.16,1,.3,1) infinite;
+}
+.ornament{animation:ornamentSpin 7s ease-in-out infinite}
+@keyframes inviteLight{to{transform:translateX(5%) scale(1.05)}}
+@keyframes inviteDoors{0%,100%{opacity:.25;transform:translateX(0) skewX(-8deg)}50%{opacity:.65;transform:translateX(16%) skewX(-4deg)}}
+@keyframes inviteShimmer{0%,35%{left:-120%}68%,100%{left:150%}}
+@keyframes inviteScript{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes inviteWord{0%,100%{letter-spacing:.01em;transform:scale(1)}50%{letter-spacing:.045em;transform:scale(1.035)}}
+@keyframes ornamentSpin{50%{transform:rotate(8deg) scale(1.12)}}
+
+/* 3) MEET THE COUPLE: elegant pastel Indian palace/garden treatment.
+   Inspired by current pastel palace/floral wedding styling, but uses the
+   site's own image asset so the page remains reliable and the UI is unchanged. */
+.couple{
+  background:
+    linear-gradient(180deg,rgba(255,249,241,.90),rgba(244,231,219,.88) 58%,rgba(224,232,220,.92)),
+    /* url("https://framerusercontent.com/images/m6r8eopxGbzyLR1bYUq6zvkRnw.webp?width=2046&height=3074") center 38%/cover fixed!important; */
+    url("./assets/meetgroom.webp") center 38%/cover fixed!important;
+}
+.couple:before,.couple:after{
+  content:"";position:absolute;z-index:1;pointer-events:none;width:310px;height:410px;top:7%;
+  opacity:.36;filter:blur(.2px);
+  background:
+    radial-gradient(circle at 40% 25%,#e8b9ae 0 4%,transparent 5%),
+    radial-gradient(circle at 62% 40%,#f0d2bd 0 5%,transparent 6%),
+    radial-gradient(circle at 45% 58%,#c9d2b7 0 5%,transparent 6%);
+  animation:coupleFlorals 8s ease-in-out infinite alternate;
+}
+.couple:before{left:-85px;transform:rotate(-18deg)}
+.couple:after{right:-85px;transform:scaleX(-1) rotate(-18deg)}
+.couple .floralMotion{opacity:.35!important}
+.couple .photo{box-shadow:0 28px 65px rgba(93,66,47,.20),0 0 0 10px rgba(255,250,243,.32)}
+@keyframes coupleFlorals{to{transform:translateY(18px) rotate(-13deg) scale(1.04)}}
+
+/* 4) SAY YES: keep approved card UI, replace monotonous backdrop with
+   a layered sage/blush evening-garden scene and animated light/bokeh. */
+.rsvp{
+  isolation:isolate;
+  background:
+    linear-gradient(135deg,rgba(66,88,73,.92),rgba(111,131,108,.86) 48%,rgba(173,132,121,.86)),
+    /* url("https://framerusercontent.com/images/1Zg49ggjH1NeMsuurkKzD6m20vo.webp?width=2046&height=3074") center 42%/cover!important; */
+    url("./assets/meetgroom.webp") center 42%/cover!important;
+}
+.rsvp:before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,230,203,.34),transparent 20%),
+    radial-gradient(circle at 83% 72%,rgba(230,216,178,.25),transparent 23%),
+    linear-gradient(180deg,rgba(35,60,47,.08),rgba(44,66,53,.34));
+}
+.rsvpGardenFX{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.rsvpGardenFX i{position:absolute;border-radius:50%;background:rgba(255,240,211,.62);box-shadow:0 0 28px rgba(255,220,168,.45);animation:gardenBokeh 7s ease-in-out infinite}
+.rsvpGardenFX i:nth-child(1){width:9px;height:9px;left:12%;top:24%}
+.rsvpGardenFX i:nth-child(2){width:15px;height:15px;right:15%;top:18%;animation-delay:-2s}
+.rsvpGardenFX i:nth-child(3){width:7px;height:7px;left:23%;bottom:18%;animation-delay:-4s}
+.rsvpGardenFX i:nth-child(4){width:12px;height:12px;right:24%;bottom:23%;animation-delay:-5.5s}
+.rsvpCard{z-index:3!important;background:rgba(75,98,81,.62)!important;box-shadow:0 32px 80px rgba(28,47,36,.35),inset 0 0 0 1px rgba(255,255,255,.16)!important}
+@keyframes gardenBokeh{0%,100%{opacity:.25;transform:translateY(20px) scale(.8)}50%{opacity:1;transform:translateY(-28px) scale(1.18)}}
+
+/* 5) Remove the dead area after carousel. */
+.gallery{
+  padding-bottom:22px!important;
+  min-height:0!important;
+  margin-bottom:0!important;
+}
+.gallery .heading{margin-bottom:32px!important}
+.gallery .galleryNav{margin-top:22px!important;margin-bottom:0!important}
+.gallery + .final{margin-top:0!important}
+.track{margin-bottom:0!important}
+
+/* 6) FOOTER / FINAL: preserve existing three-column UI, make the scene richer. */
+.final{
+  min-height:92vh!important;
+  background:
+    linear-gradient(180deg,#ead7c8 0%,#caa99a 48%,#637a69 100%)!important;
+  isolation:isolate;
+}
+.finalBg{
+  opacity:.48!important;
+  filter:saturate(.78) contrast(.92) brightness(.92)!important;
+  animation:finalCinematic 16s ease-in-out infinite alternate;
+}
+.finalAura{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 28%,rgba(255,239,200,.62) 0 5%,rgba(255,225,183,.20) 22%,transparent 48%),
+    linear-gradient(115deg,transparent 28%,rgba(255,241,211,.13) 45%,transparent 60%);
+  animation:finalAuraMove 8s ease-in-out infinite alternate;
+}
+.finalOrnaments{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.finalOrnaments i{position:absolute;width:7px;height:7px;border-radius:50%;background:#ffe0a3;box-shadow:0 0 22px #ffd58b;animation:finalFirefly 6s ease-in-out infinite}
+.finalOrnaments i:nth-child(1){left:9%;top:30%}
+.finalOrnaments i:nth-child(2){left:28%;top:15%;animation-delay:-2s}
+.finalOrnaments i:nth-child(3){right:11%;top:34%;animation-delay:-4s}
+.finalOrnaments i:nth-child(4){right:27%;bottom:18%;animation-delay:-1s}
+.finalOrnaments i:nth-child(5){left:48%;bottom:12%;animation-delay:-3s}
+.finalText{
+  background:rgba(255,249,239,.80)!important;
+  box-shadow:0 28px 75px rgba(50,58,45,.24);
+  animation:finalCardFloat 5s ease-in-out infinite;
+}
+.final .mini:first-child{animation:finalPortraitL 6s ease-in-out infinite}
+.final .mini:last-child{animation:finalPortraitR 6s ease-in-out infinite}
+@keyframes finalCinematic{to{transform:scale(1.07) translateY(-1.5%)}}
+@keyframes finalAuraMove{to{transform:translateX(3%) scale(1.04)}}
+@keyframes finalFirefly{0%,100%{opacity:.18;transform:translate(0,20px) scale(.7)}50%{opacity:1;transform:translate(18px,-28px) scale(1.25)}}
+@keyframes finalCardFloat{50%{transform:translateY(-8px)}}
+@keyframes finalPortraitL{50%{transform:translateY(-8px) rotate(-1deg)}}
+@keyframes finalPortraitR{50%{transform:translateY(-8px) rotate(1deg)}}
+
+/* mobile: no fixed background jank */
+@media(max-width:760px){
+  .couple{background-attachment:scroll!important}
+  .gallery{padding-bottom:16px!important}
+  .final{min-height:auto!important;padding-top:48px!important;padding-bottom:58px!important}
+}
+
+/* SCREENSHOT PRECISION FIX */
+.final{min-height:100vh!important;background:#d8c5b5!important;padding-top:54px!important;padding-bottom:54px!important}
+.finalBg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 48%!important;opacity:.76!important;filter:saturate(.72) brightness(.94) contrast(.92)!important;transform:scale(1.035)!important;animation:finalPhotoMove 18s ease-in-out infinite alternate!important}
+.final:after{z-index:1!important;background:linear-gradient(180deg,rgba(248,229,210,.20),rgba(235,208,190,.10) 42%,rgba(74,98,79,.38)),radial-gradient(circle at 50% 36%,rgba(255,244,218,.32),transparent 38%)!important}
+.finalAura{z-index:2!important;background:radial-gradient(circle at 50% 34%,rgba(255,231,184,.30),transparent 32%),linear-gradient(115deg,transparent 32%,rgba(255,244,220,.10) 48%,transparent 63%)!important}
+.finalBgMotion{display:none!important}.finalPeople{z-index:5!important}.finalOrnaments,#sparks{z-index:4!important}
+@keyframes finalPhotoMove{from{transform:scale(1.035) translate3d(0,0,0)}to{transform:scale(1.09) translate3d(0,-1.8%,0)}}
+
+/* Invitation has NO box */
+.inviteCopy{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;padding:20px!important;overflow:visible!important}
+.inviteCopy:before{display:none!important}
+.inviteCopy:after{content:"✦";display:block;width:110px;margin:24px auto 0;padding-top:12px;border-top:1px solid rgba(248,224,190,.62);color:#f3d9b4;font-size:18px;animation:inviteStarPulse 2.4s ease-in-out infinite}
+.engagingInvite em{display:block!important;animation:inviteYouAre 3.6s ease-in-out infinite!important}
+.engagingInvite strong{display:block!important;background:linear-gradient(90deg,#f8ead3,#fff8eb,#e8c99f,#fff8eb,#f8ead3);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:inviteGoldText 4s linear infinite,inviteWord 3.8s cubic-bezier(.16,1,.3,1) infinite!important}
+@keyframes inviteYouAre{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
+@keyframes inviteGoldText{to{background-position:220% center}}@keyframes inviteStarPulse{50%{transform:scale(1.18);opacity:.55}}
+
+/* Footer names: Rihen / WEDS / Meghana */
+.finalText{padding:42px 30px!important}
+.finalNames{margin:8px auto 15px!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:0!important;line-height:.76!important}
+.finalNames span{display:block;font:700 clamp(52px,6.3vw,82px) "Bodoni Moda";color:#9d5b47}
+.finalNames i{display:block;margin:13px 0 11px!important;font:400 13px "Italiana"!important;letter-spacing:.42em!important;color:#8e684f!important;transform:none!important}
+
+/* R&M logo visible BEFORE curtains open */
+.rmReveal{z-index:28!important;opacity:1!important;top:35%!important;transform:translate(-50%,-50%) scale(.82)!important;transition:transform 1.25s cubic-bezier(.16,1,.3,1),opacity .65s!important}
+.rmReveal div{background:rgba(80,21,36,.90)!important;color:#f4dfba!important;border-color:#d8b779!important;box-shadow:0 0 0 7px rgba(216,183,121,.12),0 18px 50px rgba(34,7,14,.38)!important}
+.rmReveal i{color:#e8c98f!important}.rmReveal small{color:#f2ddbd!important}
+.landing.open .rmReveal{top:45%!important;transform:translate(-50%,-50%) scale(1)!important;opacity:1!important}
+.landingCopy{z-index:29!important}
+@media(max-width:760px){.rmReveal{top:31%!important}.finalNames span{font-size:55px}}
+
+
+/* ==========================================================
+   HEART CREST + DEITY + SCRATCH CELEBRATION — targeted only
+   ========================================================== */
+
+/* Heart crest visible on CLOSED curtains and retained on open */
+.rmReveal{z-index:31!important;opacity:1!important}
+.rmReveal div{
+  width:176px!important;height:158px!important;
+  border:0!important;border-radius:0!important;
+  clip-path:path("M88 153 C72 135 18 98 8 58 C-2 20 42 -3 88 34 C134 -3 178 20 168 58 C158 98 104 135 88 153 Z");
+  -webkit-clip-path:polygon(50% 100%,8% 59%,2% 37%,6% 18%,20% 5%,37% 4%,50% 19%,63% 4%,80% 5%,94% 18%,98% 37%,92% 59%);
+  background:linear-gradient(145deg,#5b1729,#8c3348 52%,#4d1222)!important;
+  box-shadow:none!important;
+  display:flex!important;align-items:center;justify-content:center;gap:8px;
+  font-size:42px!important;
+  position:relative;
+}
+.rmReveal div:after{
+  content:"♥";position:absolute;inset:7px;display:grid;place-items:center;
+  color:transparent;-webkit-text-stroke:1px rgba(230,196,132,.68);
+  font-size:142px;line-height:1;pointer-events:none;
+}
+.rmReveal div span,.rmReveal div i{position:relative;z-index:2}
+.rmReveal small{margin-top:12px!important}
+
+/* Same heart crest between bride and groom */
+.heartCoupleLogo{
+  width:122px!important;height:112px!important;border:0!important;border-radius:0!important;
+  clip-path:polygon(50% 100%,8% 59%,2% 37%,6% 18%,20% 5%,37% 4%,50% 19%,63% 4%,80% 5%,94% 18%,98% 37%,92% 59%);
+  background:linear-gradient(145deg,#fff8ec,#efd7bd)!important;
+  box-shadow:0 16px 38px rgba(117,78,54,.18)!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;
+  color:#9d604a!important;
+}
+.heartCoupleLogo i{font-family:serif!important;font-size:18px!important;color:#b27661!important}
+
+/* More breathing room around WEDS */
+.finalNames{line-height:.82!important}
+.finalNames i{
+  margin:28px 0 25px!important;
+  padding-left:.42em;
+  font-size:14px!important;
+  letter-spacing:.42em!important;
+}
+.finalNames span:first-child{margin-bottom:2px!important}
+.finalNames span:last-child{margin-top:2px!important}
+
+/* Deity visuals: softly blended, no pasted rectangular look */
+.deityVisual{
+  width:min(310px,64vw);height:330px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;filter:drop-shadow(0 24px 30px rgba(90,63,43,.18));
+}
+.deityVisual:before{
+  content:"";position:absolute;width:90%;height:90%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,247,222,.84) 0 34%,rgba(238,205,161,.25) 58%,transparent 72%);
+  animation:divineAura 4.2s ease-in-out infinite;
+}
+.deityVisual img{
+  position:relative;z-index:2;max-width:100%;max-height:100%;object-fit:contain;
+  mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 62% 72% at 50% 48%,#000 54%,rgba(0,0,0,.72) 70%,transparent 94%);
+  mask-image:radial-gradient(ellipse 62% 72% at 50% 48%,#000 54%,rgba(0,0,0,.72) 70%,transparent 94%);
+}
+.deityFallback{position:relative;z-index:2;font:72px "Cormorant Garamond";color:#a46d4f}
+@keyframes divineAura{50%{transform:scale(1.07);opacity:.72}}
+
+/* Chamunda visual based on the supplied Pinterest reference when direct Pinterest
+   image delivery is unavailable: devotional frame remains integrated, not a broken image. */
+.chamundaVisual{
+  background:
+    radial-gradient(circle at 50% 43%,rgba(244,207,112,.35),transparent 38%),
+    linear-gradient(145deg,rgba(159,54,48,.10),rgba(77,113,72,.10));
+  border-radius:48% 48% 16% 16%;
+}
+
+/* Full scratch celebration */
+.heartBurst{position:absolute;inset:0;z-index:12;pointer-events:none;overflow:visible}
+.flyingHeart{
+  position:absolute;left:50%;top:50%;
+  font-size:var(--s,22px);color:var(--c,#b96c72);
+  opacity:0;filter:drop-shadow(0 4px 7px rgba(111,62,66,.18));
+  animation:heartExplosion var(--d,1.9s) cubic-bezier(.12,.7,.18,1) forwards;
+  animation-delay:var(--delay,0s)
+}
+.scratchWrap.autoDone .secret,.scratchWrap.done .secret{
+  animation:dateHeartGlow 1.8s cubic-bezier(.16,1,.3,1)!important
+}
+.scratchWrap.autoDone:after,.scratchWrap.done:after{
+  content:"♥"!important;font-size:68px!important;top:50%!important;
+  animation:mainHeartPop 1.25s cubic-bezier(.16,1,.3,1) forwards!important
+}
+@keyframes heartExplosion{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.25) rotate(0)}
+  18%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.25) rotate(var(--r))}
+}
+@keyframes mainHeartPop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}
+  38%{opacity:1;transform:translate(-50%,-50%) scale(1.35)}
+  70%{opacity:.9;transform:translate(-50%,-50%) scale(.95)}
+  100%{opacity:0;transform:translate(-50%,-95%) scale(1.1)}
+}
+@keyframes dateHeartGlow{
+  0%{transform:scale(.92);filter:blur(4px)}
+  48%{transform:scale(1.045);filter:blur(0);box-shadow:inset 0 0 95px rgba(239,183,121,.55)}
+  100%{transform:scale(1);box-shadow:inset 0 0 0 transparent}
+}
+
+
+/* ==========================================================
+   FINAL TARGETED LOGO + GOD IMAGE FIX
+   No website layout/UI changes.
+   ========================================================== */
+
+/* Exact uploaded MR artwork on CLOSED curtains only. */
+.rmReveal.uploadedMR{
+  z-index:40!important;
+  opacity:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:190px!important;
+  height:150px!important;
+  top:34%!important;
+  pointer-events:none!important;
+  transform:translate(-50%,-50%) scale(1)!important;
+  transition:opacity .45s ease,transform .65s ease!important;
+}
+.rmReveal.uploadedMR img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 8px 18px rgba(37,8,16,.38))!important;
+}
+/* Critical requirement: logo disappears once curtain is open. */
+.landing.open .rmReveal.uploadedMR{
+  opacity:0!important;
+  transform:translate(-50%,-50%) scale(.88)!important;
+  visibility:hidden!important;
+}
+
+/* Same exact MR artwork between bride and groom, blended into existing palette. */
+.heartCoupleLogo.uploadedCoupleMR{
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  background:rgba(255,248,236,.78)!important;
+  border:1px solid rgba(184,137,91,.55)!important;
+  border-radius:46% 46% 48% 48%!important;
+  width:122px!important;
+  height:112px!important;
+  padding:17px!important;
+  box-shadow:0 16px 38px rgba(117,78,54,.14)!important;
+}
+.heartCoupleLogo.uploadedCoupleMR img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+
+/* Keep the three existing god panels exactly where they are.
+   Only normalize the supplied image presentation to match the website. */
+.parshVisual img,.chamundaVisual img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  mix-blend-mode:multiply!important;
+  border-radius:28px!important;
+  opacity:.96!important;
+  filter:saturate(.78) sepia(.08) contrast(.96) brightness(1.04)!important;
+  -webkit-mask-image:radial-gradient(ellipse 68% 76% at 50% 48%,#000 52%,rgba(0,0,0,.92) 70%,transparent 97%)!important;
+  mask-image:radial-gradient(ellipse 68% 76% at 50% 48%,#000 52%,rgba(0,0,0,.92) 70%,transparent 97%)!important;
+}
+.chamundaVisual{
+  background:transparent!important;
+  border-radius:0!important;
+}
+
+@media(max-width:760px){
+  .rmReveal.uploadedMR{width:150px!important;height:118px!important;top:30%!important}
+}
+
+
+/* ==========================================================
+   REQUESTED FIXES — preserve approved UI
+   ========================================================== */
+
+/* CLOSED curtain: MR visible. OPEN curtain: MR hidden. */
+.landing:not(.open) .rmReveal.uploadedMR{
+  opacity:1!important;
+  visibility:visible!important;
+  display:flex!important;
+  z-index:60!important;
+}
+.landing.open .rmReveal.uploadedMR{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* Gods: remove ALL oval/arch/half-oval frames; show the 3 images directly. */
+.deityVisual.plainDeity,
+.ganeshVisual.plainDeity,
+.parshVisual.plainDeity,
+.chamundaVisual.plainDeity{
+  background:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  overflow:visible!important;
+  padding:0!important;
+}
+.deityVisual.plainDeity::before,
+.deityVisual.plainDeity::after{
+  display:none!important;
+  content:none!important;
+}
+.deityVisual.plainDeity img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:320px!important;
+  max-height:420px!important;
+  margin:auto!important;
+  object-fit:contain!important;
+  border:0!important;
+  border-radius:0!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  mix-blend-mode:normal!important;
+  filter:drop-shadow(0 18px 24px rgba(100,65,42,.15))!important;
+}
+
+/* RIHEN / WEDS / MEGHANA: fit full viewport and give WEDS breathing room. */
+.namesStage,
+.namesWrap,
+.heroNames,
+.weddingNames{
+  overflow:visible!important;
+}
+.namesStage h1,
+.namesWrap h1,
+.heroNames h1,
+.weddingNames h1{
+  max-width:96vw!important;
+}
+.namesStage .name,
+.namesWrap .name,
+.heroNames .name,
+.weddingNames .name{
+  line-height:.84!important;
+}
+.namesStage .weds,
+.namesWrap .weds,
+.heroNames .weds,
+.weddingNames .weds{
+  display:block!important;
+  margin:clamp(28px,5vh,64px) 0!important;
+  padding:8px 0!important;
+}
+
+/* Avoid clipping the top name on desktop. */
+.namesStage,
+.heroNames,
+.weddingNames{
+  padding-top:clamp(50px,8vh,110px)!important;
+  padding-bottom:clamp(45px,7vh,90px)!important;
+}
+
+/* Exact uploaded MR logo in bride/groom center. */
+.heartCoupleLogo.uploadedCoupleMR img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+
+/* Back to beginning belongs at the very bottom, not floating mid-page. */
+.backToBeginningFinal{
+  position:relative!important;
+  display:flex!important;
+  gap:10px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  margin:42px auto 24px!important;
+  padding:15px 27px!important;
+  border:1px solid rgba(180,128,82,.8)!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg,#9f573f,#c6865f)!important;
+  color:#fff7eb!important;
+  font:600 12px/1.2 "Montserrat",sans-serif!important;
+  letter-spacing:.14em!important;
+  box-shadow:0 12px 30px rgba(112,61,45,.22)!important;
+  cursor:pointer!important;
+  z-index:20!important;
+  transition:transform .25s ease,box-shadow .25s ease!important;
+}
+.backToBeginningFinal:hover{
+  transform:translateY(-3px)!important;
+  box-shadow:0 16px 38px rgba(112,61,45,.3)!important;
+}
+
+@media (max-width:760px){
+  .deityVisual.plainDeity img{
+    max-width:230px!important;
+    max-height:300px!important;
+  }
+  .namesStage,
+  .heroNames,
+  .weddingNames{
+    padding-top:70px!important;
+  }
+}
+
+
+/* ============================================================
+   CURTAIN FLOW FIX
+   Closed: ONLY MR logo + Open Invitation button.
+   Open: names visible, logo hidden.
+   Return to top: names show first, then curtain closes and logo/button appear.
+   ============================================================ */
+
+.landing.curtainFlow .rmReveal.uploadedMR{
+  transition:opacity .42s ease, visibility .42s ease, transform .55s ease!important;
+}
+
+/* CLOSED STATE */
+.landing.curtainFlow:not(.open) .rmReveal.uploadedMR{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translate(-50%,-50%) scale(1)!important;
+  z-index:70!important;
+}
+.landing.curtainFlow:not(.open) .landingCopy{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.landing.curtainFlow:not(.open) .openBtn,
+.landing.curtainFlow:not(.open) #openInvitation,
+.landing.curtainFlow:not(.open) [data-open]{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  z-index:75!important;
+}
+
+/* OPEN STATE: logo gone; Rihen / Weds / Meghana become the hero */
+.landing.curtainFlow.open .rmReveal.uploadedMR{
+  opacity:0!important;
+  visibility:hidden!important;
+  transform:translate(-50%,-50%) scale(.9)!important;
+  pointer-events:none!important;
+}
+.landing.curtainFlow.open .landingCopy{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transition:opacity .7s ease .28s, transform .8s cubic-bezier(.16,1,.3,1) .22s!important;
+}
+.landing.curtainFlow.open .openBtn,
+.landing.curtainFlow.open #openInvitation,
+.landing.curtainFlow.open [data-open]{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* During return-to-top sequence, keep curtains open long enough to see names first. */
+.landing.curtainFlow.returningHome.open .landingCopy{
+  opacity:1!important;
+  visibility:visible!important;
+}
+.landing.curtainFlow.returningHome .rmReveal.uploadedMR{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+/* Only after JS starts curtain close do the names disappear. */
+.landing.curtainFlow.closingHome .landingCopy{
+  opacity:0!important;
+  visibility:hidden!important;
+  transition:opacity .38s ease!important;
+}
+
+/* === FINAL GOD / COUPLE / CURTAIN FLOW CORRECTIONS === */
+
+/* GODS: absolutely no oval, arch, portal, pseudo-frame or mask */
+.gods .deityVisual,.gods .plainDeity,
+.godSection .deityVisual,.blessings .deityVisual,
+.deityVisual{
+  background:transparent!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.gods .deityVisual:before,.gods .deityVisual:after,
+.godSection .deityVisual:before,.godSection .deityVisual:after,
+.blessings .deityVisual:before,.blessings .deityVisual:after,
+.deityVisual:before,.deityVisual:after{
+  content:none!important;display:none!important;background:none!important;border:0!important;
+}
+.deityVisual img{
+  display:block!important;
+  width:auto!important;height:auto!important;
+  max-width:min(300px,72vw)!important;
+  max-height:390px!important;
+  object-fit:contain!important;
+  margin:0 auto!important;
+  border:0!important;border-radius:0!important;
+  clip-path:none!important;-webkit-clip-path:none!important;
+  -webkit-mask:none!important;mask:none!important;
+  mix-blend-mode:normal!important;
+  filter:drop-shadow(0 18px 28px rgba(92,59,39,.16))!important;
+}
+
+/* Bride/groom exact MR logo: visible and above backgrounds */
+.uploadedCoupleMR{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  visibility:visible!important;opacity:1!important;z-index:15!important;
+}
+.uploadedCoupleMR img{
+  display:block!important;width:86%!important;height:86%!important;object-fit:contain!important;
+  opacity:1!important;visibility:visible!important;
+}
+
+/* CLOSED CURTAIN: ONLY logo + open button; names must not coexist */
+.landing:not(.open) .landingCopy{
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+.landing:not(.open) .rmReveal.uploadedMR{
+  opacity:1!important;visibility:visible!important;display:flex!important;
+}
+.landing:not(.open) #openBtn,
+.landing:not(.open) .openBtn,
+.landing:not(.open) #openInvitation{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+}
+
+/* OPEN CURTAIN: logo + button gone; names visible */
+.landing.open .rmReveal.uploadedMR{
+  opacity:0!important;visibility:hidden!important;display:none!important;
+}
+.landing.open #openBtn,
+.landing.open .openBtn,
+.landing.open #openInvitation{
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+.landing.open .landingCopy{
+  opacity:1!important;visibility:visible!important;
+}
+
+/* Hold hero for 5 sec after curtain opens. Disable accidental scroll during hold. */
+html.heroHold,body.heroHold{overflow:hidden!important}
+
+
+/* ============================================================
+   OPEN BUTTON RESTORED + EXACT GANESHA IMAGE
+   ============================================================ */
+
+/* Dedicated button is independent of landingCopy, so it cannot disappear
+   just because the names are hidden while curtains are closed. */
+.openInvitationFinal{
+  position:absolute!important;
+  left:50%!important;
+  top:64%!important;
+  transform:translate(-50%,-50%)!important;
+  z-index:90!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:14px!important;
+  min-width:245px!important;
+  padding:16px 25px!important;
+  border:1px solid rgba(244,218,165,.88)!important;
+  background:rgba(91,25,39,.30)!important;
+  color:#fff0cf!important;
+  font:600 11px/1.1 "Montserrat",sans-serif!important;
+  letter-spacing:.15em!important;
+  backdrop-filter:blur(5px)!important;
+  -webkit-backdrop-filter:blur(5px)!important;
+  box-shadow:0 12px 34px rgba(31,5,13,.22),inset 0 0 0 1px rgba(255,255,255,.05)!important;
+  cursor:pointer!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transition:opacity .35s ease,transform .35s ease,background .25s ease!important;
+}
+.openInvitationFinal:hover{
+  transform:translate(-50%,-53%)!important;
+  background:rgba(130,59,66,.46)!important;
+}
+.openInvitationFinal b{
+  font-size:13px!important;
+  animation:finalOpenSpark 1.6s ease-in-out infinite!important;
+}
+@keyframes finalOpenSpark{
+  0%,100%{transform:scale(.8) rotate(0deg);opacity:.6}
+  50%{transform:scale(1.25) rotate(45deg);opacity:1}
+}
+
+/* Closed = MR logo + button. */
+.landing:not(.open) .openInvitationFinal{
+  display:flex!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+/* Open = both MR logo and button disappear; names take over. */
+.landing.open .openInvitationFinal{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* Direct Ganesha image: no arch/oval/frame. */
+.deityVisual.ganeshVisual,
+.ganeshVisual,
+.deityVisual.plainDeity.ganeshVisual{
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  padding:0!important;
+}
+.ganeshVisual::before,.ganeshVisual::after{
+  content:none!important;
+  display:none!important;
+}
+.ganeshVisual img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:min(315px,76vw)!important;
+  max-height:410px!important;
+  object-fit:contain!important;
+  margin:0 auto!important;
+  border:0!important;
+  border-radius:0!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  filter:drop-shadow(0 18px 28px rgba(94,61,36,.15))!important;
+}
+
+@media(max-width:760px){
+  .openInvitationFinal{top:66%!important;min-width:220px!important;padding:14px 20px!important}
+}
+
+
+/* FINAL navigation safety */
+html.heroHold, body.heroHold {
+  overflow: hidden !important;
+}
+.landing.open .landingCopy {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.landing.open .rmReveal.uploadedMR,
+.landing.open .openInvitationFinal {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+
+/* ===== USER SCREENSHOT FIXES: 24 JUL ===== */
+
+/* 1. GODS — direct images only. No oval/arch/shrine structures. */
+.gods .shrine{display:none!important}
+.gods .directDeity,
+.gods .directDeity.ganeshaVisual,
+.gods .directDeity.parshVisual,
+.gods .directDeity.chamundaVisual{
+  width:min(300px,25vw)!important;
+  height:350px!important;
+  margin:0 auto 12px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  overflow:visible!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.gods .directDeity::before,.gods .directDeity::after{
+  display:none!important;content:none!important
+}
+.gods .directDeity img{
+  position:relative!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:350px!important;
+  object-fit:contain!important;
+  margin:auto!important;
+  border:0!important;
+  border-radius:0!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  mix-blend-mode:normal!important;
+  filter:drop-shadow(0 16px 24px rgba(73,48,33,.16))!important;
+}
+.gods .chamundaVisual{background:transparent!important}
+
+/* 2. Names sit lower so RIHEN is never cropped by the browser top edge. */
+.gods .walkTitle{
+  top:59%!important;
+  width:min(1100px,94vw)!important;
+  transform-origin:center center!important;
+}
+.gods .walkTitle h1{
+  margin:10px auto!important;
+  font-size:clamp(64px,10vw,145px)!important;
+  line-height:.72!important;
+}
+.gods .walkTitle h1 i{
+  display:block!important;
+  margin:24px 0 30px!important;
+  line-height:1!important;
+}
+.gods .walkTitle p{margin-top:22px!important}
+
+/* 3. Meet Bride/Groom — use the exact MR logo asset, not R & M text. */
+.people .heart.uploadedCoupleMR{
+  width:140px!important;
+  height:140px!important;
+  padding:12px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:visible!important;
+}
+.people .heart.uploadedCoupleMR img{
+  display:block!important;
+  width:128px!important;
+  height:128px!important;
+  object-fit:contain!important;
+  filter:sepia(.18) saturate(.75) drop-shadow(0 10px 18px rgba(93,58,39,.12))!important;
+}
+
+@media(max-width:760px){
+  .gods .directDeity{width:min(235px,68vw)!important;height:285px!important}
+  .gods .directDeity img{max-height:285px!important}
+  .gods .walkTitle{top:58%!important}
+  .gods .walkTitle h1{font-size:clamp(55px,17vw,86px)!important}
+}
+
+
+/* =========================================================
+   FINAL REQUESTED VISUAL CHANGES
+   ========================================================= */
+
+/* MR logo between bride and groom: warm wedding red, not pale gold. */
+.people .heart.uploadedCoupleMR img{
+  filter:
+    sepia(1)
+    saturate(5.2)
+    hue-rotate(322deg)
+    brightness(.67)
+    contrast(1.08)
+    drop-shadow(0 8px 14px rgba(113,37,42,.16)) !important;
+}
+
+/* Bride & Groom portraits: square cards, softly curved corners,
+   elegant red + gold double border. */
+.people .portrait{
+  border-radius:22px!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  overflow:hidden!important;
+  border:2px solid #9b3f42!important;
+  outline:2px solid rgba(202,154,73,.92)!important;
+  outline-offset:5px!important;
+  background:#fffaf3!important;
+  box-shadow:
+    0 18px 40px rgba(83,46,36,.14),
+    inset 0 0 0 2px rgba(238,210,150,.65)!important;
+}
+.people .portrait::before,
+.people .portrait::after{
+  display:none!important;
+  content:none!important;
+}
+.people .portrait img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  border-radius:19px!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+}
+
+/* Ensure no old arch geometry can reappear on couple cards. */
+.people .person,
+.people .portrait,
+.people .portrait img{
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+
+/* Curtain behavior:
+   Closed = MR logo/button visible, names hidden.
+   Open = MR logo/button hidden, names visible and scrolling unlocked. */
+.landing:not(.open) .rmReveal.uploadedMR,
+.landing:not(.open) .openInvitationFinal{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.landing:not(.open) .landingCopy{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+.landing.open .rmReveal.uploadedMR,
+.landing.open .openInvitationFinal{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.landing.open .landingCopy{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+/* While returning to the very top, keep names visible until curtain closes. */
+.landing.open.returningHome .landingCopy{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+/* ===== FINAL CLEAN FIX: couple cards + heart logo ===== */
+
+/* Force the actual bride/groom image container to a rounded SQUARE.
+   Overrides the original arch mask at every nesting level. */
+.people .person .portrait,
+.people .portrait{
+ width:min(330px,27vw)!important;
+ height:min(330px,27vw)!important;
+ aspect-ratio:1/1!important;
+ border-radius:26px!important;
+ border:3px solid #9b3f42!important;
+ outline:2px solid #c89a49!important;
+ outline-offset:5px!important;
+ overflow:hidden!important;
+ clip-path:inset(0 round 26px)!important;
+ -webkit-clip-path:inset(0 round 26px)!important;
+ -webkit-mask:none!important; mask:none!important;
+ background:#fffaf4!important;
+ box-shadow:0 18px 38px rgba(86,43,38,.15)!important;
+}
+.people .person .portrait:before,.people .person .portrait:after,
+.people .portrait:before,.people .portrait:after{display:none!important;content:none!important}
+.people .person .portrait img,.people .portrait img{
+ width:100%!important;height:100%!important;object-fit:cover!important;
+ border-radius:22px!important;
+ clip-path:none!important;-webkit-clip-path:none!important;
+ -webkit-mask:none!important;mask:none!important;
+}
+
+/* Heart is ONLY for the logo between bride/groom.
+   Curtain MR remains completely untouched. */
+.people .heart.uploadedCoupleMR{
+ width:150px!important;height:140px!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ background:transparent!important;border:0!important;overflow:visible!important;
+}
+.people .coupleHeartLogo{
+ width:132px;height:120px;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(145deg,#fff8ec,#f7e6d4);
+ border:2px solid #b34749;
+ box-shadow:0 12px 26px rgba(104,43,43,.14), inset 0 0 0 3px rgba(207,161,77,.38);
+ clip-path:path("M66 116 C55 105 8 72 8 38 C8 14 36 4 66 31 C96 4 124 14 124 38 C124 72 77 105 66 116 Z");
+}
+.people .coupleHeartLogo img{
+ width:82px!important;height:82px!important;object-fit:contain!important;
+ /* Turn gold/brown monogram into the site's deep wedding red. */
+ filter:sepia(1) saturate(7) hue-rotate(315deg) brightness(.53) contrast(1.2)!important;
+}
+
+/* Meet-us-here mandap image treatment */
+.location img,.venue img,.meet img{
+ object-fit:cover;
+}
+
+@media(max-width:760px){
+ .people .person .portrait,.people .portrait{width:min(280px,72vw)!important;height:min(280px,72vw)!important}
+ .people .heart.uploadedCoupleMR{width:120px!important;height:112px!important}
+ .people .coupleHeartLogo{transform:scale(.82)}
+}
+
+/* FINAL: only fix the actual Bride/Groom photo frames (.photo). */
+.couple .people .person .photo{
+ width:min(350px,80vw)!important;
+ height:auto!important;
+ aspect-ratio:1/1!important;
+ padding:8px!important;
+ border-radius:26px!important;
+ border:2px solid #9f594c!important;
+ outline:2px solid #c69a5c!important;
+ outline-offset:4px!important;
+ overflow:hidden!important;
+ background:#fffaf3!important;
+ clip-path:none!important;-webkit-clip-path:none!important;
+ mask:none!important;-webkit-mask:none!important;
+ box-shadow:0 22px 52px rgba(80,48,35,.16)!important;
+}
+.couple .people .person .photo:before,
+.couple .people .person .photo:after{display:none!important;content:none!important}
+.couple .people .person .photo img{
+ width:100%!important;height:100%!important;object-fit:cover!important;
+ border-radius:19px!important;
+ clip-path:none!important;-webkit-clip-path:none!important;
+ mask:none!important;-webkit-mask:none!important;
+}
+/* Heart/logo and every other section intentionally left unchanged. */
+
+/* === Requested Bride/Groom section refinements === */
+
+/* More breathing room between image and THE BRIDE / THE GROOM */
+.couple .people .person .photo{
+    margin-bottom: 24px !important;
+}
+.couple .people .person > small,
+.couple .people .person .role{
+    display:block !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    letter-spacing: .20em !important;
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color:#6f4039 !important;
+}
+
+/* Make centre heart + MR logo larger and vertically centred against photos */
+.couple .people{
+    align-items:center !important;
+}
+.couple .monogram,
+.couple .heartLogo,
+.couple .coupleMonogram{
+    align-self:center !important;
+    transform:scale(1.28) !important;
+    transform-origin:center center !important;
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}
+
+/* Only the word "invited" uses the requested blood/wine red. */
+.invitedWine{
+    color:#7b1f2b !important;
+}
+
+.engagingInvite strong{
+    color:#7b1f2b !important;
+}
+
+.couple .people .heart,
+.couple .people .heartMark,
+.couple .people .midHeart{
+    align-self:center !important;
+    transform:scale(1.28) !important;
+    transform-origin:center center !important;
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}
+
+/* === Heart scratch reveal === */
+.dateSection .scratchWrap{
+    width:min(430px,88vw) !important;
+    height:min(400px,82vw) !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    overflow:visible !important;
+    filter:drop-shadow(0 26px 34px rgba(81,53,35,.18));
+}
+.dateSection .scratchWrap .secret,
+.dateSection .scratchWrap #scratch{
+    clip-path:path("M 215 382 C 188 354 38 248 38 135 C 38 64 88 28 142 28 C 177 28 202 48 215 72 C 228 48 253 28 288 28 C 342 28 392 64 392 135 C 392 248 242 354 215 382 Z");
+}
+.dateSection .scratchWrap .secret{
+    border-radius:0 !important;
+    background:radial-gradient(circle at 50% 35%,#fffdf8 0,#fff5e9 55%,#f5dfc9 100%) !important;
+}
+.dateSection .scratchWrap #scratch{
+    height:100% !important;
+}
+.dateSection .scratchWrap.autoDone{
+    animation:heartRevealPop 1.05s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes heartRevealPop{
+    0%{transform:scale(1)}
+    45%{transform:scale(1.08)}
+    72%{transform:scale(.98)}
+    100%{transform:scale(1)}
+}
+@media(max-width:560px){
+ .dateSection .scratchWrap{width:min(360px,88vw)!important;height:min(335px,82vw)!important}
+}
+
+/* === ShubhMangalLagna yojna section === */
+.lagnaYojna{
+    min-height:78vh;
+    padding:90px 22px;
+    display:grid;
+    place-items:center;
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    background:
+      radial-gradient(circle at 15% 20%,rgba(181,106,81,.13),transparent 24%),
+      radial-gradient(circle at 84% 76%,rgba(117,138,121,.16),transparent 25%),
+      linear-gradient(135deg,#fff7ed,#f3e1d2 52%,#edf1e8);
+}
+.lagnaYojna:before,.lagnaYojna:after{
+    content:"";
+    position:absolute;
+    width:230px;height:230px;
+    border:1px solid rgba(166,96,76,.18);
+    border-radius:50%;
+    animation:lagnaFloat 8s ease-in-out infinite alternate;
+}
+.lagnaYojna:before{left:-80px;top:8%}
+.lagnaYojna:after{right:-70px;bottom:4%;animation-delay:-3s}
+.lagnaCard{
+    width:min(850px,92vw);
+    padding:70px 55px;
+    border:1px solid rgba(166,96,76,.34);
+    background:rgba(255,249,241,.70);
+    backdrop-filter:blur(8px);
+    box-shadow:0 30px 80px rgba(92,58,45,.10);
+    position:relative;
+}
+.lagnaCard small{letter-spacing:.28em;font-size:10px}
+.lagnaCard h2{
+    margin:18px 0 5px;
+    font:400 clamp(42px,7vw,82px)/.95 "Bodoni Moda",serif;
+    color:#9f604b;
+}
+.lagnaCard h2 i{
+    display:block;
+    margin-top:14px;
+    font:400 clamp(48px,7vw,86px)/.8 "Mrs Saint Delafield",cursive;
+    color:#758a79;
+}
+.lagnaOrnament{display:block;margin:28px auto 20px;font-size:32px;color:#9f604b}
+.lagnaCard p{
+    margin:0 auto;
+    max-width:720px;
+    font:italic clamp(16px,2vw,21px)/1.8 "Bodoni Moda",serif;
+    color:#5f463d;
+}
+@keyframes lagnaFloat{to{transform:translateY(28px) scale(1.08)}}
+
+.heartBurst i{
+ position:absolute;
+ font-style:normal;
+ color:#a6604c;
+ font-size:clamp(16px,2.5vw,28px);
+ pointer-events:none;
+ opacity:0;
+ animation:fullHeartBurst 1.65s cubic-bezier(.15,.75,.25,1) forwards;
+}
+@keyframes fullHeartBurst{
+ 0%{opacity:0;transform:translate(0,0) scale(.25) rotate(0)}
+ 15%{opacity:1}
+ 100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.15) rotate(var(--r))}
+}
+
+
+/* Scratch date fit */
+.dateSection .scratchWrap .secret strong{
+  font-size:clamp(27px,4vw,46px)!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  margin:5px!important;
+}
+@media(max-width:560px){
+ .dateSection .scratchWrap .secret strong{font-size:clamp(24px,7vw,34px)!important}
+}
+
+/* =========================================================
+   HARD MOBILE RESPONSIVE FIX + ZERO CURTAIN BYPASS
+   ========================================================= */
+html.curtainLocked,body.curtainLocked{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  height:100dvh!important;
+  touch-action:none!important;
+}
+body.closed{overflow:hidden!important}
+
+/* Curtain always covers the viewport and cannot reveal content below. */
+.landing{
+  height:100dvh!important;min-height:100dvh!important;
+  position:relative!important;z-index:999!important;
+}
+body.curtainLocked .landing{
+  position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+}
+
+/* Remove the excessive 400vh / 300vh blank scroll tails. */
+.walk.gods{height:180dvh!important;margin:0!important}
+.walk.invite{height:135dvh!important;margin:0!important}
+.sticky{height:100dvh!important}
+
+/* No artificial empty gap around regular scenes. */
+.couple,.dateSection,.lagnaYojna,.rsvp,.venue,.gallery,.final{
+  margin:0!important;
+}
+.couple,.dateSection,.gallery{padding-block:72px!important}
+.lagnaYojna,.rsvp,.final{padding-block:72px!important}
+
+@media(max-width:760px){
+  /* Compact scroll-driven scenes on phone. */
+  .walk.gods{height:165dvh!important}
+  .walk.invite{height:125dvh!important}
+
+  .landingCopy{padding:16px!important}
+  .landing h1{font-size:clamp(44px,15vw,68px)!important}
+  .landing p{font-size:15px!important}
+  .rmReveal.uploadedMR{width:min(180px,50vw)!important}
+  .openInvitationFinal{top:68%!important;width:min(245px,82vw)!important;min-width:0!important}
+
+  /* Gods */
+  .god{width:90vw!important;left:5vw!important;right:auto!important;min-width:0!important}
+  .gods .directDeity{width:min(200px,58vw)!important;height:220px!important}
+  .gods .directDeity img{max-height:220px!important}
+  .god h2{font-size:19px!important;margin:6px 0!important}
+  .god p{font-size:13px!important}
+  .gods .walkTitle{width:92vw!important;top:55%!important}
+  .gods .walkTitle h1{font-size:clamp(44px,15vw,66px)!important;line-height:.78!important;margin:10px!important}
+  .gods .walkTitle p{font-size:14px!important}
+
+  /* Invite */
+  .inviteCopy{width:90vw!important;padding:12px!important}
+  .inviteCopy h2 em{font-size:clamp(34px,10vw,45px)!important}
+  .inviteCopy h2 strong{font-size:clamp(52px,17vw,76px)!important}
+  .inviteCopy p{font-size:15px!important;margin:20px auto!important}
+
+  /* Bride/Groom: actual content-driven stack */
+  .couple{padding:52px 16px!important}
+  .heading h2{font-size:clamp(36px,11vw,50px)!important;margin-bottom:30px!important}
+  .people{display:flex!important;flex-direction:column!important;width:100%!important;gap:28px!important}
+  .person{width:100%!important}
+  .couple .people .person .photo{
+    width:min(300px,80vw)!important;height:auto!important;aspect-ratio:1/1!important;
+    margin:0 auto 22px!important;border-radius:24px!important
+  }
+  .couple .people .person .photo img{border-radius:18px!important}
+  .people .heart.uploadedCoupleMR{width:125px!important;height:115px!important;margin:auto!important}
+  .person h3{font-size:clamp(50px,15vw,62px)!important}
+  .person p{font-size:14px!important;max-width:310px;margin:auto!important}
+
+  /* Scratch */
+  .dateSection{padding:52px 14px!important}
+  .dateSection .scratchWrap{
+    width:min(330px,88vw)!important;height:min(307px,82vw)!important;margin:24px auto!important
+  }
+  .dateSection .scratchWrap .secret strong{font-size:clamp(24px,7.5vw,34px)!important}
+
+  /* Lagna */
+  .lagnaYojna{min-height:0!important;padding:52px 15px!important}
+  .lagnaCard{width:92vw!important;padding:38px 18px!important}
+  .lagnaCard h2{font-size:clamp(36px,11vw,50px)!important}
+  .lagnaCard p{font-size:14px!important;line-height:1.6!important}
+  .lagnaCard p br{display:none!important}
+
+  /* RSVP */
+  .rsvp{padding:52px 15px!important}
+  .rsvpCard{width:92vw!important;padding:42px 18px!important}
+  .rsvp h2{font-size:46px!important}.rsvp h2 i{font-size:64px!important}
+
+  /* Venue */
+  .venue{display:flex!important;flex-direction:column!important;min-height:0!important}
+  .venuePic{height:56vw!important;min-height:270px!important}
+  .venuePic img{width:100%!important;height:100%!important;object-fit:cover!important}
+  .venueCopy{padding:40px 22px 48px!important;text-align:center!important;align-items:center!important}
+  .venueCopy h2{font-size:46px!important}.venueCopy h2 i{font-size:58px!important}
+  .venueCopy a{align-self:center!important}
+
+  /* Gallery */
+  .gallery{padding:52px 14px!important}
+  .track figure{flex:0 0 78vw!important;height:min(112vw,420px)!important}
+  .galleryNav{margin-top:24px!important}
+
+  /* Final */
+  .final{min-height:0!important;padding:52px 15px 76px!important}
+  .finalPeople{display:block!important;width:100%!important}
+  .finalPeople .mini{display:none!important}
+  .finalText{width:92vw!important;margin:auto!important;padding:36px 18px!important}
+  .finalText h2{font-size:clamp(44px,14vw,60px)!important}
+}
+
+@media(max-width:390px){
+  .walk.gods{height:155dvh!important}
+  .walk.invite{height:120dvh!important}
+  .couple .people .person .photo{width:84vw!important}
+}
+
+/* TARGETED MOBILE: scratch + ShubhMangalLagna */
+@media(max-width:600px){
+ .dateSection{min-height:0!important;padding:46px 12px 52px!important;overflow:hidden!important}
+ .dateSection .heading{width:94vw!important;margin:0 auto 16px!important}
+ .dateSection .heading h2{font-size:clamp(34px,10vw,46px)!important;line-height:1.05!important}
+ .dateSection .scratchWrap{width:min(88vw,350px)!important;height:auto!important;aspect-ratio:1.08/1!important;margin:20px auto!important}
+ .dateSection .scratchWrap .secret,.dateSection .scratchWrap #scratch{width:100%!important;height:100%!important}
+ .dateSection .scratchWrap .secret{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:17% 14% 11%!important;box-sizing:border-box!important}
+ .dateSection .scratchWrap .secret strong{font-size:clamp(22px,7vw,31px)!important;white-space:nowrap!important;line-height:1!important}
+ .dateSection .hint{font-size:12px!important;max-width:86vw!important;margin:8px auto!important}
+ .lagnaYojna{min-height:0!important;padding:50px 14px!important;overflow:hidden!important}
+ .lagnaCard{width:min(92vw,520px)!important;max-width:92vw!important;padding:36px 17px 39px!important;box-sizing:border-box!important}
+ .lagnaCard small{font-size:8px!important;letter-spacing:.16em!important;line-height:1.5!important}
+ .lagnaCard h2{font-size:clamp(31px,9.4vw,44px)!important;line-height:1!important;overflow-wrap:anywhere!important}
+ .lagnaCard h2 i{font-size:clamp(39px,12.5vw,56px)!important;line-height:.9!important;margin-top:12px!important}
+ .lagnaOrnament{margin:18px auto 13px!important;font-size:24px!important}
+ .lagnaCard p{font-size:13px!important;line-height:1.62!important;width:100%!important;overflow-wrap:anywhere!important}
+ .lagnaCard p br{display:none!important}
+}
+
+/* ===== FINAL MOBILE RESPONSIVE PASS ===== */
+@media (max-width: 600px) {
+  html, body {
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:hidden !important;
+  }
+
+  /* Ordinary sections must size to their content. This removes the large
+     empty cream gaps visible between sections in the screenshots. */
+  main > section:not(#gate):not(.gate):not(.hero),
+  section.dateSection,
+  section.lagnaYojna {
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  /* Prevent common desktop section wrappers from forcing viewport height. */
+  .section,
+  .storySection,
+  .inviteSection,
+  .invitedSection,
+  .meetSection,
+  .dateSection,
+  .lagnaYojna {
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  /* INVITED panel: end immediately after its artwork/content. */
+  .invitedSection,
+  .inviteSection {
+    padding-bottom:18px !important;
+    margin-bottom:0 !important;
+  }
+
+  /* Scratch section */
+  .dateSection {
+    padding:18px 10px 20px !important;
+    margin:0 !important;
+    display:block !important;
+  }
+  .dateSection .heading {
+    margin:0 auto 10px !important;
+    padding:0 8px !important;
+  }
+  .dateSection .heading h2 {
+    font-size:clamp(25px,8vw,36px) !important;
+    line-height:1.05 !important;
+    margin:0 0 5px !important;
+  }
+  .dateSection .scratchWrap {
+    width:min(76vw,285px) !important;
+    height:auto !important;
+    aspect-ratio:1 / 1 !important;
+    margin:4px auto 7px !important;
+    position:relative !important;
+  }
+  .dateSection .scratchWrap canvas,
+  .dateSection .scratchWrap img,
+  .dateSection .scratchWrap .reveal {
+    width:100% !important;
+    height:100% !important;
+  }
+  .dateSection .hint {
+    width:92% !important;
+    margin:4px auto 0 !important;
+    padding:0 !important;
+    font-size:11px !important;
+    line-height:1.35 !important;
+  }
+
+  /* ShubhMangalLagna yojna */
+  .lagnaYojna {
+    padding:16px 10px 18px !important;
+    margin:0 !important;
+  }
+  .lagnaCard {
+    box-sizing:border-box !important;
+    width:calc(100vw - 20px) !important;
+    max-width:420px !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin:0 auto !important;
+    padding:24px 14px 26px !important;
+  }
+  .lagnaCard h2 {
+    width:100% !important;
+    max-width:100% !important;
+    font-size:clamp(24px,7.1vw,33px) !important;
+    line-height:1.05 !important;
+    letter-spacing:-.03em !important;
+    word-break:normal !important;
+    overflow-wrap:normal !important;
+    hyphens:none !important;
+    margin:8px auto 10px !important;
+  }
+  .lagnaCard h2 i {
+    display:block !important;
+    font-size:clamp(32px,10vw,44px) !important;
+    line-height:1 !important;
+    margin-top:7px !important;
+  }
+  .lagnaCard p {
+    max-width:100% !important;
+    margin:10px auto 0 !important;
+    padding:0 4px !important;
+    font-size:clamp(11px,3vw,13px) !important;
+    line-height:1.45 !important;
+    word-break:normal !important;
+    overflow-wrap:break-word !important;
+  }
+
+  /* Floating audio control must not create section height. */
+  .musicBtn, #musicBtn {
+    position:fixed !important;
+    right:14px !important;
+    bottom:14px !important;
+  }
+}
+
+/* Very short DevTools viewport (400 x 390 in the supplied screenshots).
+   Scale content; don't hide it and don't manufacture blank space. */
+@media (max-width:600px) and (max-height:500px) {
+  .dateSection {
+    padding:8px 8px 10px !important;
+  }
+  .dateSection .heading {
+    margin-bottom:4px !important;
+  }
+  .dateSection .heading h2 {
+    font-size:22px !important;
+  }
+  .dateSection .heading p {
+    font-size:9px !important;
+    margin:0 !important;
+  }
+  .dateSection .scratchWrap {
+    width:min(62vw,235px) !important;
+    margin:2px auto 3px !important;
+  }
+  .dateSection .hint {
+    font-size:9px !important;
+    line-height:1.2 !important;
+  }
+
+  .lagnaYojna {
+    padding:8px !important;
+  }
+  .lagnaCard {
+    width:calc(100vw - 16px) !important;
+    padding:14px 12px 16px !important;
+  }
+  .lagnaCard small {
+    font-size:7px !important;
+  }
+  .lagnaCard h2 {
+    font-size:24px !important;
+    margin:5px auto 6px !important;
+  }
+  .lagnaCard h2 i {
+    font-size:32px !important;
+    margin-top:4px !important;
+  }
+  .lagnaOrnament {
+    margin:6px auto !important;
+  }
+  .lagnaCard p {
+    font-size:10px !important;
+    line-height:1.32 !important;
+    margin-top:5px !important;
+  }
+}
+
+/* ===== HEART SCRATCH + GODS MOBILE/TABLET CORRECTION ===== */
+@media (max-width: 900px) {
+  /* scratch: centered, complete heart, no clipping */
+  .dateSection {
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+  }
+  .dateSection .scratchWrap {
+    position:relative !important;
+    left:auto !important;
+    right:auto !important;
+    top:auto !important;
+    transform:none !important;
+    width:min(82vw, 330px) !important;
+    max-width:calc(100vw - 34px) !important;
+    aspect-ratio:1 / 1 !important;
+    height:auto !important;
+    margin:10px auto 8px !important;
+    overflow:hidden !important;
+  }
+  .dateSection .scratchWrap canvas,
+  .dateSection .scratchWrap .reveal,
+  .dateSection .scratchWrap img {
+    position:absolute !important;
+    inset:0 !important;
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    object-fit:contain !important;
+  }
+
+  /* Gods on phone/tablet: one centered devotional reveal at a time.
+     Desktop rules remain untouched. */
+  #gods, .godsSection, .gods-section {
+    overflow:hidden !important;
+  }
+  #gods .god,
+  #gods .godCard,
+  #gods .god-slide,
+  .godsSection .god,
+  .godsSection .godCard,
+  .godsSection .god-slide,
+  .gods-section .god,
+  .gods-section .godCard,
+  .gods-section .god-slide {
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 auto !important;
+    text-align:center !important;
+    justify-content:center !important;
+    align-items:center !important;
+  }
+
+  #gods img,
+  .godsSection img,
+  .gods-section img {
+    display:block !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:min(78vw, 430px) !important;
+    max-height:58vh !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  #gods .god-copy,
+  #gods .godText,
+  #gods .god-text,
+  .godsSection .god-copy,
+  .godsSection .godText,
+  .godsSection .god-text,
+  .gods-section .god-copy,
+  .gods-section .godText,
+  .gods-section .god-text {
+    width:92% !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+  }
+}
+
+@media (max-width:600px) {
+  .dateSection .scratchWrap {
+    width:min(76vw, 290px) !important;
+    max-width:calc(100vw - 40px) !important;
+  }
+  #gods img, .godsSection img, .gods-section img {
+    max-width:min(86vw, 350px) !important;
+    max-height:55vh !important;
+  }
+}
+
+
+
+
+/* ===== FINAL GODS + INVITED FLOW ===== */
+
+/* Gods is a single full-screen scene on desktop, tablet and mobile. */
+.walk.gods{
+  position:relative!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.walk.gods > .sticky.stage{
+  position:relative!important;
+  top:auto!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  overflow:hidden!important;
+}
+.gods .god{
+  position:absolute!important;
+  z-index:12!important;
+  left:50%!important;
+  right:auto!important;
+  top:48%!important;
+  bottom:auto!important;
+  width:min(720px,92vw)!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 20px 90px!important;
+  text-align:center!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translate(-50%,-44%) scale(.90)!important;
+  filter:blur(9px)!important;
+  transition:
+    opacity .72s ease,
+    transform .78s cubic-bezier(.16,1,.3,1),
+    filter .72s ease,
+    visibility 0s linear .78s!important;
+}
+.gods .god.godStepActive{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translate(-50%,-50%) scale(1)!important;
+  filter:blur(0)!important;
+  transition-delay:0s!important;
+}
+.gods .god.godStepLeaving{
+  opacity:0!important;
+  visibility:visible!important;
+  transform:translate(-50%,-57%) scale(1.06)!important;
+  filter:blur(10px)!important;
+}
+.gods .directDeity,
+.gods .directDeity.ganeshaVisual,
+.gods .directDeity.parshVisual,
+.gods .directDeity.chamundaVisual{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:min(420px,64vw)!important;
+  height:min(55vh,460px)!important;
+  margin:0 auto 10px!important;
+  padding:0!important;
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+}
+.gods .directDeity img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  margin:auto!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+.gods .god h2{
+  margin:8px auto 3px!important;
+  font:400 clamp(27px,3vw,43px)/1.05 "Italiana",serif!important;
+}
+.gods .god p{
+  margin:4px auto!important;
+  font:italic clamp(15px,1.35vw,20px)/1.35 "Bodoni Moda",serif!important;
+}
+.godsBlessingLabel{
+  position:absolute!important;
+  z-index:30!important;
+  left:50%!important;
+  top:max(22px,env(safe-area-inset-top))!important;
+  transform:translateX(-50%)!important;
+  color:#8f5846!important;
+  font:500 10px/1.2 "DM Sans",sans-serif!important;
+  letter-spacing:.30em!important;
+  white-space:nowrap!important;
+  opacity:.82!important;
+}
+.godsNextBtn{
+  position:absolute!important;
+  z-index:50!important;
+  left:50%!important;
+  bottom:max(30px,env(safe-area-inset-bottom))!important;
+  transform:translateX(-50%) translateY(12px)!important;
+  border:0!important;
+  border-bottom:1px solid rgba(143,88,70,.55)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#9e5946!important;
+  min-width:0!important;
+  height:auto!important;
+  padding:8px 5px 7px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  font:700 clamp(18px,2vw,27px)/1 "Bodoni Moda",serif!important;
+  letter-spacing:.08em!important;
+  cursor:pointer!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  transition:opacity .35s ease,transform .35s ease!important;
+}
+.godsNextBtn.show{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translateX(-50%) translateY(0)!important;
+}
+.godsNextBtn b{
+  font:400 20px/1 "Bodoni Moda",serif!important;
+  animation:finalGodArrow 1.1s ease-in-out infinite;
+}
+@keyframes finalGodArrow{
+  0%,100%{transform:translateY(-2px)}
+  50%{transform:translateY(4px)}
+}
+.gods .footsteps{display:none!important}
+
+
+/* Mobile/tablet deity artwork: larger and genuinely centered. */
+@media(max-width:900px){
+  .gods .god{
+    top:50%!important;
+    width:100%!important;
+    padding:42px 12px 82px!important;
+  }
+  .gods .directDeity,
+  .gods .directDeity.ganeshaVisual,
+  .gods .directDeity.parshVisual,
+  .gods .directDeity.chamundaVisual{
+    width:min(88vw,430px)!important;
+    height:min(58dvh,430px)!important;
+  }
+  .gods .god h2{font-size:clamp(25px,7vw,34px)!important}
+  .gods .god p{font-size:clamp(14px,4vw,17px)!important}
+  .godsBlessingLabel{top:18px!important;font-size:8px!important}
+  .godsNextBtn{bottom:max(18px,env(safe-area-inset-bottom))!important;font-size:21px!important}
+}
+
+/* You Are Invited is one full viewport on phone/tablet; no scroll-progress
+   dead zone. Its existing visual animation runs once the section enters. */
+@media(max-width:900px){
+  .walk.invite{
+    position:relative!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  .walk.invite > .sticky.inviteStage{
+    position:relative!important;
+    top:auto!important;
+    width:100%!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+  }
+  .inviteCopy{
+    opacity:1!important;
+    filter:none!important;
+    transform:translate(-50%,-50%) scale(1)!important;
+    width:90vw!important;
+  }
+  .inviteCopy h2 em{font-size:clamp(38px,11vw,52px)!important}
+  .inviteCopy h2 strong{font-size:clamp(58px,18vw,82px)!important}
+  .inviteCopy p{font-size:clamp(14px,4vw,17px)!important;margin:22px auto!important}
+}
+
+/* Scroll is normal everywhere except during the three-card Gods sequence. */
+html, body{
+  overflow-x:hidden;
+}
+html.godsSequenceLocked{
+  overflow:hidden!important;
+}
+html.godsSequenceLocked body{
+  overflow:hidden!important;
+  touch-action:none!important;
+}
+
+/* FINAL DEVICE-SAFE GODS LOCK: lock only this scene, never html/body scrolling. */
+.walk.gods.godsSequenceActive{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  z-index:900!important;
+  margin:0!important;
+}
+.walk.gods.godsSequenceActive > .sticky.stage{
+  width:100%!important;
+  height:100%!important;
+}
+/* Old global lock is intentionally neutralized. */
+html.godsSequenceLocked, html.godsSequenceLocked body,
+body.godsSequenceLocked{
+  overflow-y:auto!important;
+  touch-action:auto!important;
+}
+
+/* ===== RELIABLE NAVIGATION / SECTION FIX 2026-07-24 ===== */
+.walk.gods{height:100vh!important;min-height:100dvh!important;position:relative!important}
+.walk.gods>.sticky.stage{position:relative!important;top:auto!important;height:100vh!important;min-height:100dvh!important}
+.walk.invite{height:100vh!important;min-height:100dvh!important;position:relative!important;margin:0!important;padding:0!important}
+.walk.invite>.sticky.inviteStage{position:relative!important;top:auto!important;height:100vh!important;min-height:100dvh!important;overflow:hidden!important}
+.inviteCopy{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important;filter:none!important}
+.walk.gods.godsSequenceActive{position:relative!important;inset:auto!important;width:100%!important;height:100vh!important;z-index:auto!important}
+.sectionContinue{position:absolute;z-index:80;left:50%;bottom:max(22px,env(safe-area-inset-bottom));transform:translateX(-50%);border:1px solid #b98762;background:rgba(255,248,239,.92);color:#7d4d3d;border-radius:999px;padding:12px 22px;font:500 10px "DM Sans",sans-serif;letter-spacing:.16em;white-space:nowrap;cursor:pointer;box-shadow:0 8px 25px #4d34221f}
+main>section{position:relative}
+@media(max-width:900px){.walk.gods,.walk.gods>.sticky.stage,.walk.invite,.walk.invite>.sticky.inviteStage{height:100dvh!important;min-height:100dvh!important}.inviteCopy{width:88vw!important}.sectionContinue{bottom:max(18px,env(safe-area-inset-bottom));padding:11px 18px}.gods .god{left:50%!important;right:auto!important;width:92vw!important;transform:translate(-50%,-45%) scale(.94)!important}.gods .god.godStepActive{transform:translate(-50%,-50%) scale(1)!important}}
+
+/* ===== FINAL RESPONSIVE OVERRIDES 2026-07-24 ===== */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+
+/* A true modal-style lock only while the three divine blessings are playing. */
+html.godsHardLocked{overflow:hidden!important}
+body.godsHardLocked{position:fixed!important;left:0!important;right:0!important;width:100%!important;overflow:hidden!important;touch-action:none!important}
+.walk.gods.godsSequenceActive{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;z-index:900!important;overflow:hidden!important;margin:0!important}
+.walk.gods.godsSequenceActive>.sticky.stage{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important}
+
+/* All three gods are centered on every viewport. */
+.gods .god,.gods .god.g1,.gods .god.g2,.gods .god.g3{
+ left:50%!important;right:auto!important;top:50%!important;width:min(720px,94vw)!important;
+ transform:translate(-50%,-44%) scale(.92)!important;text-align:center!important
+}
+.gods .god.godStepActive{transform:translate(-50%,-50%) scale(1)!important}
+.gods .directDeity,.gods .directDeity.ganeshaVisual,.gods .directDeity.parshVisual,.gods .directDeity.chamundaVisual{
+ width:min(400px,68vw)!important;height:min(52dvh,430px)!important;margin:0 auto 8px!important
+}
+.gods .directDeity img{display:block!important;margin:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center!important}
+
+/* Continue buttons: no more overlap with headings/cards/text. */
+.sectionContinue{
+ position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;
+ transform:none!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;
+ width:max-content!important;max-width:calc(100% - 40px)!important;margin:34px auto 34px!important;
+ padding:12px 22px!important;border:1px solid #b98762!important;border-radius:999px!important;
+ background:rgba(255,248,239,.96)!important;color:#7d4d3d!important;box-shadow:0 8px 25px #4d34221f!important;
+ font:500 10px/1 "DM Sans",sans-serif!important;letter-spacing:.16em!important;white-space:nowrap!important;z-index:80!important
+}
+.sectionContinue b{font-size:14px;line-height:1;animation:finalGodArrow 1.1s ease-in-out infinite}
+/* Invite is intentionally exactly one viewport, so its button sits safely at the bottom. */
+.walk.invite>.sectionContinue{position:absolute!important;left:50%!important;bottom:max(24px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;margin:0!important}
+.walk.invite .inviteCopy{padding-bottom:76px!important}
+
+/* Scratch heart: percentage clip-path scales with the element instead of using fixed 430px path coordinates. */
+.dateSection{overflow:hidden!important}
+.dateSection .scratchWrap{
+ width:min(430px,86vw)!important;height:auto!important;aspect-ratio:1.075/1!important;
+ margin:30px auto 18px!important;overflow:visible!important;position:relative!important;transform:none!important
+}
+.dateSection .scratchWrap .secret,.dateSection .scratchWrap #scratch{
+ position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ clip-path:polygon(50% 100%,42% 92%,28% 80%,15% 66%,7% 52%,4% 37%,7% 23%,15% 12%,27% 7%,39% 9%,50% 22%,61% 9%,73% 7%,85% 12%,93% 23%,96% 37%,93% 52%,85% 66%,72% 80%,58% 92%)!important
+}
+.dateSection .scratchWrap .secret{padding:16% 12% 10%!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
+.dateSection .hint{margin:8px auto 0!important;padding:0 16px!important;max-width:520px!important}
+
+@media(max-width:900px){
+ .gods .god,.gods .god.g1,.gods .god.g2,.gods .god.g3{width:96vw!important;padding:34px 12px 90px!important}
+ .gods .directDeity,.gods .directDeity.ganeshaVisual,.gods .directDeity.parshVisual,.gods .directDeity.chamundaVisual{width:min(78vw,390px)!important;height:min(50dvh,390px)!important}
+ .godsNextBtn{bottom:max(22px,env(safe-area-inset-bottom))!important}
+ .sectionContinue{margin:28px auto 30px!important;padding:12px 20px!important}
+ .walk.invite>.sectionContinue{margin:0!important;bottom:max(20px,env(safe-area-inset-bottom))!important}
+ .dateSection{padding:48px 14px 42px!important}
+ .dateSection .scratchWrap{width:min(82vw,340px)!important;max-width:340px!important;margin:22px auto 16px!important}
+ .dateSection .scratchWrap .secret strong{font-size:clamp(23px,7vw,34px)!important;white-space:nowrap!important}
+}
+@media(max-width:480px){
+ .gods .directDeity,.gods .directDeity.ganeshaVisual,.gods .directDeity.parshVisual,.gods .directDeity.chamundaVisual{width:min(82vw,330px)!important;height:min(46dvh,330px)!important}
+ .dateSection .scratchWrap{width:min(84vw,315px)!important}
+ .sectionContinue{margin:26px auto 30px!important}
+}
+
+/* ===== 2026-07-24 NO-LOCK GODS FINAL ===== */
+html.godsHardLocked,html.godsSequenceLocked{overflow-y:auto!important}
+body.godsHardLocked,body.godsSequenceLocked{position:static!important;inset:auto!important;width:auto!important;overflow-y:auto!important;touch-action:auto!important}
+.walk.gods.godsSequenceActive{position:relative!important;inset:auto!important;width:100%!important;height:100dvh!important;z-index:auto!important}
+.walk.gods{height:100dvh!important;min-height:100dvh!important;overflow:hidden!important;scroll-margin-top:0!important}
+.walk.gods>.sticky.stage{position:relative!important;inset:auto!important;height:100dvh!important;min-height:100dvh!important;overflow:hidden!important}
+.gods .god,.gods .god.g1,.gods .god.g2,.gods .god.g3{left:50%!important;right:auto!important;top:47%!important;width:min(650px,92vw)!important;padding:38px 18px 92px!important}
+.gods .directDeity,.gods .directDeity.ganeshaVisual,.gods .directDeity.parshVisual,.gods .directDeity.chamundaVisual{width:min(330px,62vw)!important;height:min(47dvh,390px)!important;margin:0 auto 8px!important}
+.godsNextBtn{bottom:max(24px,env(safe-area-inset-bottom))!important}
+@media(max-width:900px){
+ .gods .god,.gods .god.g1,.gods .god.g2,.gods .god.g3{top:48%!important;width:100%!important;padding:42px 14px 90px!important}
+ .gods .directDeity,.gods .directDeity.ganeshaVisual,.gods .directDeity.parshVisual,.gods .directDeity.chamundaVisual{width:min(250px,68vw)!important;height:min(43dvh,300px)!important}
+ .godsNextBtn{bottom:max(20px,env(safe-area-inset-bottom))!important}
+}
+
+/* ===== FINAL CONTINUE ALIGNMENT + COMPACT SPACING ===== */
+/* A Continue button appended to a grid section must span the whole section,
+   not become a child of only one grid column. */
+main > section > .sectionContinue{
+  grid-column:1 / -1!important;
+  justify-self:center!important;
+  align-self:center!important;
+  position:relative!important;
+  left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  transform:none!important;
+  margin:22px auto 24px!important;
+}
+/* Venue: keep the two-column composition and give the button one compact full-width row. */
+.venue{grid-template-rows:minmax(0,1fr) auto!important;align-items:stretch!important}
+.venue > .sectionContinue{grid-column:1 / -1!important;grid-row:2!important;margin:18px auto 22px!important}
+/* Avoid the old large blank tail created by section-specific bottom spacing. */
+.couple > .sectionContinue,.dateSection > .sectionContinue,.rsvp > .sectionContinue,.gallery > .sectionContinue{
+  margin-top:22px!important;margin-bottom:22px!important
+}
+@media(max-width:900px){
+  .venue{grid-template-rows:auto auto auto!important}
+  .venue > .sectionContinue{grid-column:1!important;grid-row:3!important;margin:18px auto 22px!important}
+  main > section > .sectionContinue{margin:18px auto 20px!important}
+}
+
+/* ===== COMPACT SPACE BELOW CONTINUE BUTTONS 2026-07-24 ===== */
+/* Keep the existing content breathing room, but remove the oversized empty tail
+   after each dynamically-added Continue button. */
+.couple,
+.dateSection,
+.lagnaYojna,
+.rsvp,
+.gallery{
+  padding-bottom:26px!important;
+}
+main > section > .sectionContinue{
+  margin-bottom:0!important;
+}
+.couple > .sectionContinue,
+.dateSection > .sectionContinue,
+.lagnaYojna > .sectionContinue,
+.rsvp > .sectionContinue,
+.gallery > .sectionContinue{
+  margin-top:20px!important;
+  margin-bottom:0!important;
+}
+.venue > .sectionContinue{
+  margin-top:16px!important;
+  margin-bottom:16px!important;
+}
+@media(max-width:900px){
+  .couple,.dateSection,.lagnaYojna,.rsvp,.gallery{padding-bottom:20px!important}
+  .couple > .sectionContinue,.dateSection > .sectionContinue,.lagnaYojna > .sectionContinue,
+  .rsvp > .sectionContinue,.gallery > .sectionContinue{margin-top:16px!important;margin-bottom:0!important}
+  .venue > .sectionContinue{margin-top:14px!important;margin-bottom:14px!important}
+}
+
+/* ===== OPEN HERO HOLD + EXPLICIT CONTINUE TO GODS ===== */
+.heroContinue{
+  position:absolute!important;left:50%!important;bottom:clamp(24px,4vh,46px)!important;
+  transform:translateX(-50%)!important;z-index:95!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;
+  min-width:150px!important;padding:13px 23px!important;border:1px solid #b87855!important;
+  border-radius:999px!important;background:rgba(255,248,237,.94)!important;color:#8f513c!important;
+  font:600 11px/1 "Montserrat",sans-serif!important;letter-spacing:.15em!important;
+  box-shadow:0 8px 22px rgba(83,48,34,.10)!important;cursor:pointer!important;
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+  transition:opacity .45s ease .45s,transform .25s ease!important;
+}
+.heroContinue b{font-size:16px!important;line-height:1!important}
+.landing.open .heroContinue{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+.landing:not(.open) .heroContinue{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.landing.open .landingCopy{padding-bottom:76px!important}
+@media(max-width:760px){
+  .heroContinue{bottom:18px!important;min-width:140px!important;padding:12px 20px!important}
+  .landing.open .landingCopy{padding-bottom:72px!important}
+}
+
+/* True circular infinite carousel */
+.gallery { overflow: hidden; }
+.gallery .track {
+  animation: none !important;
+  will-change: transform;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.gallery .track:active { cursor: grabbing; }
+
+/* FINAL ONLY CHANGE — show complete Bride & Groom images without cropping */
+.couple .people .person .photo img{
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
