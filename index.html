@@ -30,7 +30,7 @@
 
   <div class="god g3">
    <div class="deityVisual directDeity chamundaVisual"><img src="assets/chamunda-maa.png" alt="Chamunda Maa"></div>
-   <h2>Dhragada Chamunda Mata Ji</h2><p>For strength &amp; protection</p>
+   <h2>Dhragada Mata Ji</h2><p>For strength &amp; protection</p>
   </div>
 
   <div class="godsBlessingLabel">WITH DIVINE BLESSINGS</div>
@@ -47,9 +47,9 @@
 <section class="couple"><div class="bgMotion floralMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
  <div class="heading"><small>THE TWO AT THE HEART OF IT ALL</small><h2>Meet Bride & Groom</h2></div>
  <div class="people">
-  <article class="person bride reveal leftIn"><div class="photo"><img src="assets/bride.png"></div><div><small>THE BRIDE</small><h3>Meghana</h3><p>D/o. Smt. Trilochana Praful Shah</p></div></article>
+  <article class="person bride reveal leftIn"><div class="photo"><img src="assets/bride.png"></div><div><small>THE BRIDE</small><h3>Meghana</h3><p>Grace in her heart, mischief in her smile.</p></div></article>
   <div class="heart reveal uploadedCoupleMR"><div class="coupleHeartLogo"><img src="assets/mr-logo-gold.png" alt="MR monogram"></div></div>
-  <article class="person groom reveal rightIn"><div class="photo"><img src="assets/groom.png"></div><div><small>THE GROOM</small><h3>Rihen</h3><p>S/o. Smt. Bhadra Devendra Vora</p></div></article>
+  <article class="person groom reveal rightIn"><div class="photo"><img src="assets/groom.png"></div><div><small>THE GROOM</small><h3>Rihen</h3><p>Calm in his soul, adventure in his eyes.</p></div></article>
  </div>
 </section>
 <section class="dateSection"><div class="bgMotion dateBgMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
@@ -61,7 +61,7 @@
  <div class="rsvpCard reveal"><small>WILL YOU JOIN US?</small><h2>Say <i>Yes!</i></h2><p>We would love to know that you'll be there when our forever begins.</p><a id="wa">RSVP ON WHATSAPP <b>↗</b></a></div>
 </section>
 <section class="venue"><div class="bgMotion venueBgMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
- <div class="venuePic reveal"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Wedding%20Mandap%20with%20Tikri%20Art.jpg?width=1800"></div>
+ <div class="venuePic reveal"><img src="assets/weddingmandap.jpg"></div>
  <div class="venueCopy reveal"><small>THE CELEBRATION AWAITS</small><h2>Meet us<br><i>here</i></h2><h3>SUMATI GURJAR BHAVAN</h3><p>Swastik Park, Chembur, Mumbai</p><a href="https://www.google.com/maps/search/?api=1&query=Sumati+Gurjar+Bhavan+Swastik+Park+Chembur+Mumbai" target="_blank">OPEN GOOGLE MAPS ⌖</a></div>
 </section>
 <section class="gallery"><div class="bgMotion galleryBgMotion"></div><div class="ambient softAmbient"><i></i><i></i><i></i></div>
@@ -131,4 +131,17 @@ window.addEventListener("load",function(){
 });
 </script>
 
+<style id="rose-petals">
+.gods .stage{isolation:isolate}.rosePetalLayer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:8}
+.rosePetal{position:absolute;top:-10vh;width:var(--s);height:calc(var(--s)*.7);border-radius:75% 20% 70% 25%;opacity:var(--o);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.3),transparent 24%),linear-gradient(145deg,#a40f2b,#d52b48 48%,#760719);box-shadow:inset -2px -2px 5px rgba(70,0,15,.22);will-change:transform;animation:petalFall var(--t) linear var(--d) infinite}
+@keyframes petalFall{0%{transform:translate3d(0,-12vh,0) rotate(0)}25%{transform:translate3d(var(--a),28vh,0) rotate(110deg)}55%{transform:translate3d(var(--b),62vh,0) rotate(230deg)}80%{transform:translate3d(var(--c),91vh,0) rotate(330deg)}100%{transform:translate3d(var(--e),118vh,0) rotate(450deg)}}
+@media(max-width:809.98px){.rosePetal:nth-child(n+15){display:none}}
+</style>
+<script>
+(()=>{const s=document.querySelector(".gods .stage");if(!s||s.querySelector(".rosePetalLayer"))return;
+const l=document.createElement("div");l.className="rosePetalLayer";l.setAttribute("aria-hidden","true");
+const n=matchMedia("(max-width:809.98px)").matches?14:24;
+for(let i=0;i<n;i++){const p=document.createElement("i");p.className="rosePetal";const t=7.5+Math.random()*6,d=-(Math.random()*t),dr=()=>`${-65+Math.random()*130}px`;p.style.left=`${Math.random()*100}%`;p.style.setProperty("--s",`${10+Math.random()*13}px`);p.style.setProperty("--o",`${.48+Math.random()*.42}`);p.style.setProperty("--t",`${t}s`);p.style.setProperty("--d",`${d}s`);["--a","--b","--c","--e"].forEach(x=>p.style.setProperty(x,dr()));l.appendChild(p)}s.appendChild(l);
+const sec=document.querySelector(".gods");new IntersectionObserver(e=>{l.querySelectorAll(".rosePetal").forEach(p=>p.style.animationPlayState=e[0].isIntersecting?"running":"paused")},{threshold:.05}).observe(sec)})();
+</script>
 </body></html>
