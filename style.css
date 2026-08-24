@@ -2846,3 +2846,21 @@ main > section > .sectionContinue{
     left:var(--elastic-center-x,50%)!important;
   }
 }
+
+
+/* FINAL — RELIABLE ELASTIC GALLERY INTERACTION */
+.gallery .track{
+  touch-action:pan-y!important;
+  pointer-events:auto!important;
+  overflow:visible!important;
+  cursor:grab!important;
+}
+.gallery .track.is-elastic-dragging{
+  cursor:grabbing!important;
+}
+.gallery .track figure{
+  pointer-events:auto;
+}
+.gallery .track figure img{
+  pointer-events:none!important;
+}
