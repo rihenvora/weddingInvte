@@ -67,7 +67,7 @@ let opened=false;
    e.preventDefault();
    if(!audio)return;
    if(audio.paused){await startAudio();}
-   else{audio.pause();musicBtn.textContent="♫";}
+   else{audio.pause();musicBtn.textContent="\u266b";}
  });
 
  /* Best effort autoplay from the curtain. Browsers may block audible autoplay
@@ -118,74 +118,8 @@ function walk(){
 const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("show",e.isIntersecting)),{threshold:.15});$$(".reveal").forEach(e=>io.observe(e));
 $("#wa").href="https://wa.me/917977500797?text="+encodeURIComponent("Hello! We would love to RSVP for Rihen & Meghana's wedding.");
 const c=$("#scratch"),x=c.getContext("2d");function initScratch(){let d=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);let g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,"#8e623c");g.addColorStop(.25,"#e4c17e");g.addColorStop(.5,"#9d6d40");g.addColorStop(.75,"#efd99e");g.addColorStop(1,"#8d6039");x.fillStyle=g;x.fillRect(0,0,w,h);x.fillStyle="#5e4436";x.font="16px serif";x.textAlign="center";x.fillText("✦  SCRATCH TO REVEAL  ✦",w/2,h/2);x.globalCompositeOperation="destination-out"}initScratch();let down=false;function scratch(e){if(!down)return;let r=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-r.left,e.clientY-r.top,30,0,Math.PI*2);x.fill()}c.onpointerdown=e=>{down=true;scratch(e)};c.onpointermove=scratch;addEventListener("pointerup",()=>down=false);
-let idx=0,track=$("#track");function move(){let w=track.querySelector("figure").getBoundingClientRect().width+24, max=track.children.length-1;idx=Math.max(0,Math.min(max,idx));track.style.transform=`translateX(${-idx*w}px)`}$("#next").onclick=()=>{idx++;move()};$("#prev").onclick=()=>{idx--;move()};let sx=0;track.onpointerdown=e=>sx=e.clientX;track.onpointerup=e=>{if(Math.abs(e.clientX-sx)>40){idx+=e.clientX<sx?1:-1;move()}};
 for(let i=0;i<28;i++){let q=document.createElement("i");q.className="spark";q.style.left=Math.random()*100+"%";q.style.animationDuration=5+Math.random()*7+"s";q.style.animationDelay=-Math.random()*8+"s";$("#sparks").appendChild(q)}
 if(legacyBackTop) legacyBackTop.onclick=()=>{scrollTo({top:0,behavior:"smooth"});setTimeout(closeLanding,700)};
-/* Carousel is controlled by the seamless infinite-loop controller below. */
-/* subtle pointer parallax for desktop */
-addEventListener("pointermove",e=>{
-  if(innerWidth<800)return;
-  const dx=(e.clientX/innerWidth-.5),dy=(e.clientY/innerHeight-.5);
-  document.documentElement.style.setProperty("--mx",dx);
-  document.documentElement.style.setProperty("--my",dy);
-});
-
-
-/* ===== requested refinements; original V2 UI untouched ===== */
-
-// Auto-finish scratch after a meaningful partial scratch.
-(function(){
- const cv=document.querySelector("#scratch"), wrap=document.querySelector(".scratchWrap");
- if(!cv||!wrap)return;
- let finished=false, scratchMoves=0;
- const autoFinish=()=>{
-   if(finished)return; finished=true;
-   wrap.classList.add("autoDone");
-   cv.style.transition="opacity .72s ease,transform .85s cubic-bezier(.16,1,.3,1)";
-   cv.style.opacity="0";cv.style.transform="scale(1.07)";
-   setTimeout(()=>cv.style.pointerEvents="none",750);
- };
- cv.addEventListener("pointermove",()=>{
-   if(!down||finished)return;
-   scratchMoves++;
-   // Existing scratch brush is retained; after enough genuine movement,
-   // finish the reveal automatically instead of forcing the whole card.
-   if(scratchMoves>=26)autoFinish();
- });
-})();
-
-// Replace finite/autoplay controller with one seamless infinite strip.
-(function(){
- const tr=document.querySelector("#track");
- if(!tr || tr.dataset.seamless==="1")return;
- tr.dataset.seamless="1";
-
- // Stop any legacy transform that may have been left by the V2 carousel.
- try{ clearInterval(carouselTimer); }catch(e){}
- tr.style.transform="";
-
- const originals=[...tr.children];
- originals.forEach(card=>tr.appendChild(card.cloneNode(true)));
-
- requestAnimationFrame(()=>{
-   const gap=parseFloat(getComputedStyle(tr).gap)||24;
-   let width=0;
-   originals.forEach(card=>width+=card.getBoundingClientRect().width+gap);
-   tr.style.setProperty("--loopWidth",width+"px");
-   tr.style.setProperty("--loopDuration",Math.max(28,originals.length*6.5)+"s");
-   tr.classList.add("seamless");
- });
-
- // Arrows briefly nudge the animation speed rather than reaching an endpoint.
- const prev=document.querySelector("#prev"), next=document.querySelector("#next");
- const nudge=(dir)=>{
-   tr.style.animationDuration=dir>0?"18s":"46s";
-   setTimeout(()=>tr.style.animationDuration="",1200);
- };
- if(prev) prev.onclick=()=>nudge(-1);
- if(next) next.onclick=()=>nudge(1);
-})();
-
 /* Full heart celebration after scratch auto-completion */
 (function(){
   const wrap=document.querySelector(".scratchWrap"), field=document.querySelector("#heartBurst");
@@ -196,7 +130,7 @@ addEventListener("pointermove",e=>{
     const palette=["#a95e66","#c7827f","#d7a06e","#8f5a62","#e0b38b"];
     for(let i=0;i<46;i++){
       const h=document.createElement("span");
-      h.className="flyingHeart"; h.textContent=i%5===0?"♡":"♥";
+      h.className="flyingHeart"; h.textContent=i%5===0?"\u2661":"\u2665";
       const angle=(Math.PI*2*i/46)+(Math.random()-.5)*.28;
       const dist=90+Math.random()*270;
       h.style.setProperty("--x",Math.cos(angle)*dist+"px");
@@ -223,7 +157,7 @@ addEventListener("pointermove",e=>{
  const obs=new MutationObserver(()=>{
    if(!wrap.classList.contains("autoDone") || burst.dataset.fullBurst==="1")return;
    burst.dataset.fullBurst="1";
-   const chars=["♡","♥","♡","♥","♡"];
+   const chars=["\u2661","\u2665","\u2661","\u2665","\u2661"];
    for(let i=0;i<42;i++){
      const h=document.createElement("i");
      h.textContent=chars[i%chars.length];
@@ -487,342 +421,374 @@ if(false){
    Entry is intentionally handled only by openInvitation() above.
    Keeping a second click/scroll controller here caused competing scrolls. */
 
-/* ===== TRUE CIRCULAR INFINITE GALLERY — MOBILE SWIPE FIX ===== */
+
+
+/* =========================================================
+   OUR LITTLE WORLD — ELASTIC INFINITE CAROUSEL
+   ========================================================= */
 (function(){
-  const tr=document.getElementById("track");
-  if(!tr || tr.dataset.circularReady==="1") return;
-  tr.dataset.circularReady="1";
+  function boot(){
+    const gallery=document.querySelector(".gallery");
+    const track=document.getElementById("track");
+    if(!gallery || !track) return;
 
-  tr.classList.remove("seamless");
-  tr.style.animation="none";
-  tr.style.removeProperty("--loopWidth");
-  tr.style.removeProperty("--loopDuration");
+  /* Replace the current track once, so any older carousel listeners
+     attached by legacy inline code cannot fight this controller. */
+  const fresh=track.cloneNode(true);
+  track.replaceWith(fresh);
 
-  const originals=[...tr.children];
-  if(originals.length<2) return;
+  const rail=document.getElementById("track");
+  const originalCards=[...rail.children];
 
-  const before=originals.map(el=>el.cloneNode(true));
-  const after=originals.map(el=>el.cloneNode(true));
+  if(originalCards.length<2) return;
 
-  before.reverse().forEach(el=>tr.insertBefore(el,tr.firstChild));
-  after.forEach(el=>tr.appendChild(el));
-
-  const N=originals.length;
-
-  let current=N;
-  let busy=false;
-  let auto=null;
-
-  /* Pointer state */
-  let pointerStartX=null;
-  let pointerStartY=null;
-  let pointerActive=false;
-  let pointerMoved=false;
-
-  /* Touch state — kept separate for iPhone Safari reliability */
-  let touchStartX=null;
-  let touchStartY=null;
-  let touchMoved=false;
-
-  function metrics(){
-    const f=tr.querySelector("figure");
-    if(!f) return {step:1};
-
-    const cs=getComputedStyle(tr);
-    const gap=parseFloat(cs.columnGap || cs.gap) || 24;
-
-    return {
-      step:f.getBoundingClientRect().width + gap
-    };
-  }
-
-  function paint(animate=true){
-
-    const {step}=metrics();
-
-    tr.style.transition=animate
-      ? "transform .65s cubic-bezier(.22,.61,.36,1)"
-      : "none";
-
-    tr.style.transform=
-      `translate3d(${-current*step}px,0,0)`;
-  }
-
-  function normalize(){
-
-    if(current>=N*2){
-      current-=N;
-      paint(false);
+  const cards=originalCards.map((card,i)=>{
+    card.dataset.elasticIndex=i;
+    card.setAttribute("draggable","false");
+    const img=card.querySelector("img");
+    if(img){
+      img.draggable=false;
+      img.addEventListener("dragstart",e=>e.preventDefault());
     }
-
-    else if(current<N){
-      current+=N;
-      paint(false);
-    }
-
-    busy=false;
-  }
-
-  function go(dir){
-
-    if(busy) return;
-
-    busy=true;
-
-    current+=dir;
-
-    paint(true);
-  }
-
-  tr.addEventListener(
-    "transitionend",
-    normalize
-  );
-
-  window.addEventListener(
-    "resize",
-    ()=>paint(false),
-    {passive:true}
-  );
-
-
-  /* =====================================================
-     BUTTONS
-     ===================================================== */
-
-  const next=document.getElementById("next");
-  const prev=document.getElementById("prev");
-
-  if(next){
-    next.onclick=()=>{
-      go(1);
-      restart();
-    };
-  }
-
-  if(prev){
-    prev.onclick=()=>{
-      go(-1);
-      restart();
-    };
-  }
-
-
-  /* =====================================================
-     POINTER — DESKTOP
-     ===================================================== */
-
-  tr.addEventListener("pointerdown",e=>{
-
-    if(e.pointerType==="touch") return;
-
-    pointerActive=true;
-    pointerMoved=false;
-
-    pointerStartX=e.clientX;
-    pointerStartY=e.clientY;
-
-    clearInterval(auto);
-
+    return card;
   });
 
-  tr.addEventListener("pointermove",e=>{
+  /* Make a small progress indicator without changing the HTML layout. */
+  if(!gallery.querySelector(".elasticProgress")){
+    const p=document.createElement("div");
+    p.className="elasticProgress";
+    p.setAttribute("aria-hidden","true");
+    p.innerHTML="<i></i>";
+    gallery.appendChild(p);
+  }
 
-    if(!pointerActive) return;
+  const N=cards.length;
 
-    if(
-      Math.abs(e.clientX-pointerStartX)>8 ||
-      Math.abs(e.clientY-pointerStartY)>8
-    ){
-      pointerMoved=true;
-    }
+  let position=0;
+  let velocity=.17;          // cards per frame-ish, converted by dt
+  let autoVelocity=.17;
+  let targetVelocity=.17;
 
-  });
+  let dragging=false;
+  let pointerId=null;
+  let startX=0;
+  let startPosition=0;
+  let lastX=0;
+  let lastTime=0;
+  let dragVelocity=0;
+  let dragDistance=0;
+  let spring=0;
 
-  tr.addEventListener("pointerup",e=>{
+  let raf=0;
+  let lastFrame=performance.now();
+  let paused=false;
 
-    if(!pointerActive) return;
+  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    const dx=e.clientX-pointerStartX;
-    const dy=e.clientY-pointerStartY;
+  function wrap(v){
+    return ((v%N)+N)%N;
+  }
 
-    pointerActive=false;
+  function distance(i){
+    let d=i-position;
+    while(d>N/2)d-=N;
+    while(d<-N/2)d+=N;
+    return d;
+  }
 
-    if(
-      pointerMoved &&
-      Math.abs(dx)>45 &&
-      Math.abs(dx)>Math.abs(dy)
-    ){
-      go(dx<0 ? 1 : -1);
-    }
+  function render(){
+    const width=gallery.clientWidth;
+    const mobile=window.innerWidth<810;
 
-    restart();
+    const cardWidth=mobile
+      ? Math.min(width*.72,330)
+      : Math.min(width*.27,360);
 
-  });
+    rail.style.setProperty("--elastic-card",cardWidth+"px");
 
-  tr.addEventListener(
-    "pointercancel",
-    ()=>{
-      pointerActive=false;
-      restart();
-    }
-  );
+    const gap=mobile
+      ? Math.min(18,width*.045)
+      : Math.min(30,width*.022);
 
+    const step=cardWidth+gap;
 
-  /* =====================================================
-     TOUCH — IPHONE / ANDROID
-     ===================================================== */
+    const centerY=rail.clientHeight*.50;
 
-  tr.addEventListener(
-    "touchstart",
-    e=>{
+    cards.forEach((card,i)=>{
+      const d=distance(i);
+      const ad=Math.abs(d);
 
-      if(!e.touches.length) return;
-
-      const touch=e.touches[0];
-
-      touchStartX=touch.clientX;
-      touchStartY=touch.clientY;
-
-      touchMoved=false;
-
-      clearInterval(auto);
-
-    },
-    {passive:true}
-  );
-
-
-  tr.addEventListener(
-    "touchmove",
-    e=>{
-
-      if(
-        touchStartX===null ||
-        !e.touches.length
-      ) return;
-
-      const touch=e.touches[0];
-
-      const dx=touch.clientX-touchStartX;
-      const dy=touch.clientY-touchStartY;
-
-      /*
-       * We deliberately do NOT preventDefault().
-       *
-       * This allows normal vertical page scrolling.
-       * A predominantly horizontal gesture becomes a
-       * gallery swipe.
-       */
-
-      if(
-        Math.abs(dx)>10 &&
-        Math.abs(dx)>Math.abs(dy)
-      ){
-        touchMoved=true;
-      }
-
-    },
-    {passive:true}
-  );
-
-
-  tr.addEventListener(
-    "touchend",
-    e=>{
-
-      if(
-        touchStartX===null
-      ){
-        restart();
+      if(ad>3.2){
+        card.style.opacity="0";
+        card.style.pointerEvents="none";
+        card.classList.remove("is-center");
         return;
       }
 
-      const touch=e.changedTouches[0];
+      const sign=d<0?-1:1;
 
-      const dx=touch.clientX-touchStartX;
-      const dy=touch.clientY-touchStartY;
+      /* The elastic part: dragging slightly stretches the spacing. */
+      const stretch=dragging
+        ? Math.min(.22,Math.abs(dragDistance)/(width||1)*.18)
+        : spring*.04;
 
-      if(
-        touchMoved &&
-        Math.abs(dx)>=45 &&
-        Math.abs(dx)>Math.abs(dy)
-      ){
+      const spread=step*(1+stretch);
 
-        /*
-         * Left swipe  = next
-         * Right swipe = previous
-         */
+      const x=d*spread;
 
-        go(dx<0 ? 1 : -1);
-      }
+      const depth=Math.max(0,1-ad/3.2);
+      const scale=
+        ad<.55
+          ? 1 + (.08*(1-ad/.55))*Math.min(1,Math.abs(spring)*2+.15)
+          : .82 + depth*.18;
 
-      touchStartX=null;
-      touchStartY=null;
-      touchMoved=false;
+      const rotateY=
+        d===0
+          ? 0
+          : sign*Math.min(18,ad*7.2);
 
-      restart();
+      const rotateZ=
+        d===0
+          ? 0
+          : sign*Math.min(3.5,ad*1.4);
 
-    },
-    {passive:true}
-  );
+      const y=
+        d===0
+          ? 0
+          : Math.min(34,ad*12);
 
+      const opacity=
+        ad<2.25
+          ? 1
+          : Math.max(0,(3.2-ad)/.95);
 
-  tr.addEventListener(
-    "touchcancel",
-    ()=>{
-      touchStartX=null;
-      touchStartY=null;
-      touchMoved=false;
-      restart();
-    },
-    {passive:true}
-  );
+      const blur=
+        ad<1.2
+          ? 0
+          : Math.min(1.7,(ad-1.2)*.85);
 
+      card.style.transform=
+        `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) `+
+        `perspective(1100px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
 
-  /* =====================================================
-     AUTO PLAY
-     ===================================================== */
+      card.style.opacity=opacity;
+      card.style.filter=`blur(${blur}px)`;
 
-  function restart(){
+      card.style.zIndex=String(100-Math.round(ad*10));
+      card.style.pointerEvents=ad<.75?"auto":"none";
 
-    clearInterval(auto);
-
-    auto=setInterval(
-      ()=>go(1),
-      3200
-    );
-
+      card.classList.toggle("is-center",Math.abs(d)<.5);
+    });
   }
 
-  tr.addEventListener(
-    "mouseenter",
-    ()=>clearInterval(auto)
-  );
+  function frame(now){
+    const dt=Math.min(40,now-lastFrame);
+    lastFrame=now;
 
-  tr.addEventListener(
-    "mouseleave",
-    restart
-  );
+    if(!dragging && !paused){
+      if(!reduce.matches){
+        velocity += (targetVelocity-velocity)*Math.min(1,dt*.0025);
 
+        /* Inertial movement after release. */
+        if(Math.abs(velocity)>0.0001){
+          position += velocity*dt*.06;
+        }
+      }
+    }
 
-  /*
-   * Prevent browser image dragging from stealing the gesture.
-   */
-  tr.querySelectorAll("img").forEach(img=>{
-    img.draggable=false;
+    /* Elastic spring eases back after the gesture. */
+    spring += (0-spring)*Math.min(1,dt*.012);
 
-    img.addEventListener(
-      "dragstart",
-      e=>e.preventDefault()
+    render();
+    raf=requestAnimationFrame(frame);
+  }
+
+  function stopAuto(){
+    targetVelocity=0;
+  }
+
+  function resumeAuto(){
+    targetVelocity=reduce.matches?0:.17;
+  }
+
+  function pointerDown(e){
+    if(e.button!==undefined && e.button!==0) return;
+
+    dragging=true;
+    pointerId=e.pointerId;
+    startX=e.clientX;
+    lastX=e.clientX;
+    startPosition=position;
+    lastTime=performance.now();
+    dragVelocity=0;
+    dragDistance=0;
+
+    stopAuto();
+
+    rail.classList.add("is-elastic-dragging");
+
+    try{rail.setPointerCapture(pointerId)}catch(_){}
+  }
+
+  function pointerMove(e){
+    if(!dragging || e.pointerId!==pointerId) return;
+
+    const now=performance.now();
+    const dx=e.clientX-startX;
+    const dt=Math.max(8,now-lastTime);
+    const step=Math.max(
+      1,
+      (window.innerWidth<810
+        ? Math.min(gallery.clientWidth*.72,330)
+        : Math.min(gallery.clientWidth*.27,360))
+      + (window.innerWidth<810?18:30)
     );
+
+    position=startPosition-dx/step;
+
+    dragDistance=dx;
+    dragVelocity=-(e.clientX-lastX)/dt/step;
+
+    lastX=e.clientX;
+    lastTime=now;
+
+    /* Slightly overdrive the spring while being dragged. */
+    spring=Math.max(-1,Math.min(1,dx/(gallery.clientWidth*.8)));
+
+    render();
+  }
+
+  function pointerUp(e){
+    if(!dragging || e.pointerId!==pointerId) return;
+
+    dragging=false;
+    rail.classList.remove("is-elastic-dragging");
+
+    /* Convert the release velocity into a tasteful momentum burst. */
+    velocity=Math.max(-.55,Math.min(.55,dragVelocity*18));
+
+    if(Math.abs(velocity)<.035){
+      velocity=dragDistance<0?.06:-.06;
+    }
+
+    spring=dragDistance/(gallery.clientWidth||1);
+
+    resumeAuto();
+
+    try{rail.releasePointerCapture(pointerId)}catch(_){}
+    pointerId=null;
+  }
+
+  rail.addEventListener("pointerdown",pointerDown);
+  rail.addEventListener("pointermove",pointerMove);
+  rail.addEventListener("pointerup",pointerUp);
+  rail.addEventListener("pointercancel",pointerUp);
+
+  /* Keyboard accessibility */
+  rail.tabIndex=0;
+  rail.setAttribute("aria-label","Our Little World photo carousel");
+
+  rail.addEventListener("keydown",e=>{
+    if(e.key==="ArrowRight"){
+      e.preventDefault();
+      position+=1;
+      velocity=0;
+      spring=.18;
+    }
+
+    if(e.key==="ArrowLeft"){
+      e.preventDefault();
+      position-=1;
+      velocity=0;
+      spring=-.18;
+    }
   });
 
+  /* Clicking a side card brings it naturally to the centre. */
+  rail.addEventListener("click",e=>{
+    const card=e.target.closest("figure");
+    if(!card) return;
 
-  requestAnimationFrame(
-    ()=>paint(false)
-  );
+    const i=Number(card.dataset.elasticIndex);
+    const d=distance(i);
 
-  restart();
+    if(Math.abs(d)>.45){
+      position+=d;
+      velocity=0;
+      spring=d>0?.28:-.28;
+    }
+  });
 
+  /* Existing navigation buttons are retained. */
+  const prev=document.getElementById("prev");
+  const next=document.getElementById("next");
+
+  if(prev){
+    prev.onclick=e=>{
+      e.preventDefault();
+      position-=1;
+      velocity=0;
+      spring=-.2;
+      resumeAuto();
+    };
+  }
+
+  if(next){
+    next.onclick=e=>{
+      e.preventDefault();
+      position+=1;
+      velocity=0;
+      spring=.2;
+      resumeAuto();
+    };
+  }
+
+  gallery.addEventListener("mouseenter",()=>{
+    if(window.innerWidth>=810) paused=true;
+  });
+
+  gallery.addEventListener("mouseleave",()=>{
+    paused=false;
+    resumeAuto();
+  });
+
+  document.addEventListener("visibilitychange",()=>{
+    paused=document.hidden;
+    if(!paused)resumeAuto();
+  });
+
+  window.addEventListener("resize",render,{passive:true});
+
+  /* Preload all gallery images before starting the motion. */
+  let loaded=0;
+
+  function start(){
+    render();
+    resumeAuto();
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(frame);
+  }
+
+  const imgs=cards
+    .map(c=>c.querySelector("img"))
+    .filter(Boolean);
+
+  if(!imgs.length){
+    start();
+  }else{
+    imgs.forEach(img=>{
+      if(img.complete) loaded++;
+      else img.addEventListener("load",()=>{
+        loaded++;
+        if(loaded===imgs.length)start();
+      },{once:true});
+    });
+
+    if(loaded===imgs.length)start();
+  }
+
+  }
+  document.addEventListener("elasticGalleryReady",boot,{once:true});
+  /* If another integration has already prepared the gallery, start immediately. */
+  if(document.documentElement.dataset.elasticGalleryReady==="1") boot();
 })();
