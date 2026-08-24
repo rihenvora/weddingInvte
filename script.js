@@ -3,8 +3,8 @@ const legacyBackTop = document.getElementById("backTop");
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 let opened=false;
 
-/* One curtain controller only. Body is physically fixed before opening,
-   so wheel/touch/trackpad cannot move the document underneath the curtain. */
+/* --One curtain controller only. Body is physically fixed before opening,
+   so wheel/touch/trackpad cannot move the document underneath the curtain.-- */
 (function(){
  const landing=document.getElementById("landing");
  const openButtons=[document.getElementById("openInvitationFinal"),document.getElementById("openBtn")].filter(Boolean);
