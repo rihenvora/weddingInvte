@@ -500,6 +500,16 @@ if(false){
     const width=gallery.clientWidth;
     const mobile=window.innerWidth<810;
 
+    /*
+     * Anchor the carousel to the REAL centre of the gallery, not to the
+     * track's own coordinate system. This is important when the invitation
+     * is displayed inside a constrained mobile viewport/frame.
+     */
+    const galleryRect=gallery.getBoundingClientRect();
+    const railRect=rail.getBoundingClientRect();
+    const centerX=(galleryRect.left + galleryRect.width/2) - railRect.left;
+    rail.style.setProperty("--elastic-center-x",centerX+"px");
+
     const cardWidth=mobile
       ? Math.min(width*.72,330)
       : Math.min(width*.27,360);
@@ -566,6 +576,13 @@ if(false){
         ad<1.2
           ? 0
           : Math.min(1.7,(ad-1.2)*.85);
+
+      /*
+       * Every card is positioned from the calculated gallery centre.
+       * This prevents the first/active image drifting to the right on
+       * narrow iPhone/Android layouts.
+       */
+      card.style.left=`var(--elastic-center-x)`;
 
       card.style.transform=
         `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) `+
