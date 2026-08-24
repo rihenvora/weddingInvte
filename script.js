@@ -432,7 +432,7 @@ if(false){
   const originalTrack=document.getElementById("track");
   if(!gallery || !originalTrack) return;
 
-  /* Remove any previous gallery listeners/controllers by replacing the track. */
+  /* Fresh track = no legacy listeners can interfere. */
   const track=originalTrack.cloneNode(true);
   originalTrack.replaceWith(track);
 
@@ -450,27 +450,15 @@ if(false){
     }
   });
 
-  track.style.position="relative";
-  track.style.touchAction="pan-y";
-
   let position=0;
-  let velocity=0.22;
-  let targetVelocity=0.22;
-  let raf=0;
-  let last=performance.now();
+  let dragStartPosition=0;
+  let startX=0;
+  let lastX=0;
   let dragging=false;
   let pointerId=null;
-  let startX=0;
-  let startY=0;
-  let startPosition=0;
-  let lastX=0;
-  let lastTime=0;
-  let dragVelocity=0;
   let moved=false;
-  let paused=false;
-  let spring=0;
-
-  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+  let autoTimer=null;
+  let resumeTimer=null;
 
   function wrap(v){
     return ((v%N)+N)%N;
@@ -483,23 +471,20 @@ if(false){
     return d;
   }
 
-  function metrics(){
+  function getMetrics(){
     const w=gallery.clientWidth;
     const mobile=window.innerWidth<=760;
-    const cardW=mobile
-      ? Math.min(w*.76,330)
-      : Math.min(w*.28,360);
+    const cardW=mobile ? Math.min(w*.76,330) : Math.min(w*.28,360);
     const gap=mobile ? Math.min(18,w*.045) : Math.min(30,w*.022);
-    return {w,mobile,cardW,gap,step:cardW+gap};
+    return {w,mobile,cardW,step:cardW+gap};
   }
 
-  function render(){
-    const {w,mobile,cardW,step}=metrics();
-    const grect=gallery.getBoundingClientRect();
-    const trect=track.getBoundingClientRect();
+  function render(animate=true){
+    const {mobile,cardW,step}=getMetrics();
+    const gr=gallery.getBoundingClientRect();
+    const tr=track.getBoundingClientRect();
+    const cx=(gr.left+gr.width/2)-tr.left;
 
-    /* Centre cards against the visible gallery, not the document viewport. */
-    const cx=(grect.left+grect.width/2)-trect.left;
     track.style.setProperty("--elastic-center-x",cx+"px");
     track.style.setProperty("--elastic-card",cardW+"px");
 
@@ -507,30 +492,30 @@ if(false){
       const d=distance(i);
       const ad=Math.abs(d);
 
-      if(ad>3.2){
+      if(ad>3.25){
         card.style.opacity="0";
         card.style.pointerEvents="none";
         return;
       }
 
       const sign=d<0?-1:1;
-      const stretch=dragging
-        ? Math.min(.16,Math.abs(position-startPosition)*.045)
-        : Math.abs(spring)*.025;
+      const x=d*step;
+      const scale=ad<.5 ? 1.05 : .80+Math.max(0,1-ad/3.25)*.20;
+      const y=ad===0 ? 0 : Math.min(mobile?16:30,ad*(mobile?7:10));
+      const rotate=sign*Math.min(mobile?8:16,ad*(mobile?4:6));
+      const opacity=ad<2.35 ? 1 : Math.max(0,(3.25-ad)/.9);
+      const blur=ad<1.15 ? 0 : Math.min(1.5,(ad-1.15)*.8);
 
-      const x=d*step*(1+stretch);
-      const depth=Math.max(0,1-ad/3.2);
-      const scale=ad<.5 ? 1.045 : .80+depth*.20;
-      const y=ad===0 ? 0 : Math.min(mobile?18:34,ad*(mobile?7:12));
-      const rotate=sign*Math.min(mobile?9:18,ad*(mobile?4.5:7));
-      const opacity=ad<2.35 ? 1 : Math.max(0,(3.2-ad)/.85);
-      const blur=ad<1.1 ? 0 : Math.min(1.6,(ad-1.1)*.75);
-
-      card.style.left=`${cx}px`;
+      card.style.left=cx+"px";
       card.style.top="50%";
+      card.style.transition=animate
+        ? "transform .72s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease"
+        : "none";
+
       card.style.transform=
         `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) `+
         `perspective(1200px) rotateY(${rotate}deg) scale(${scale})`;
+
       card.style.opacity=String(opacity);
       card.style.filter=`blur(${blur}px)`;
       card.style.zIndex=String(100-Math.round(ad*10));
@@ -539,195 +524,184 @@ if(false){
     });
   }
 
-  function resumeAuto(){
-    targetVelocity=reduced.matches?0:.22;
-  }
-
-  function pauseAuto(){
-    targetVelocity=0;
-  }
-
-  function frame(now){
-    const dt=Math.min(34,Math.max(0,now-last));
-    last=now;
-
-    if(!dragging && !paused){
-      velocity += (targetVelocity-velocity)*Math.min(1,dt*.006);
-      position += velocity*dt*.06;
-      if(Math.abs(position)>100000){
-        position=wrap(position);
-      }
+  function stopAuto(){
+    if(autoTimer){
+      clearInterval(autoTimer);
+      autoTimer=null;
     }
-
-    spring += (0-spring)*Math.min(1,dt*.012);
-    render();
-    raf=requestAnimationFrame(frame);
+    if(resumeTimer){
+      clearTimeout(resumeTimer);
+      resumeTimer=null;
+    }
   }
 
-  function beginDrag(x,y,id){
-    dragging=true;
-    pointerId=id;
-    startX=x;
-    startY=y;
-    lastX=x;
-    lastTime=performance.now();
-    startPosition=position;
-    dragVelocity=0;
-    moved=false;
-    pauseAuto();
-    track.classList.add("is-elastic-dragging");
-  }
+  function startAuto(delay=2200){
+    stopAuto();
 
-  function moveDrag(x,y){
-    if(!dragging) return;
-
-    const dx=x-startX;
-    const dy=y-startY;
-
-    /* Don't steal a vertical page scroll. */
-    if(!moved && Math.abs(dy)>Math.abs(dx) && Math.abs(dy)>8){
-      dragging=false;
-      pointerId=null;
-      track.classList.remove("is-elastic-dragging");
-      resumeAuto();
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+      render(false);
       return;
     }
 
-    if(Math.abs(dx)>6) moved=true;
-
-    const now=performance.now();
-    const dt=Math.max(8,now-lastTime);
-    const {step}=metrics();
-
-    position=startPosition-dx/step;
-    dragVelocity=-(x-lastX)/dt/step;
-    lastX=x;
-    lastTime=now;
-    spring=Math.max(-1,Math.min(1,dx/(gallery.clientWidth||1)));
-    render();
+    autoTimer=setInterval(()=>{
+      if(!dragging){
+        position=wrap(Math.round(position)+1);
+        render(true);
+      }
+    },delay);
   }
 
-  function endDrag(){
+  function moveTo(delta){
+    position=wrap(Math.round(position)+delta);
+    render(true);
+    startAuto(2800);
+  }
+
+  function pointerDown(x,y,id){
+    dragging=true;
+    pointerId=id;
+    startX=x;
+    lastX=x;
+    dragStartPosition=position;
+    moved=false;
+    stopAuto();
+    track.classList.add("is-elastic-dragging");
+    render(false);
+  }
+
+  function pointerMove(x,y){
+    if(!dragging) return;
+
+    const dx=x-startX;
+    if(Math.abs(dx)>6) moved=true;
+
+    const {step}=getMetrics();
+    position=dragStartPosition-dx/step;
+    lastX=x;
+
+    render(false);
+  }
+
+  function pointerUp(){
     if(!dragging) return;
 
     dragging=false;
     track.classList.remove("is-elastic-dragging");
 
-    velocity=Math.max(-.65,Math.min(.65,dragVelocity*20));
-    if(Math.abs(velocity)<.04){
-      velocity=startX-lastX>0 ? .07 : -.07;
-    }
+    /* Snap to the nearest image after the gesture. */
+    position=wrap(Math.round(position));
+    render(true);
 
-    spring=Math.max(-1,Math.min(1,position-startPosition));
     pointerId=null;
-    resumeAuto();
+    startAuto(2800);
   }
 
-  /* Pointer events for desktop and modern mobile browsers. */
+  /* Pointer Events: mouse, trackpad and modern touch browsers. */
   track.addEventListener("pointerdown",e=>{
     if(e.pointerType==="mouse" && e.button!==0) return;
-    beginDrag(e.clientX,e.clientY,e.pointerId);
+    pointerDown(e.clientX,e.clientY,e.pointerId);
     try{track.setPointerCapture(e.pointerId)}catch(_){}
   });
 
   track.addEventListener("pointermove",e=>{
     if(!dragging || pointerId!==e.pointerId) return;
-    moveDrag(e.clientX,e.clientY);
+    pointerMove(e.clientX,e.clientY);
   });
 
   track.addEventListener("pointerup",e=>{
-    if(pointerId===e.pointerId){
-      endDrag();
-      try{track.releasePointerCapture(e.pointerId)}catch(_){}
-    }
+    if(pointerId!==e.pointerId) return;
+    pointerUp();
+    try{track.releasePointerCapture(e.pointerId)}catch(_){}
   });
 
-  track.addEventListener("pointercancel",endDrag);
+  track.addEventListener("pointercancel",pointerUp);
 
   /*
-   * Native touch fallback.
-   * This is deliberately non-passive so a horizontal gesture can be
-   * prevented from becoming a browser/page gesture, while vertical
-   * swipes remain normal page scrolling.
+   * Direct touch fallback for iPhone Safari.
+   * Horizontal movement is handled here; vertical movement is left to
+   * the browser so the page can still scroll normally.
    */
   track.addEventListener("touchstart",e=>{
-    if(!e.touches.length) return;
     const t=e.touches[0];
-    beginDrag(t.clientX,t.clientY,"touch");
+    if(t) pointerDown(t.clientX,t.clientY,"touch");
   },{passive:true});
 
   track.addEventListener("touchmove",e=>{
-    if(!dragging || !e.touches.length) return;
+    if(!dragging) return;
     const t=e.touches[0];
-    const dx=t.clientX-startX;
-    const dy=t.clientY-startY;
+    if(!t) return;
 
-    if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>6){
+    const dx=t.clientX-startX;
+    const dy=t.clientY-(e.touches[0].clientY || 0);
+
+    if(Math.abs(dx)>8){
       e.preventDefault();
-      moveDrag(t.clientX,t.clientY);
+      pointerMove(t.clientX,t.clientY);
     }
   },{passive:false});
 
-  track.addEventListener("touchend",endDrag,{passive:true});
-  track.addEventListener("touchcancel",endDrag,{passive:true});
+  track.addEventListener("touchend",pointerUp,{passive:true});
+  track.addEventListener("touchcancel",pointerUp,{passive:true});
 
-  /* Buttons. */
   const prev=document.getElementById("prev");
   const next=document.getElementById("next");
 
-  function stepTo(delta){
-    position+=delta;
-    velocity=delta*.08;
-    spring=delta*.18;
-    resumeAuto();
-    render();
+  if(prev){
+    prev.onclick=e=>{
+      e.preventDefault();
+      moveTo(-1);
+    };
   }
 
-  if(prev) prev.onclick=e=>{e.preventDefault();stepTo(-1)};
-  if(next) next.onclick=e=>{e.preventDefault();stepTo(1)};
+  if(next){
+    next.onclick=e=>{
+      e.preventDefault();
+      moveTo(1);
+    };
+  }
 
-  /* Click a visible side image to bring it to centre. */
   track.addEventListener("click",e=>{
     if(moved){
       moved=false;
       return;
     }
+
     const card=e.target.closest("figure");
     if(!card) return;
+
     const i=Number(card.dataset.elasticIndex);
     const d=distance(i);
-    if(Math.abs(d)>.45) stepTo(d);
+
+    if(Math.abs(d)>.45){
+      position=wrap(Math.round(position+d));
+      render(true);
+      startAuto(2800);
+    }
   });
 
   track.tabIndex=0;
   track.setAttribute("aria-label","Our Little World photo carousel");
 
   track.addEventListener("keydown",e=>{
-    if(e.key==="ArrowLeft"){e.preventDefault();stepTo(-1)}
-    if(e.key==="ArrowRight"){e.preventDefault();stepTo(1)}
+    if(e.key==="ArrowLeft"){
+      e.preventDefault();
+      moveTo(-1);
+    }
+    if(e.key==="ArrowRight"){
+      e.preventDefault();
+      moveTo(1);
+    }
   });
 
-  gallery.addEventListener("mouseenter",()=>{
-    if(window.innerWidth>760) paused=true;
-  });
-  gallery.addEventListener("mouseleave",()=>{
-    paused=false;
-    resumeAuto();
-  });
+  window.addEventListener("resize",()=>render(false),{passive:true});
 
-  document.addEventListener("visibilitychange",()=>{
-    paused=document.hidden;
-    if(!paused) resumeAuto();
-  });
-
-  window.addEventListener("resize",render,{passive:true});
-
-  /* Always start the animation loop immediately. */
-  render();
-  resumeAuto();
-  last=performance.now();
-  cancelAnimationFrame(raf);
-  raf=requestAnimationFrame(frame);
+  /*
+   * IMPORTANT:
+   * No requestAnimationFrame, no image-load dependency, no hover pause.
+   * A simple timer drives the carousel so it cannot silently stop.
+   */
+  render(false);
+  startAuto(2200);
 }
 
 if(document.readyState==="loading"){
