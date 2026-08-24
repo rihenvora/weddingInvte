@@ -2802,3 +2802,28 @@ main > section > .sectionContinue{
 @media(prefers-reduced-motion:reduce){
   .gallery .elasticProgress i{animation:none}
 }
+
+
+/* FINAL ELASTIC TOUCH RELIABILITY FIX */
+.gallery .track{
+  touch-action:pan-y!important;
+  overscroll-behavior-x:contain;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+}
+
+.gallery .track figure,
+.gallery .track img{
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-touch-callout:none!important;
+}
+
+.gallery .track img{
+  -webkit-user-drag:none!important;
+}
+
+/* FINAL ELASTIC TOUCH FALLBACK */
+.gallery .track{
+  touch-action:pan-y!important;
+}
