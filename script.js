@@ -428,62 +428,49 @@ if(false){
    ========================================================= */
 (function(){
   function boot(){
-    const gallery=document.querySelector(".gallery");
-    const track=document.getElementById("track");
-    if(!gallery || !track) return;
+  const gallery=document.querySelector(".gallery");
+  const originalTrack=document.getElementById("track");
+  if(!gallery || !originalTrack) return;
 
-  /* Replace the current track once, so any older carousel listeners
-     attached by legacy inline code cannot fight this controller. */
-  const fresh=track.cloneNode(true);
-  track.replaceWith(fresh);
+  /* Remove any previous gallery listeners/controllers by replacing the track. */
+  const track=originalTrack.cloneNode(true);
+  originalTrack.replaceWith(track);
 
-  const rail=document.getElementById("track");
-  const originalCards=[...rail.children];
+  const cards=[...track.querySelectorAll("figure")];
+  const N=cards.length;
+  if(N<2) return;
 
-  if(originalCards.length<2) return;
-
-  const cards=originalCards.map((card,i)=>{
+  cards.forEach((card,i)=>{
     card.dataset.elasticIndex=i;
-    card.setAttribute("draggable","false");
+    card.draggable=false;
     const img=card.querySelector("img");
     if(img){
       img.draggable=false;
       img.addEventListener("dragstart",e=>e.preventDefault());
     }
-    return card;
   });
 
-  /* Make a small progress indicator without changing the HTML layout. */
-  if(!gallery.querySelector(".elasticProgress")){
-    const p=document.createElement("div");
-    p.className="elasticProgress";
-    p.setAttribute("aria-hidden","true");
-    p.innerHTML="<i></i>";
-    gallery.appendChild(p);
-  }
-
-  const N=cards.length;
+  track.style.position="relative";
+  track.style.touchAction="pan-y";
 
   let position=0;
-  let velocity=.17;          // cards per frame-ish, converted by dt
-  let autoVelocity=.17;
-  let targetVelocity=.17;
-
+  let velocity=0.22;
+  let targetVelocity=0.22;
+  let raf=0;
+  let last=performance.now();
   let dragging=false;
   let pointerId=null;
   let startX=0;
+  let startY=0;
   let startPosition=0;
   let lastX=0;
   let lastTime=0;
   let dragVelocity=0;
-  let dragDistance=0;
+  let moved=false;
+  let paused=false;
   let spring=0;
 
-  let raf=0;
-  let lastFrame=performance.now();
-  let paused=false;
-
-  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function wrap(v){
     return ((v%N)+N)%N;
@@ -496,33 +483,25 @@ if(false){
     return d;
   }
 
+  function metrics(){
+    const w=gallery.clientWidth;
+    const mobile=window.innerWidth<=760;
+    const cardW=mobile
+      ? Math.min(w*.76,330)
+      : Math.min(w*.28,360);
+    const gap=mobile ? Math.min(18,w*.045) : Math.min(30,w*.022);
+    return {w,mobile,cardW,gap,step:cardW+gap};
+  }
+
   function render(){
-    const width=gallery.clientWidth;
-    const mobile=window.innerWidth<810;
+    const {w,mobile,cardW,step}=metrics();
+    const grect=gallery.getBoundingClientRect();
+    const trect=track.getBoundingClientRect();
 
-    /*
-     * Anchor the carousel to the REAL centre of the gallery, not to the
-     * track's own coordinate system. This is important when the invitation
-     * is displayed inside a constrained mobile viewport/frame.
-     */
-    const galleryRect=gallery.getBoundingClientRect();
-    const railRect=rail.getBoundingClientRect();
-    const centerX=(galleryRect.left + galleryRect.width/2) - railRect.left;
-    rail.style.setProperty("--elastic-center-x",centerX+"px");
-
-    const cardWidth=mobile
-      ? Math.min(width*.72,330)
-      : Math.min(width*.27,360);
-
-    rail.style.setProperty("--elastic-card",cardWidth+"px");
-
-    const gap=mobile
-      ? Math.min(18,width*.045)
-      : Math.min(30,width*.022);
-
-    const step=cardWidth+gap;
-
-    const centerY=rail.clientHeight*.50;
+    /* Centre cards against the visible gallery, not the document viewport. */
+    const cx=(grect.left+grect.width/2)-trect.left;
+    track.style.setProperty("--elastic-center-x",cx+"px");
+    track.style.setProperty("--elastic-card",cardW+"px");
 
     cards.forEach((card,i)=>{
       const d=distance(i);
@@ -531,239 +510,206 @@ if(false){
       if(ad>3.2){
         card.style.opacity="0";
         card.style.pointerEvents="none";
-        card.classList.remove("is-center");
         return;
       }
 
       const sign=d<0?-1:1;
-
-      /* The elastic part: dragging slightly stretches the spacing. */
       const stretch=dragging
-        ? Math.min(.22,Math.abs(dragDistance)/(width||1)*.18)
-        : spring*.04;
+        ? Math.min(.16,Math.abs(position-startPosition)*.045)
+        : Math.abs(spring)*.025;
 
-      const spread=step*(1+stretch);
-
-      const x=d*spread;
-
+      const x=d*step*(1+stretch);
       const depth=Math.max(0,1-ad/3.2);
-      const scale=
-        ad<.55
-          ? 1 + (.08*(1-ad/.55))*Math.min(1,Math.abs(spring)*2+.15)
-          : .82 + depth*.18;
+      const scale=ad<.5 ? 1.045 : .80+depth*.20;
+      const y=ad===0 ? 0 : Math.min(mobile?18:34,ad*(mobile?7:12));
+      const rotate=sign*Math.min(mobile?9:18,ad*(mobile?4.5:7));
+      const opacity=ad<2.35 ? 1 : Math.max(0,(3.2-ad)/.85);
+      const blur=ad<1.1 ? 0 : Math.min(1.6,(ad-1.1)*.75);
 
-      const rotateY=
-        d===0
-          ? 0
-          : sign*Math.min(18,ad*7.2);
-
-      const rotateZ=
-        d===0
-          ? 0
-          : sign*Math.min(3.5,ad*1.4);
-
-      const y=
-        d===0
-          ? 0
-          : Math.min(34,ad*12);
-
-      const opacity=
-        ad<2.25
-          ? 1
-          : Math.max(0,(3.2-ad)/.95);
-
-      const blur=
-        ad<1.2
-          ? 0
-          : Math.min(1.7,(ad-1.2)*.85);
-
-      /*
-       * Every card is positioned from the calculated gallery centre.
-       * This prevents the first/active image drifting to the right on
-       * narrow iPhone/Android layouts.
-       */
-      card.style.left=`var(--elastic-center-x)`;
-
+      card.style.left=`${cx}px`;
+      card.style.top="50%";
       card.style.transform=
         `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) `+
-        `perspective(1100px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
-
-      card.style.opacity=opacity;
+        `perspective(1200px) rotateY(${rotate}deg) scale(${scale})`;
+      card.style.opacity=String(opacity);
       card.style.filter=`blur(${blur}px)`;
-
       card.style.zIndex=String(100-Math.round(ad*10));
-      card.style.pointerEvents=ad<.75?"auto":"none";
-
-      card.classList.toggle("is-center",Math.abs(d)<.5);
+      card.style.pointerEvents=ad<.8 ? "auto" : "none";
+      card.classList.toggle("is-center",ad<.5);
     });
   }
 
+  function resumeAuto(){
+    targetVelocity=reduced.matches?0:.22;
+  }
+
+  function pauseAuto(){
+    targetVelocity=0;
+  }
+
   function frame(now){
-    const dt=Math.min(40,now-lastFrame);
-    lastFrame=now;
+    const dt=Math.min(34,Math.max(0,now-last));
+    last=now;
 
     if(!dragging && !paused){
-      if(!reduce.matches){
-        velocity += (targetVelocity-velocity)*Math.min(1,dt*.0025);
-
-        /* Inertial movement after release. */
-        if(Math.abs(velocity)>0.0001){
-          position += velocity*dt*.085;
-        }
+      velocity += (targetVelocity-velocity)*Math.min(1,dt*.006);
+      position += velocity*dt*.06;
+      if(Math.abs(position)>100000){
+        position=wrap(position);
       }
     }
 
-    /* Elastic spring eases back after the gesture. */
     spring += (0-spring)*Math.min(1,dt*.012);
-
     render();
     raf=requestAnimationFrame(frame);
   }
 
-  function stopAuto(){
-    targetVelocity=0;
-  }
-
-  function resumeAuto(){
-    targetVelocity=reduce.matches?0:.17;
-  }
-
-  function pointerDown(e){
-    if(e.button!==undefined && e.button!==0) return;
-
+  function beginDrag(x,y,id){
     dragging=true;
-    pointerId=e.pointerId;
-    startX=e.clientX;
-    lastX=e.clientX;
-    startPosition=position;
+    pointerId=id;
+    startX=x;
+    startY=y;
+    lastX=x;
     lastTime=performance.now();
+    startPosition=position;
     dragVelocity=0;
-    dragDistance=0;
-
-    stopAuto();
-
-    rail.classList.add("is-elastic-dragging");
-
-    try{rail.setPointerCapture(pointerId)}catch(_){}
+    moved=false;
+    pauseAuto();
+    track.classList.add("is-elastic-dragging");
   }
 
-  function pointerMove(e){
-    if(!dragging || e.pointerId!==pointerId) return;
+  function moveDrag(x,y){
+    if(!dragging) return;
+
+    const dx=x-startX;
+    const dy=y-startY;
+
+    /* Don't steal a vertical page scroll. */
+    if(!moved && Math.abs(dy)>Math.abs(dx) && Math.abs(dy)>8){
+      dragging=false;
+      pointerId=null;
+      track.classList.remove("is-elastic-dragging");
+      resumeAuto();
+      return;
+    }
+
+    if(Math.abs(dx)>6) moved=true;
 
     const now=performance.now();
-    const dx=e.clientX-startX;
     const dt=Math.max(8,now-lastTime);
-    const step=Math.max(
-      1,
-      (window.innerWidth<810
-        ? Math.min(gallery.clientWidth*.72,330)
-        : Math.min(gallery.clientWidth*.27,360))
-      + (window.innerWidth<810?18:30)
-    );
+    const {step}=metrics();
 
     position=startPosition-dx/step;
-
-    dragDistance=dx;
-    dragVelocity=-(e.clientX-lastX)/dt/step;
-
-    lastX=e.clientX;
+    dragVelocity=-(x-lastX)/dt/step;
+    lastX=x;
     lastTime=now;
-
-    /* Slightly overdrive the spring while being dragged. */
-    spring=Math.max(-1,Math.min(1,dx/(gallery.clientWidth*.8)));
-
+    spring=Math.max(-1,Math.min(1,dx/(gallery.clientWidth||1)));
     render();
   }
 
-  function pointerUp(e){
-    if(!dragging || e.pointerId!==pointerId) return;
+  function endDrag(){
+    if(!dragging) return;
 
     dragging=false;
-    rail.classList.remove("is-elastic-dragging");
+    track.classList.remove("is-elastic-dragging");
 
-    /* Convert the release velocity into a tasteful momentum burst. */
-    velocity=Math.max(-.55,Math.min(.55,dragVelocity*18));
-
-    if(Math.abs(velocity)<.035){
-      velocity=dragDistance<0?.06:-.06;
+    velocity=Math.max(-.65,Math.min(.65,dragVelocity*20));
+    if(Math.abs(velocity)<.04){
+      velocity=startX-lastX>0 ? .07 : -.07;
     }
 
-    spring=dragDistance/(gallery.clientWidth||1);
-
-    resumeAuto();
-
-    try{rail.releasePointerCapture(pointerId)}catch(_){}
+    spring=Math.max(-1,Math.min(1,position-startPosition));
     pointerId=null;
+    resumeAuto();
   }
 
-  rail.addEventListener("pointerdown",pointerDown);
-  rail.addEventListener("pointermove",pointerMove);
-  rail.addEventListener("pointerup",pointerUp);
-  rail.addEventListener("pointercancel",pointerUp);
+  /* Pointer events for desktop and modern mobile browsers. */
+  track.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="mouse" && e.button!==0) return;
+    beginDrag(e.clientX,e.clientY,e.pointerId);
+    try{track.setPointerCapture(e.pointerId)}catch(_){}
+  });
 
-  /* Keyboard accessibility */
-  rail.tabIndex=0;
-  rail.setAttribute("aria-label","Our Little World photo carousel");
+  track.addEventListener("pointermove",e=>{
+    if(!dragging || pointerId!==e.pointerId) return;
+    moveDrag(e.clientX,e.clientY);
+  });
 
-  rail.addEventListener("keydown",e=>{
-    if(e.key==="ArrowRight"){
-      e.preventDefault();
-      position+=1;
-      velocity=0;
-      spring=.18;
-    }
-
-    if(e.key==="ArrowLeft"){
-      e.preventDefault();
-      position-=1;
-      velocity=0;
-      spring=-.18;
+  track.addEventListener("pointerup",e=>{
+    if(pointerId===e.pointerId){
+      endDrag();
+      try{track.releasePointerCapture(e.pointerId)}catch(_){}
     }
   });
 
-  /* Clicking a side card brings it naturally to the centre. */
-  rail.addEventListener("click",e=>{
-    const card=e.target.closest("figure");
-    if(!card) return;
+  track.addEventListener("pointercancel",endDrag);
 
-    const i=Number(card.dataset.elasticIndex);
-    const d=distance(i);
+  /*
+   * Native touch fallback.
+   * This is deliberately non-passive so a horizontal gesture can be
+   * prevented from becoming a browser/page gesture, while vertical
+   * swipes remain normal page scrolling.
+   */
+  track.addEventListener("touchstart",e=>{
+    if(!e.touches.length) return;
+    const t=e.touches[0];
+    beginDrag(t.clientX,t.clientY,"touch");
+  },{passive:true});
 
-    if(Math.abs(d)>.45){
-      position+=d;
-      velocity=0;
-      spring=d>0?.28:-.28;
+  track.addEventListener("touchmove",e=>{
+    if(!dragging || !e.touches.length) return;
+    const t=e.touches[0];
+    const dx=t.clientX-startX;
+    const dy=t.clientY-startY;
+
+    if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>6){
+      e.preventDefault();
+      moveDrag(t.clientX,t.clientY);
     }
-  });
+  },{passive:false});
 
-  /* Existing navigation buttons are retained. */
+  track.addEventListener("touchend",endDrag,{passive:true});
+  track.addEventListener("touchcancel",endDrag,{passive:true});
+
+  /* Buttons. */
   const prev=document.getElementById("prev");
   const next=document.getElementById("next");
 
-  if(prev){
-    prev.onclick=e=>{
-      e.preventDefault();
-      position-=1;
-      velocity=0;
-      spring=-.2;
-      resumeAuto();
-    };
+  function stepTo(delta){
+    position+=delta;
+    velocity=delta*.08;
+    spring=delta*.18;
+    resumeAuto();
+    render();
   }
 
-  if(next){
-    next.onclick=e=>{
-      e.preventDefault();
-      position+=1;
-      velocity=0;
-      spring=.2;
-      resumeAuto();
-    };
-  }
+  if(prev) prev.onclick=e=>{e.preventDefault();stepTo(-1)};
+  if(next) next.onclick=e=>{e.preventDefault();stepTo(1)};
 
-  gallery.addEventListener("mouseenter",()=>{
-    if(window.innerWidth>=810) paused=true;
+  /* Click a visible side image to bring it to centre. */
+  track.addEventListener("click",e=>{
+    if(moved){
+      moved=false;
+      return;
+    }
+    const card=e.target.closest("figure");
+    if(!card) return;
+    const i=Number(card.dataset.elasticIndex);
+    const d=distance(i);
+    if(Math.abs(d)>.45) stepTo(d);
   });
 
+  track.tabIndex=0;
+  track.setAttribute("aria-label","Our Little World photo carousel");
+
+  track.addEventListener("keydown",e=>{
+    if(e.key==="ArrowLeft"){e.preventDefault();stepTo(-1)}
+    if(e.key==="ArrowRight"){e.preventDefault();stepTo(1)}
+  });
+
+  gallery.addEventListener("mouseenter",()=>{
+    if(window.innerWidth>760) paused=true;
+  });
   gallery.addEventListener("mouseleave",()=>{
     paused=false;
     resumeAuto();
@@ -771,41 +717,23 @@ if(false){
 
   document.addEventListener("visibilitychange",()=>{
     paused=document.hidden;
-    if(!paused)resumeAuto();
+    if(!paused) resumeAuto();
   });
 
   window.addEventListener("resize",render,{passive:true});
 
-  /*
-   * Start the carousel immediately.
-   *
-   * The previous version waited for every image's load event. If even one
-   * image was already cached/errored/slow, the animation never started.
-   * The browser can render the images independently, so the carousel must
-   * not depend on image loading to begin its motion.
-   */
-  function start(){
-    render();
-    resumeAuto();
-    cancelAnimationFrame(raf);
-    lastFrame=performance.now();
-    raf=requestAnimationFrame(frame);
-  }
+  /* Always start the animation loop immediately. */
+  render();
+  resumeAuto();
+  last=performance.now();
+  cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(frame);
+}
 
-  start();
-
-  } /* end boot() */
-
-  /*
-   * Start immediately on the actual wedding page.
-   * The previous version only listened for a custom
-   * "elasticGalleryReady" event which this page never fired,
-   * leaving the carousel completely static.
-   */
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded",boot,{once:true});
-  }else{
-    boot();
-  }
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",boot,{once:true});
+}else{
+  boot();
+}
 
 })();
