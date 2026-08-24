@@ -428,9 +428,6 @@ if(false){
    ========================================================= */
 (function(){
   function boot(){
-    if(window.__rihenElasticGalleryBooted) return;
-    window.__rihenElasticGalleryBooted=true;
-
     const gallery=document.querySelector(".gallery");
     const track=document.getElementById("track");
     if(!gallery || !track) return;
@@ -594,7 +591,7 @@ if(false){
 
         /* Inertial movement after release. */
         if(Math.abs(velocity)>0.0001){
-          position += velocity*dt*.06;
+          position += velocity*dt*.085;
         }
       }
     }
@@ -762,39 +759,36 @@ if(false){
 
   window.addEventListener("resize",render,{passive:true});
 
-  /* Preload all gallery images before starting the motion. */
-  let loaded=0;
-
+  /*
+   * Start the carousel immediately.
+   *
+   * The previous version waited for every image's load event. If even one
+   * image was already cached/errored/slow, the animation never started.
+   * The browser can render the images independently, so the carousel must
+   * not depend on image loading to begin its motion.
+   */
   function start(){
     render();
     resumeAuto();
     cancelAnimationFrame(raf);
+    lastFrame=performance.now();
     raf=requestAnimationFrame(frame);
   }
 
-  const imgs=cards
-    .map(c=>c.querySelector("img"))
-    .filter(Boolean);
+  start();
 
-  if(!imgs.length){
-    start();
-  }else{
-    imgs.forEach(img=>{
-      if(img.complete) loaded++;
-      else img.addEventListener("load",()=>{
-        loaded++;
-        if(loaded===imgs.length)start();
-      },{once:true});
-    });
+  } /* end boot() */
 
-    if(loaded===imgs.length)start();
-  }
-
-  }
-  /* Start normally after the DOM is ready. */
+  /*
+   * Start immediately on the actual wedding page.
+   * The previous version only listened for a custom
+   * "elasticGalleryReady" event which this page never fired,
+   * leaving the carousel completely static.
+   */
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded",boot,{once:true});
   }else{
     boot();
   }
+
 })();
