@@ -428,6 +428,9 @@ if(false){
    ========================================================= */
 (function(){
   function boot(){
+    if(window.__rihenElasticGalleryBooted) return;
+    window.__rihenElasticGalleryBooted=true;
+
     const gallery=document.querySelector(".gallery");
     const track=document.getElementById("track");
     if(!gallery || !track) return;
@@ -788,7 +791,10 @@ if(false){
   }
 
   }
-  document.addEventListener("elasticGalleryReady",boot,{once:true});
-  /* If another integration has already prepared the gallery, start immediately. */
-  if(document.documentElement.dataset.elasticGalleryReady==="1") boot();
+  /* Start normally after the DOM is ready. */
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded",boot,{once:true});
+  }else{
+    boot();
+  }
 })();
