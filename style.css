@@ -52,7 +52,7 @@
    IMPORTANT: original V2 foreground UI/layout intentionally preserved.
    ========================================================= */
 
-/* Curtain-open R&M signature â€” no landing layout replacement */
+/* Curtain-open R&M signature — no landing layout replacement */
 .rmReveal{
  position:absolute;z-index:24;left:50%;top:50%;
  transform:translate(-50%,-45%) scale(.72);
@@ -120,7 +120,7 @@
  url("./assets/meetgroom.webp") center/cover;
 }
 
-/* Keep THIS Say Yes palette â€” strengthened but same V2 look */
+/* Keep THIS Say Yes palette — strengthened but same V2 look */
 .rsvp{
  background:
  radial-gradient(circle at 18% 18%,#f7e6d580 0 8%,transparent 27%),
@@ -205,7 +205,7 @@
  .rmReveal div{width:145px;height:145px;font-size:38px}
 }
 
-/* SPACE FIX â€” preserve V2 UI, shorten only scroll-animation timelines */
+/* SPACE FIX — preserve V2 UI, shorten only scroll-animation timelines */
 .walk.gods{height:220vh!important}
 .walk.invite{height:175vh!important}
 .couple,.dateSection,.gallery{padding-top:72px!important;padding-bottom:72px!important}
@@ -222,7 +222,7 @@
 
 
 /* =========================================================
-   TARGETED FIX ONLY â€” approved foreground UI is unchanged
+   TARGETED FIX ONLY — approved foreground UI is unchanged
    ========================================================= */
 
 /* 1) GODS: remove the doubled/overlapping palace image.
@@ -440,7 +440,7 @@
 
 
 /* ==========================================================
-   HEART CREST + DEITY + SCRATCH CELEBRATION â€” targeted only
+   HEART CREST + DEITY + SCRATCH CELEBRATION — targeted only
    ========================================================== */
 
 /* Heart crest visible on CLOSED curtains and retained on open */
@@ -623,7 +623,7 @@
 
 
 /* ==========================================================
-   REQUESTED FIXES â€” preserve approved UI
+   REQUESTED FIXES — preserve approved UI
    ========================================================== */
 
 /* CLOSED curtain: MR visible. OPEN curtain: MR hidden. */
@@ -1025,7 +1025,7 @@ html.heroHold, body.heroHold {
 
 /* ===== USER SCREENSHOT FIXES: 24 JUL ===== */
 
-/* 1. GODS â€” direct images only. No oval/arch/shrine structures. */
+/* 1. GODS — direct images only. No oval/arch/shrine structures. */
 .gods .shrine{display:none!important}
 .gods .directDeity,
 .gods .directDeity.ganeshaVisual,
@@ -1089,7 +1089,7 @@ html.heroHold, body.heroHold {
 }
 .gods .walkTitle p{margin-top:22px!important}
 
-/* 3. Meet Bride/Groom â€” use the exact MR logo asset, not R & M text. */
+/* 3. Meet Bride/Groom — use the exact MR logo asset, not R & M text. */
 .people .heart.uploadedCoupleMR{
   width:140px!important;
   height:140px!important;
@@ -2274,7 +2274,7 @@ main > section > .sectionContinue{
 }
 .gallery .track:active { cursor: grabbing; }
 
-/* FINAL ONLY CHANGE â€” show complete Bride & Groom images without cropping */
+/* FINAL ONLY CHANGE — show complete Bride & Groom images without cropping */
 .couple .people .person .photo img{
   object-fit: contain !important;
   object-position: center bottom !important;
@@ -2282,7 +2282,7 @@ main > section > .sectionContinue{
 
 
 /* =========================================================
-   FINAL OUR LITTLE WORLD â€” NO CROPPING / NO EMPTY LETTERBOX
+   FINAL OUR LITTLE WORLD — NO CROPPING / NO EMPTY LETTERBOX
    Each card adopts the natural aspect ratio of its photograph.
    ========================================================= */
 
@@ -2333,7 +2333,7 @@ main > section > .sectionContinue{
 
 
 /* =========================================================
-   OUR LITTLE WORLD â€” CURVED INFINITE AUTOPLAY CAROUSEL
+   OUR LITTLE WORLD — CURVED INFINITE AUTOPLAY CAROUSEL
    Scoped only to .curveWorld
    ========================================================= */
 
@@ -2615,7 +2615,7 @@ main > section > .sectionContinue{
 
 
 /* =========================================================
-   OUR LITTLE WORLD â€” ELASTIC INFINITE CAROUSEL
+   OUR LITTLE WORLD — ELASTIC INFINITE CAROUSEL
    Premium spring / depth / tactile motion
    ========================================================= */
 
@@ -2826,4 +2826,23 @@ main > section > .sectionContinue{
 /* FINAL ELASTIC TOUCH FALLBACK */
 .gallery .track{
   touch-action:pan-y!important;
+}
+
+
+/* FINAL MOBILE CENTER ANCHOR
+   The JS calculates the exact gallery centre in page coordinates. */
+.gallery .track figure{
+  left:var(--elastic-center-x,50%)!important;
+}
+
+@media(max-width:809.98px){
+  .gallery .track{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+
+  .gallery .track figure{
+    left:var(--elastic-center-x,50%)!important;
+  }
 }
