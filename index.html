@@ -151,8 +151,6 @@ const sec=document.querySelector(".gods");new IntersectionObserver(e=>{l.querySe
 }
 .gallery .track figure{
   position:absolute!important;
-  left:50%!important;
-  top:50%!important;
   width:var(--elastic-card)!important;
   height:auto!important;
   margin:0!important;
@@ -236,4 +234,81 @@ const sec=document.querySelector(".gods");new IntersectionObserver(e=>{l.querySe
    drag/autoplay controller. */
 </script>
 
+
+<style id="native-gallery-final">
+/* FINAL NATIVE CAROUSEL — this is intentionally the last gallery CSS */
+.gallery .track{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:clamp(16px,2.2vw,30px)!important;
+  width:100%!important;
+  height:min(68vh,620px)!important;
+  min-height:420px!important;
+  margin:0!important;
+  padding:0 calc((100% - min(360px,27vw))/2)!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-behavior:smooth!important;
+  scroll-snap-type:x mandatory!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  transform:none!important;
+  animation:none!important;
+  touch-action:pan-x!important;
+  cursor:grab!important;
+}
+.gallery .track::-webkit-scrollbar{display:none!important}
+.gallery .track.native-dragging{cursor:grabbing!important;scroll-behavior:auto!important;scroll-snap-type:none!important}
+
+.gallery .track figure{
+  position:relative!important;
+  left:auto!important;
+  top:auto!important;
+  width:min(360px,27vw)!important;
+  min-width:min(360px,27vw)!important;
+  max-width:none!important;
+  height:auto!important;
+  flex:0 0 min(360px,27vw)!important;
+  margin:0!important;
+  padding:10px!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:none!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  will-change:auto!important;
+  scroll-snap-align:center!important;
+  box-sizing:border-box!important;
+}
+.gallery .track figure img{
+  width:100%!important;
+  height:auto!important;
+  max-height:calc(min(68vh,620px) - 20px)!important;
+  object-fit:contain!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  transform:none!important;
+  image-rendering:auto!important;
+  will-change:auto!important;
+}
+@media(max-width:809.98px){
+ .gallery .track{
+   height:min(70vh,540px)!important;
+   min-height:380px!important;
+   padding-left:calc((100% - min(78vw,330px))/2)!important;
+   padding-right:calc((100% - min(78vw,330px))/2)!important;
+   gap:18px!important;
+ }
+ .gallery .track figure{
+   width:min(78vw,330px)!important;
+   min-width:min(78vw,330px)!important;
+   padding:7px!important;
+ }
+ .gallery .track figure img{
+   max-height:calc(min(70vh,540px) - 14px)!important;
+ }
+}
+</style>
 </body></html>

@@ -117,7 +117,129 @@ function walk(){
 }
 const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("show",e.isIntersecting)),{threshold:.15});$$(".reveal").forEach(e=>io.observe(e));
 $("#wa").href="https://wa.me/917977500797?text="+encodeURIComponent("Hello! We would love to RSVP for Rihen & Meghana's wedding.");
-const c=$("#scratch"),x=c.getContext("2d");function initScratch(){let d=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);let g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,"#8e623c");g.addColorStop(.25,"#e4c17e");g.addColorStop(.5,"#9d6d40");g.addColorStop(.75,"#efd99e");g.addColorStop(1,"#8d6039");x.fillStyle=g;x.fillRect(0,0,w,h);x.fillStyle="#5e4436";x.font="16px serif";x.textAlign="center";x.fillText("✦  SCRATCH TO REVEAL  ✦",w/2,h/2);x.globalCompositeOperation="destination-out"}initScratch();let down=false;function scratch(e){if(!down)return;let r=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-r.left,e.clientY-r.top,30,0,Math.PI*2);x.fill()}c.onpointerdown=e=>{down=true;scratch(e)};c.onpointermove=scratch;addEventListener("pointerup",()=>down=false);
+const c=$("#scratch"),x=c.getContext("2d",{willReadFrequently:true});
+let scratchReady=false, down=false, scratchMoves=0, lastCheck=0;
+
+function initScratch(){
+  const d=window.devicePixelRatio||1;
+  const w=c.clientWidth,h=c.clientHeight;
+  c.width=Math.max(1,Math.round(w*d));
+  c.height=Math.max(1,Math.round(h*d));
+  x.setTransform(d,0,0,d,0,0);
+
+  const g=x.createLinearGradient(0,0,w,h);
+  g.addColorStop(0,"#8e623c");
+  g.addColorStop(.25,"#e4c17e");
+  g.addColorStop(.5,"#9d6d40");
+  g.addColorStop(.75,"#efd99e");
+  g.addColorStop(1,"#8d6039");
+
+  x.globalCompositeOperation="source-over";
+  x.fillStyle=g;
+  x.fillRect(0,0,w,h);
+
+  x.fillStyle="#5e4436";
+  x.font="16px serif";
+  x.textAlign="center";
+  x.textBaseline="middle";
+  x.fillText("✦  SCRATCH TO REVEAL  ✦",w/2,h/2);
+
+  x.globalCompositeOperation="destination-out";
+}
+
+function revealAfterScratch(){
+  if(scratchReady)return;
+  scratchReady=true;
+
+  const wrap=document.querySelector(".scratchWrap");
+  if(!wrap)return;
+
+  /*
+   * Keep the scratch interaction as the ONLY manual part.
+   * Once enough of the heart has been scratched, the existing
+   * celebration animation takes over automatically.
+   */
+  wrap.classList.add("autoDone");
+
+  // Let the CSS celebration play; then remove the scratch layer.
+  setTimeout(()=>{
+    c.style.transition="opacity .55s ease";
+    c.style.opacity="0";
+  },180);
+
+  setTimeout(()=>{
+    c.style.pointerEvents="none";
+  },800);
+}
+
+function scratchProgress(){
+  if(scratchReady)return;
+
+  const now=performance.now();
+  if(now-lastCheck<180)return;
+  lastCheck=now;
+
+  const w=c.width,h=c.height;
+  // Sample the canvas rather than reading every pixel.
+  const sampleW=Math.min(180,w);
+  const sampleH=Math.min(180,h);
+  const data=x.getImageData(
+    Math.max(0,(w-sampleW)/2),
+    Math.max(0,(h-sampleH)/2),
+    sampleW,
+    sampleH
+  ).data;
+
+  let transparent=0,total=0;
+  for(let i=3;i<data.length;i+=16){
+    total++;
+    if(data[i]<45)transparent++;
+  }
+
+  // About 30% scratched is enough; the rest of the reveal is animated.
+  if(total && transparent/total>=0.30) revealAfterScratch();
+}
+
+function scratch(e){
+  if(!down||scratchReady)return;
+
+  const r=c.getBoundingClientRect();
+  const px=e.clientX-r.left;
+  const py=e.clientY-r.top;
+
+  x.beginPath();
+  x.arc(px,py,30,0,Math.PI*2);
+  x.fill();
+
+  scratchMoves++;
+  if(scratchMoves%4===0)scratchProgress();
+}
+
+initScratch();
+
+c.addEventListener("pointerdown",e=>{
+  if(scratchReady)return;
+  down=true;
+  try{c.setPointerCapture(e.pointerId)}catch(_){}
+  scratch(e);
+});
+
+c.addEventListener("pointermove",scratch);
+
+c.addEventListener("pointerup",()=>{
+  down=false;
+  scratchProgress();
+});
+
+c.addEventListener("pointercancel",()=>{
+  down=false;
+  scratchProgress();
+});
+
+window.addEventListener("resize",()=>{
+  if(!scratchReady)initScratch();
+});
+
 for(let i=0;i<28;i++){let q=document.createElement("i");q.className="spark";q.style.left=Math.random()*100+"%";q.style.animationDuration=5+Math.random()*7+"s";q.style.animationDelay=-Math.random()*8+"s";$("#sparks").appendChild(q)}
 if(legacyBackTop) legacyBackTop.onclick=()=>{scrollTo({top:0,behavior:"smooth"});setTimeout(closeLanding,700)};
 /* Full heart celebration after scratch auto-completion */
@@ -428,20 +550,18 @@ if(false){
    ========================================================= */
 (function(){
   function boot(){
+  return; // Native scroll carousel below is the only active gallery controller.
   const gallery=document.querySelector(".gallery");
-  const originalTrack=document.getElementById("track");
-  if(!gallery || !originalTrack) return;
-
-  /* Fresh track = no legacy listeners can interfere. */
-  const track=originalTrack.cloneNode(true);
-  originalTrack.replaceWith(track);
+  const track=document.getElementById("track");
+  if(!gallery || !track || track.dataset.crispCarousel==="1") return;
+  track.dataset.crispCarousel="1";
 
   const cards=[...track.querySelectorAll("figure")];
   const N=cards.length;
   if(N<2) return;
 
   cards.forEach((card,i)=>{
-    card.dataset.elasticIndex=i;
+    card.dataset.i=i;
     card.draggable=false;
     const img=card.querySelector("img");
     if(img){
@@ -450,73 +570,72 @@ if(false){
     }
   });
 
-  let position=0;
-  let dragStartPosition=0;
-  let startX=0;
-  let lastX=0;
+  let pos=0;
+  let timer=null;
   let dragging=false;
   let pointerId=null;
+  let startX=0;
+  let startPos=0;
   let moved=false;
-  let autoTimer=null;
-  let resumeTimer=null;
 
-  function wrap(v){
-    return ((v%N)+N)%N;
-  }
+  function wrap(v){ return ((v%N)+N)%N; }
 
-  function distance(i){
-    let d=i-position;
+  function dist(i){
+    let d=i-pos;
     while(d>N/2)d-=N;
     while(d<-N/2)d+=N;
     return d;
   }
 
-  function getMetrics(){
+  function metrics(){
     const w=gallery.clientWidth;
     const mobile=window.innerWidth<=760;
     const cardW=mobile ? Math.min(w*.76,330) : Math.min(w*.28,360);
     const gap=mobile ? Math.min(18,w*.045) : Math.min(30,w*.022);
-    return {w,mobile,cardW,step:cardW+gap};
+    return {cardW,step:cardW+gap,mobile};
   }
 
+  /*
+   * IMPORTANT:
+   * Photos are positioned with LEFT/TOP rather than 3D transforms.
+   * This prevents browser GPU rasterisation from making the JPEGs soft.
+   * There is intentionally NO blur, perspective, rotateY, scale or
+   * will-change on the photographs.
+   */
   function render(animate=true){
-    const {mobile,cardW,step}=getMetrics();
+    const {step,mobile}=metrics();
     const gr=gallery.getBoundingClientRect();
     const tr=track.getBoundingClientRect();
-    const cx=(gr.left+gr.width/2)-tr.left;
-
-    track.style.setProperty("--elastic-center-x",cx+"px");
-    track.style.setProperty("--elastic-card",cardW+"px");
+    const centerX=(gr.left+gr.width/2)-tr.left;
+    const centerY=track.clientHeight/2;
 
     cards.forEach((card,i)=>{
-      const d=distance(i);
+      const d=dist(i);
       const ad=Math.abs(d);
 
-      if(ad>3.25){
+      if(ad>3.15){
         card.style.opacity="0";
         card.style.pointerEvents="none";
         return;
       }
 
-      const sign=d<0?-1:1;
-      const x=d*step;
-      const scale=ad<.5 ? 1.05 : .80+Math.max(0,1-ad/3.25)*.20;
-      const y=ad===0 ? 0 : Math.min(mobile?16:30,ad*(mobile?7:10));
-      const rotate=sign*Math.min(mobile?8:16,ad*(mobile?4:6));
-      const opacity=ad<2.35 ? 1 : Math.max(0,(3.25-ad)/.9);
+      const x=centerX+d*step;
+      const y=centerY+(ad===0 ? 0 : Math.min(mobile?14:28,ad*(mobile?6:10)));
 
-      card.style.left=cx+"px";
-      card.style.top="50%";
+      card.style.left=x+"px";
+      card.style.top=y+"px";
+
+      /*
+       * No transform on the image/card.
+       * The centre card is therefore rendered at its native pixel quality.
+       */
+      card.style.transform="translate(-50%,-50%)";
+
       card.style.transition=animate
-        ? "transform .72s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease"
+        ? "left .72s cubic-bezier(.22,1,.36,1),top .72s cubic-bezier(.22,1,.36,1),opacity .45s ease"
         : "none";
 
-      card.style.transform=
-        `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) `+
-        `perspective(1200px) rotateY(${rotate}deg) scale(${scale})`;
-
-      card.style.opacity=String(opacity);
-      card.style.filter="none";
+      card.style.opacity=ad<2.35 ? "1" : String(Math.max(0,(3.15-ad)/.8));
       card.style.zIndex=String(100-Math.round(ad*10));
       card.style.pointerEvents=ad<.8 ? "auto" : "none";
       card.classList.toggle("is-center",ad<.5);
@@ -524,105 +643,82 @@ if(false){
   }
 
   function stopAuto(){
-    if(autoTimer){
-      clearInterval(autoTimer);
-      autoTimer=null;
-    }
-    if(resumeTimer){
-      clearTimeout(resumeTimer);
-      resumeTimer=null;
+    if(timer){
+      clearInterval(timer);
+      timer=null;
     }
   }
 
-  function startAuto(delay=2200){
+  function startAuto(delay=2400){
     stopAuto();
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      render(false);
-      return;
-    }
-
-    autoTimer=setInterval(()=>{
+    timer=setInterval(()=>{
       if(!dragging){
-        position=wrap(Math.round(position)+1);
+        pos=wrap(Math.round(pos)+1);
         render(true);
       }
     },delay);
   }
 
-  function moveTo(delta){
-    position=wrap(Math.round(position)+delta);
+  function moveBy(delta){
+    pos=wrap(Math.round(pos)+delta);
     render(true);
     startAuto(2800);
   }
 
-  function pointerDown(x,y,id){
+  function begin(x,id){
     dragging=true;
     pointerId=id;
     startX=x;
-    lastX=x;
-    dragStartPosition=position;
+    startPos=pos;
     moved=false;
     stopAuto();
-    track.classList.add("is-elastic-dragging");
-    render(false);
   }
 
-  function pointerMove(x,y){
+  function move(x){
     if(!dragging) return;
-
     const dx=x-startX;
-    if(Math.abs(dx)>6) moved=true;
+    if(Math.abs(dx)>7) moved=true;
 
-    const {step}=getMetrics();
-    position=dragStartPosition-dx/step;
-    lastX=x;
-
+    const {step}=metrics();
+    pos=startPos-dx/step;
     render(false);
   }
 
-  function pointerUp(){
+  function end(){
     if(!dragging) return;
-
     dragging=false;
-    track.classList.remove("is-elastic-dragging");
-
-    /* Snap to the nearest image after the gesture. */
-    position=wrap(Math.round(position));
-    render(true);
-
     pointerId=null;
+    pos=wrap(Math.round(pos));
+    render(true);
     startAuto(2800);
   }
 
-  /* Pointer Events: mouse, trackpad and modern touch browsers. */
+  /* Mouse / Pointer */
   track.addEventListener("pointerdown",e=>{
     if(e.pointerType==="mouse" && e.button!==0) return;
-    pointerDown(e.clientX,e.clientY,e.pointerId);
+    begin(e.clientX,e.pointerId);
     try{track.setPointerCapture(e.pointerId)}catch(_){}
   });
 
   track.addEventListener("pointermove",e=>{
-    if(!dragging || pointerId!==e.pointerId) return;
-    pointerMove(e.clientX,e.clientY);
+    if(dragging && pointerId===e.pointerId) move(e.clientX);
   });
 
   track.addEventListener("pointerup",e=>{
-    if(pointerId!==e.pointerId) return;
-    pointerUp();
-    try{track.releasePointerCapture(e.pointerId)}catch(_){}
+    if(dragging && pointerId===e.pointerId){
+      end();
+      try{track.releasePointerCapture(e.pointerId)}catch(_){}
+    }
   });
 
-  track.addEventListener("pointercancel",pointerUp);
+  track.addEventListener("pointercancel",end);
 
-  /*
-   * Direct touch fallback for iPhone Safari.
-   * Horizontal movement is handled here; vertical movement is left to
-   * the browser so the page can still scroll normally.
-   */
+  /* Direct touch fallback for iPhone / Android */
   track.addEventListener("touchstart",e=>{
     const t=e.touches[0];
-    if(t) pointerDown(t.clientX,t.clientY,"touch");
+    if(t) begin(t.clientX,"touch");
   },{passive:true});
 
   track.addEventListener("touchmove",e=>{
@@ -630,34 +726,20 @@ if(false){
     const t=e.touches[0];
     if(!t) return;
 
-    const dx=t.clientX-startX;
-    const dy=t.clientY-(e.touches[0].clientY || 0);
-
-    if(Math.abs(dx)>8){
+    if(Math.abs(t.clientX-startX)>8){
       e.preventDefault();
-      pointerMove(t.clientX,t.clientY);
+      move(t.clientX);
     }
   },{passive:false});
 
-  track.addEventListener("touchend",pointerUp,{passive:true});
-  track.addEventListener("touchcancel",pointerUp,{passive:true});
+  track.addEventListener("touchend",end,{passive:true});
+  track.addEventListener("touchcancel",end,{passive:true});
 
   const prev=document.getElementById("prev");
   const next=document.getElementById("next");
 
-  if(prev){
-    prev.onclick=e=>{
-      e.preventDefault();
-      moveTo(-1);
-    };
-  }
-
-  if(next){
-    next.onclick=e=>{
-      e.preventDefault();
-      moveTo(1);
-    };
-  }
+  if(prev) prev.onclick=e=>{e.preventDefault();moveBy(-1)};
+  if(next) next.onclick=e=>{e.preventDefault();moveBy(1)};
 
   track.addEventListener("click",e=>{
     if(moved){
@@ -668,40 +750,16 @@ if(false){
     const card=e.target.closest("figure");
     if(!card) return;
 
-    const i=Number(card.dataset.elasticIndex);
-    const d=distance(i);
-
-    if(Math.abs(d)>.45){
-      position=wrap(Math.round(position+d));
-      render(true);
-      startAuto(2800);
-    }
-  });
-
-  track.tabIndex=0;
-  track.setAttribute("aria-label","Our Little World photo carousel");
-
-  track.addEventListener("keydown",e=>{
-    if(e.key==="ArrowLeft"){
-      e.preventDefault();
-      moveTo(-1);
-    }
-    if(e.key==="ArrowRight"){
-      e.preventDefault();
-      moveTo(1);
-    }
+    const d=dist(Number(card.dataset.i));
+    if(Math.abs(d)>.45) moveBy(d);
   });
 
   window.addEventListener("resize",()=>render(false),{passive:true});
 
-  /*
-   * IMPORTANT:
-   * No requestAnimationFrame, no image-load dependency, no hover pause.
-   * A simple timer drives the carousel so it cannot silently stop.
-   */
   render(false);
-  startAuto(2200);
+  startAuto();
 }
+
 
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",boot,{once:true});
@@ -709,4 +767,206 @@ if(document.readyState==="loading"){
   boot();
 }
 
+})();
+
+
+/* =========================================================
+   OUR LITTLE WORLD — NATIVE INFINITE CAROUSEL
+   No 3D transforms. No image blur. Native horizontal scroll
+   gives iPhone/Android the browser's own touch physics.
+   ========================================================= */
+(function(){
+  function initNativeGallery(){
+    const gallery=document.querySelector(".gallery");
+    const track=document.getElementById("track");
+    if(!gallery || !track || track.dataset.nativeCarousel==="1") return;
+    track.dataset.nativeCarousel="1";
+
+    const original=[...track.querySelectorAll("figure")];
+    if(original.length<2) return;
+
+    /* Build a 3x loop. The middle copy is the starting copy. */
+    const base=original.map(f=>f.cloneNode(true));
+    track.innerHTML="";
+    const copies=[...original.map(f=>f.cloneNode(true)),...base.map(f=>f.cloneNode(true)),...base.map(f=>f.cloneNode(true))];
+    copies.forEach((card,i)=>{
+      card.dataset.loopIndex=i;
+      card.draggable=false;
+      const img=card.querySelector("img");
+      if(img){
+        img.draggable=false;
+        img.loading=i<original.length*2 ? "eager" : "lazy";
+        img.addEventListener("dragstart",e=>e.preventDefault());
+      }
+      track.appendChild(card);
+    });
+
+    const N=original.length;
+    let timer=null;
+    let dragging=false;
+    let startX=0;
+    let startScroll=0;
+    let moved=false;
+
+    function gap(){
+      const cs=getComputedStyle(track);
+      return parseFloat(cs.columnGap)||parseFloat(cs.gap)||18;
+    }
+
+    function step(){
+      const card=track.querySelector("figure");
+      return card ? card.getBoundingClientRect().width+gap() : 1;
+    }
+
+    function middleStart(){
+      return step()*N;
+    }
+
+    function centerStart(){
+      const s=step();
+      const card=track.querySelector("figure");
+      const viewport=track.clientWidth;
+      const cardW=card ? card.getBoundingClientRect().width : 0;
+      return s*N - (viewport-cardW)/2;
+    }
+
+    function normalise(animated=false){
+      const s=step();
+      const middle=s*N;
+      const max=track.scrollWidth-track.clientWidth;
+      const left=track.scrollLeft;
+
+      if(left < s*(N*.55)){
+        track.scrollLeft=left+middle;
+      }else if(left > max-s*(N*.55)){
+        track.scrollLeft=left-middle;
+      }
+
+      updateCenter();
+    }
+
+    function updateCenter(){
+      const center=track.scrollLeft+track.clientWidth/2;
+      let best=null,bd=Infinity;
+      [...track.children].forEach(card=>{
+        const c=card.offsetLeft+card.offsetWidth/2;
+        const d=Math.abs(c-center);
+        if(d<bd){bd=d;best=card;}
+      });
+      track.querySelectorAll("figure").forEach(f=>f.classList.remove("is-center"));
+      if(best) best.classList.add("is-center");
+    }
+
+    function scrollToCard(card,behavior="smooth"){
+      const left=card.offsetLeft-(track.clientWidth-card.offsetWidth)/2;
+      track.scrollTo({left,behavior});
+    }
+
+    function next(){
+      const s=step();
+      track.scrollBy({left:s,behavior:"smooth"});
+      setTimeout(normalise,760);
+    }
+    function prev(){
+      const s=step();
+      track.scrollBy({left:-s,behavior:"smooth"});
+      setTimeout(normalise,760);
+    }
+
+    const prevBtn=document.getElementById("prev");
+    const nextBtn=document.getElementById("next");
+    if(prevBtn) prevBtn.addEventListener("click",e=>{e.preventDefault();prev();resetAuto();});
+    if(nextBtn) nextBtn.addEventListener("click",e=>{e.preventDefault();next();resetAuto();});
+
+    track.addEventListener("scroll",updateCenter,{passive:true});
+
+    track.addEventListener("pointerdown",e=>{
+      if(e.pointerType==="mouse" && e.button!==0) return;
+      dragging=true;
+      moved=false;
+      startX=e.clientX;
+      startScroll=track.scrollLeft;
+      track.classList.add("native-dragging");
+      try{track.setPointerCapture(e.pointerId)}catch(_){}
+      stopAuto();
+    });
+
+    track.addEventListener("pointermove",e=>{
+      if(!dragging)return;
+      const dx=e.clientX-startX;
+      if(Math.abs(dx)>6)moved=true;
+      track.scrollLeft=startScroll-dx;
+    });
+
+    const end=e=>{
+      if(!dragging)return;
+      dragging=false;
+      track.classList.remove("native-dragging");
+      try{if(e?.pointerId)track.releasePointerCapture(e.pointerId)}catch(_){}
+      const s=step();
+      const target=Math.round(track.scrollLeft/s)*s;
+      track.scrollTo({left:target,behavior:"smooth"});
+      setTimeout(normalise,760);
+      setTimeout(startAuto,900);
+    };
+    track.addEventListener("pointerup",end);
+    track.addEventListener("pointercancel",end);
+
+    track.addEventListener("click",e=>{
+      if(moved){moved=false;return;}
+      const card=e.target.closest("figure");
+      if(!card)return;
+      const c=card.offsetLeft+card.offsetWidth/2;
+      const center=track.scrollLeft+track.clientWidth/2;
+      if(Math.abs(c-center)>track.clientWidth*.12){
+        scrollToCard(card);
+        resetAuto();
+      }
+    });
+
+    function stopAuto(){
+      if(timer){clearInterval(timer);timer=null;}
+    }
+    function startAuto(){
+      stopAuto();
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+      timer=setInterval(next,3000);
+    }
+    function resetAuto(){
+      stopAuto();
+      setTimeout(startAuto,3200);
+    }
+
+    function initial(){
+      const target=centerStart();
+      track.scrollLeft=target;
+      updateCenter();
+      setTimeout(normalise,50);
+      startAuto();
+    }
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(()=>requestAnimationFrame(initial));
+    }else{
+      requestAnimationFrame(initial);
+    }
+
+    window.addEventListener("resize",()=>{
+      const center=track.scrollLeft+track.clientWidth/2;
+      requestAnimationFrame(()=>{
+        let best=null,bd=Infinity;
+        [...track.children].forEach(card=>{
+          const c=card.offsetLeft+card.offsetWidth/2,d=Math.abs(c-center);
+          if(d<bd){bd=d;best=card;}
+        });
+        if(best)scrollToCard(best,"auto");
+      });
+    },{passive:true});
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",initNativeGallery,{once:true});
+  }else{
+    initNativeGallery();
+  }
 })();

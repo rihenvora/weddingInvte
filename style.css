@@ -917,6 +917,7 @@ html.heroHold,body.heroHold{overflow:hidden!important}
 .openInvitationFinal{
   position:absolute!important;
   left:50%!important;
+
   top:64%!important;
   transform:translate(-50%,-50%)!important;
   z-index:90!important;
@@ -1881,7 +1882,7 @@ body.curtainLocked .landing{
 }
 .walk.gods > .sticky.stage{
   position:relative!important;
-  top:auto!important;
+
   inset:auto!important;
   width:100%!important;
   height:100vh!important;
@@ -1893,7 +1894,7 @@ body.curtainLocked .landing{
 .gods .god{
   position:absolute!important;
   z-index:12!important;
-  left:50%!important;
+
   right:auto!important;
   top:48%!important;
   bottom:auto!important;
@@ -1938,7 +1939,7 @@ body.curtainLocked .landing{
   margin:0 auto 10px!important;
   padding:0!important;
   position:relative!important;
-  left:auto!important;
+
   right:auto!important;
   transform:none!important;
 }
@@ -1963,7 +1964,7 @@ body.curtainLocked .landing{
 .godsBlessingLabel{
   position:absolute!important;
   z-index:30!important;
-  left:50%!important;
+
   top:max(22px,env(safe-area-inset-top))!important;
   transform:translateX(-50%)!important;
   color:#8f5846!important;
@@ -1974,8 +1975,9 @@ body.curtainLocked .landing{
 }
 .godsNextBtn{
   position:absolute!important;
-  z-index:50!important;
   left:50%!important;
+  z-index:50!important;
+
   bottom:max(30px,env(safe-area-inset-bottom))!important;
   transform:translateX(-50%) translateY(12px)!important;
   border:0!important;
@@ -2017,7 +2019,7 @@ body.curtainLocked .landing{
 /* Mobile/tablet deity artwork: larger and genuinely centered. */
 @media(max-width:900px){
   .gods .god{
-    top:50%!important;
+
     width:100%!important;
     padding:42px 12px 82px!important;
   }
@@ -2048,7 +2050,7 @@ body.curtainLocked .landing{
   }
   .walk.invite > .sticky.inviteStage{
     position:relative!important;
-    top:auto!important;
+
     width:100%!important;
     height:100dvh!important;
     min-height:100dvh!important;
@@ -2652,8 +2654,7 @@ main > section > .sectionContinue{
 
 .gallery .track figure{
   position:absolute!important;
-  left:50%!important;
-  top:50%!important;
+
   width:var(--elastic-card)!important;
   height:auto!important;
   margin:0!important;
@@ -2829,21 +2830,11 @@ main > section > .sectionContinue{
 }
 
 
-/* FINAL MOBILE CENTER ANCHOR
-   The JS calculates the exact gallery centre in page coordinates. */
-.gallery .track figure{
-  left:var(--elastic-center-x,50%)!important;
-}
-
 @media(max-width:809.98px){
   .gallery .track{
     width:100%!important;
     margin-left:0!important;
     margin-right:0!important;
-  }
-
-  .gallery .track figure{
-    left:var(--elastic-center-x,50%)!important;
   }
 }
 
@@ -2890,4 +2881,76 @@ main > section > .sectionContinue{
 .gallery .track figure.is-center img{
   filter:none!important;
   -webkit-filter:none!important;
+}
+
+
+/* =========================================================
+   FINAL CRISP PHOTO MODE
+   The original photos were sharp. Do not rasterise them with
+   3D transforms, filters, perspective or animated scaling.
+   ========================================================= */
+
+.gallery .track{
+  transform:none!important;
+  animation:none!important;
+  perspective:none!important;
+  -webkit-perspective:none!important;
+  will-change:auto!important;
+}
+
+.gallery .track figure{
+  transform:translate(-50%,-50%)!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  perspective:none!important;
+  -webkit-perspective:none!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  will-change:auto!important;
+  transition-property:left,top,opacity!important;
+}
+
+.gallery .track figure img,
+.gallery .track figure.is-center img{
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:calc(var(--elastic-height) - 20px)!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  transform:none!important;
+  image-rendering:auto!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  will-change:auto!important;
+}
+
+
+
+/* FINAL OPEN-INVITATION POSITION FIX
+   The button is intentionally centred in the closed curtain.
+   Its transform is already translate(-50%, -50%), so left:50% is required. */
+.landing:not(.open) .openInvitationFinal{
+  left:50%!important;
+  top:68%!important;
+  transform:translate(-50%,-50%)!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+<style>
+/* ONLY FIX: Gods NEXT / CONTINUE button horizontal anchor */
+.walk.gods .godsNextBtn{
+  left:50%!important;
+  right:auto!important;
+}
+</style>
+
+
+/* DISCOVER THE DAY — scratch is the only manual interaction.
+   After enough scratching, the existing celebration animation plays. */
+.dateSection .scratchWrap.autoDone #scratch{
+  transition:opacity .55s ease;
 }
