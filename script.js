@@ -487,13 +487,12 @@ if(false){
    Entry is intentionally handled only by openInvitation() above.
    Keeping a second click/scroll controller here caused competing scrolls. */
 
-/* ===== TRUE CIRCULAR INFINITE GALLERY ===== */
+/* ===== TRUE CIRCULAR INFINITE GALLERY — MOBILE SWIPE FIX ===== */
 (function(){
   const tr=document.getElementById("track");
   if(!tr || tr.dataset.circularReady==="1") return;
   tr.dataset.circularReady="1";
 
-  // Remove behavior from any earlier seamless implementation.
   tr.classList.remove("seamless");
   tr.style.animation="none";
   tr.style.removeProperty("--loopWidth");
@@ -502,68 +501,328 @@ if(false){
   const originals=[...tr.children];
   if(originals.length<2) return;
 
-  // Clone a full set before and after. Start in the middle set, then silently
-  // wrap to the equivalent slide whenever a boundary is crossed.
   const before=originals.map(el=>el.cloneNode(true));
   const after=originals.map(el=>el.cloneNode(true));
+
   before.reverse().forEach(el=>tr.insertBefore(el,tr.firstChild));
   after.forEach(el=>tr.appendChild(el));
 
   const N=originals.length;
+
   let current=N;
   let busy=false;
-  let downX=null;
   let auto=null;
+
+  /* Pointer state */
+  let pointerStartX=null;
+  let pointerStartY=null;
+  let pointerActive=false;
+  let pointerMoved=false;
+
+  /* Touch state — kept separate for iPhone Safari reliability */
+  let touchStartX=null;
+  let touchStartY=null;
+  let touchMoved=false;
 
   function metrics(){
     const f=tr.querySelector("figure");
     if(!f) return {step:1};
+
     const cs=getComputedStyle(tr);
-    const gap=parseFloat(cs.columnGap||cs.gap)||24;
-    return {step:f.getBoundingClientRect().width+gap};
+    const gap=parseFloat(cs.columnGap || cs.gap) || 24;
+
+    return {
+      step:f.getBoundingClientRect().width + gap
+    };
   }
+
   function paint(animate=true){
+
     const {step}=metrics();
-    tr.style.transition=animate ? "transform .65s cubic-bezier(.22,.61,.36,1)" : "none";
-    tr.style.transform=`translate3d(${-current*step}px,0,0)`;
+
+    tr.style.transition=animate
+      ? "transform .65s cubic-bezier(.22,.61,.36,1)"
+      : "none";
+
+    tr.style.transform=
+      `translate3d(${-current*step}px,0,0)`;
   }
+
   function normalize(){
-    if(current>=N*2){ current-=N; paint(false); }
-    else if(current<N){ current+=N; paint(false); }
+
+    if(current>=N*2){
+      current-=N;
+      paint(false);
+    }
+
+    else if(current<N){
+      current+=N;
+      paint(false);
+    }
+
     busy=false;
   }
+
   function go(dir){
+
     if(busy) return;
+
     busy=true;
+
     current+=dir;
+
     paint(true);
   }
-  tr.addEventListener("transitionend",normalize);
-  window.addEventListener("resize",()=>paint(false));
+
+  tr.addEventListener(
+    "transitionend",
+    normalize
+  );
+
+  window.addEventListener(
+    "resize",
+    ()=>paint(false),
+    {passive:true}
+  );
+
+
+  /* =====================================================
+     BUTTONS
+     ===================================================== */
 
   const next=document.getElementById("next");
   const prev=document.getElementById("prev");
-  if(next) next.onclick=()=>{go(1); restart();};
-  if(prev) prev.onclick=()=>{go(-1); restart();};
+
+  if(next){
+    next.onclick=()=>{
+      go(1);
+      restart();
+    };
+  }
+
+  if(prev){
+    prev.onclick=()=>{
+      go(-1);
+      restart();
+    };
+  }
+
+
+  /* =====================================================
+     POINTER — DESKTOP
+     ===================================================== */
 
   tr.addEventListener("pointerdown",e=>{
-    downX=e.clientX;
-    tr.setPointerCapture?.(e.pointerId);
+
+    if(e.pointerType==="touch") return;
+
+    pointerActive=true;
+    pointerMoved=false;
+
+    pointerStartX=e.clientX;
+    pointerStartY=e.clientY;
+
     clearInterval(auto);
+
   });
+
+  tr.addEventListener("pointermove",e=>{
+
+    if(!pointerActive) return;
+
+    if(
+      Math.abs(e.clientX-pointerStartX)>8 ||
+      Math.abs(e.clientY-pointerStartY)>8
+    ){
+      pointerMoved=true;
+    }
+
+  });
+
   tr.addEventListener("pointerup",e=>{
-    if(downX!==null && Math.abs(e.clientX-downX)>35) go(e.clientX<downX?1:-1);
-    downX=null; restart();
+
+    if(!pointerActive) return;
+
+    const dx=e.clientX-pointerStartX;
+    const dy=e.clientY-pointerStartY;
+
+    pointerActive=false;
+
+    if(
+      pointerMoved &&
+      Math.abs(dx)>45 &&
+      Math.abs(dx)>Math.abs(dy)
+    ){
+      go(dx<0 ? 1 : -1);
+    }
+
+    restart();
+
   });
-  tr.addEventListener("pointercancel",()=>{downX=null;restart();});
+
+  tr.addEventListener(
+    "pointercancel",
+    ()=>{
+      pointerActive=false;
+      restart();
+    }
+  );
+
+
+  /* =====================================================
+     TOUCH — IPHONE / ANDROID
+     ===================================================== */
+
+  tr.addEventListener(
+    "touchstart",
+    e=>{
+
+      if(!e.touches.length) return;
+
+      const touch=e.touches[0];
+
+      touchStartX=touch.clientX;
+      touchStartY=touch.clientY;
+
+      touchMoved=false;
+
+      clearInterval(auto);
+
+    },
+    {passive:true}
+  );
+
+
+  tr.addEventListener(
+    "touchmove",
+    e=>{
+
+      if(
+        touchStartX===null ||
+        !e.touches.length
+      ) return;
+
+      const touch=e.touches[0];
+
+      const dx=touch.clientX-touchStartX;
+      const dy=touch.clientY-touchStartY;
+
+      /*
+       * We deliberately do NOT preventDefault().
+       *
+       * This allows normal vertical page scrolling.
+       * A predominantly horizontal gesture becomes a
+       * gallery swipe.
+       */
+
+      if(
+        Math.abs(dx)>10 &&
+        Math.abs(dx)>Math.abs(dy)
+      ){
+        touchMoved=true;
+      }
+
+    },
+    {passive:true}
+  );
+
+
+  tr.addEventListener(
+    "touchend",
+    e=>{
+
+      if(
+        touchStartX===null
+      ){
+        restart();
+        return;
+      }
+
+      const touch=e.changedTouches[0];
+
+      const dx=touch.clientX-touchStartX;
+      const dy=touch.clientY-touchStartY;
+
+      if(
+        touchMoved &&
+        Math.abs(dx)>=45 &&
+        Math.abs(dx)>Math.abs(dy)
+      ){
+
+        /*
+         * Left swipe  = next
+         * Right swipe = previous
+         */
+
+        go(dx<0 ? 1 : -1);
+      }
+
+      touchStartX=null;
+      touchStartY=null;
+      touchMoved=false;
+
+      restart();
+
+    },
+    {passive:true}
+  );
+
+
+  tr.addEventListener(
+    "touchcancel",
+    ()=>{
+      touchStartX=null;
+      touchStartY=null;
+      touchMoved=false;
+      restart();
+    },
+    {passive:true}
+  );
+
+
+  /* =====================================================
+     AUTO PLAY
+     ===================================================== */
 
   function restart(){
-    clearInterval(auto);
-    auto=setInterval(()=>go(1),3200);
-  }
-  tr.addEventListener("mouseenter",()=>clearInterval(auto));
-  tr.addEventListener("mouseleave",restart);
 
-  requestAnimationFrame(()=>paint(false));
+    clearInterval(auto);
+
+    auto=setInterval(
+      ()=>go(1),
+      3200
+    );
+
+  }
+
+  tr.addEventListener(
+    "mouseenter",
+    ()=>clearInterval(auto)
+  );
+
+  tr.addEventListener(
+    "mouseleave",
+    restart
+  );
+
+
+  /*
+   * Prevent browser image dragging from stealing the gesture.
+   */
+  tr.querySelectorAll("img").forEach(img=>{
+    img.draggable=false;
+
+    img.addEventListener(
+      "dragstart",
+      e=>e.preventDefault()
+    );
+  });
+
+
+  requestAnimationFrame(
+    ()=>paint(false)
+  );
+
   restart();
+
 })();
