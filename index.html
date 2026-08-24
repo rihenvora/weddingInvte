@@ -235,31 +235,5 @@ const sec=document.querySelector(".gods");new IntersectionObserver(e=>{l.querySe
    replacement is intentionally removed so it cannot destroy the active
    drag/autoplay controller. */
 </script>
-<script>
-(function(){
-function init(){
- const g=document.querySelector('.gallery'), old=document.getElementById('track');
- if(!g||!old||g.dataset.finalCarousel==='1')return;
- const names=['couple10.jpeg','couple8.jpeg','couple1.jpeg','couple2.jpeg','couple3.jpeg','couple4.jpeg','couple5.jpeg','couple6.jpeg','couple7.jpeg','couple9.jpeg'];
- const figs=[...old.querySelectorAll('figure')], t=old.cloneNode(false); t.innerHTML='';
- names.forEach(n=>{const f=figs.find(x=>{const i=x.querySelector('img');return i&&i.src.includes(n)});if(f)t.appendChild(f.cloneNode(true));});
- if(t.children.length<2)return; old.replaceWith(t); g.dataset.finalCarousel='1';
- const cards=[...t.querySelectorAll('figure')], N=cards.length; let pos=0,timer,drag=false,startX=0,startPos=0,pid=null,moved=false;
- cards.forEach((c,i)=>{c.dataset.i=i;c.draggable=false;const im=c.querySelector('img');if(im){im.draggable=false;im.ondragstart=()=>false}});
- const wrap=v=>((v%N)+N)%N;
- const dist=i=>{let d=i-pos;while(d>N/2)d-=N;while(d<-N/2)d+=N;return d};
- function metric(){const w=g.clientWidth,m=innerWidth<=760,wid=m?Math.min(w*.76,330):Math.min(w*.28,360);return{step:wid+(m?Math.min(18,w*.045):Math.min(30,w*.022)),m};}
- function render(anim){const {step,m}=metric(),gr=g.getBoundingClientRect(),tr=t.getBoundingClientRect(),cx=gr.left+gr.width/2-tr.left;
-  cards.forEach((c,i)=>{const d=dist(i),a=Math.abs(d);if(a>3.1){c.style.opacity=0;c.style.pointerEvents='none';return}const x=d*step,sc=a<.5?1.04:.8+Math.max(0,1-a/3.1)*.2,y=a?Math.min(m?14:28,a*(m?6:10)):0,r=(d<0?-1:1)*Math.min(m?7:14,a*(m?3.5:5));c.style.left=cx+'px';c.style.top='50%';c.style.transition=anim?'transform .72s cubic-bezier(.22,1,.36,1),opacity .45s ease':'none';c.style.transform=`translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),0) perspective(1200px) rotateY(${r}deg) scale(${sc})`;c.style.opacity=a<2.25?1:Math.max(0,(3.1-a)/.85);c.style.zIndex=100-Math.round(a*10);c.style.pointerEvents=a<.75?'auto':'none';});}
- function stop(){clearInterval(timer);timer=null} function start(){stop();timer=setInterval(()=>{if(!drag){pos=wrap(Math.round(pos)+1);render(true)}},2200)} function stepTo(d){pos=wrap(Math.round(pos)+d);render(true);start()}
- function down(x,id){drag=true;pid=id;startX=x;startPos=pos;moved=false;stop();render(false)} function move(x){if(!drag)return;const dx=x-startX;if(Math.abs(dx)>7)moved=true;pos=startPos-dx/metric().step;render(false)} function up(){if(!drag)return;drag=false;pos=wrap(Math.round(pos));pid=null;render(true);start()}
- t.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;down(e.clientX,e.pointerId);try{t.setPointerCapture(e.pointerId)}catch(_){} });
- t.addEventListener('pointermove',e=>{if(pid===e.pointerId)move(e.clientX)});t.addEventListener('pointerup',e=>{if(pid===e.pointerId){up();try{t.releasePointerCapture(e.pointerId)}catch(_){}}});t.addEventListener('pointercancel',up);
- t.addEventListener('touchstart',e=>{const q=e.touches[0];if(q)down(q.clientX,'touch')},{passive:true});t.addEventListener('touchmove',e=>{if(!drag)return;const q=e.touches[0];if(q&&Math.abs(q.clientX-startX)>8){e.preventDefault();move(q.clientX)}},{passive:false});t.addEventListener('touchend',up,{passive:true});t.addEventListener('touchcancel',up,{passive:true});
- const p=document.getElementById('prev'),n=document.getElementById('next');if(p)p.onclick=e=>{e.preventDefault();stepTo(-1)};if(n)n.onclick=e=>{e.preventDefault();stepTo(1)};
- t.addEventListener('click',e=>{if(moved){moved=false;return}const c=e.target.closest('figure');if(c){const d=dist(+c.dataset.i);if(Math.abs(d)>.5)stepTo(d)}});addEventListener('resize',()=>render(false),{passive:true});render(false);start();
-}
-if(document.readyState==='complete')init();else addEventListener('load',init,{once:true});
-})();
-</script>
+
 </body></html>

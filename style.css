@@ -2864,3 +2864,30 @@ main > section > .sectionContinue{
 .gallery .track figure img{
   pointer-events:none!important;
 }
+
+
+/* FINAL OUR LITTLE WORLD — SINGLE CONTROLLER / SHARP PHOTOS */
+.gallery .track{
+  animation:none!important;
+  transform:none!important;
+  will-change:contents;
+  touch-action:pan-y!important;
+  overflow:visible!important;
+  pointer-events:auto!important;
+}
+.gallery .track figure{
+  filter:none!important;
+  will-change:transform,opacity;
+}
+.gallery .track figure img{
+  filter:none!important;
+  -webkit-filter:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  pointer-events:none!important;
+  -webkit-user-drag:none!important;
+}
+.gallery .track figure.is-center img{
+  filter:none!important;
+  -webkit-filter:none!important;
+}

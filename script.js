@@ -3,8 +3,8 @@ const legacyBackTop = document.getElementById("backTop");
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 let opened=false;
 
-/* --One curtain controller only. Body is physically fixed before opening,
-   so wheel/touch/trackpad cannot move the document underneath the curtain.-- */
+/* One curtain controller only. Body is physically fixed before opening,
+   so wheel/touch/trackpad cannot move the document underneath the curtain. */
 (function(){
  const landing=document.getElementById("landing");
  const openButtons=[document.getElementById("openInvitationFinal"),document.getElementById("openBtn")].filter(Boolean);
@@ -504,7 +504,6 @@ if(false){
       const y=ad===0 ? 0 : Math.min(mobile?16:30,ad*(mobile?7:10));
       const rotate=sign*Math.min(mobile?8:16,ad*(mobile?4:6));
       const opacity=ad<2.35 ? 1 : Math.max(0,(3.25-ad)/.9);
-      const blur=ad<1.15 ? 0 : Math.min(1.5,(ad-1.15)*.8);
 
       card.style.left=cx+"px";
       card.style.top="50%";
@@ -517,7 +516,7 @@ if(false){
         `perspective(1200px) rotateY(${rotate}deg) scale(${scale})`;
 
       card.style.opacity=String(opacity);
-      card.style.filter=`blur(${blur}px)`;
+      card.style.filter="none";
       card.style.zIndex=String(100-Math.round(ad*10));
       card.style.pointerEvents=ad<.8 ? "auto" : "none";
       card.classList.toggle("is-center",ad<.5);
