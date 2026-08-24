@@ -2954,3 +2954,636 @@ main > section > .sectionContinue{
 .dateSection .scratchWrap.autoDone #scratch{
   transition:opacity .55s ease;
 }
+
+
+/* =========================================================
+   MOBILE-ONLY PRECISION FIXES
+   1) Our Little World: remove the empty white area under photo.
+   2) Gods: centre the BLESSINGS label on small screens.
+   No carousel logic, images, or other sections changed.
+   ========================================================= */
+
+/* Our Little World — card height must follow the actual photo.
+   The old elastic container was giving the figure a much taller
+   box than the image itself on mobile. */
+@media (max-width: 809.98px){
+  .gallery .track figure{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:auto!important;
+    box-sizing:border-box!important;
+  }
+
+  .gallery .track figure img,
+  .gallery .track figure.is-center img{
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+    display:block!important;
+  }
+}
+
+/* Gods — BLESSINGS must be horizontally centred.
+   The existing transform already uses translateX(-50%);
+   it was simply missing the 50% left anchor. */
+@media (max-width: 809.98px){
+  .walk.gods .godsBlessingLabel{
+    left:50%!important;
+    right:auto!important;
+    top:max(18px,env(safe-area-inset-top))!important;
+    transform:translateX(-50%)!important;
+    text-align:center!important;
+  }
+}
+
+
+/* =========================================================
+   OUR LITTLE WORLD — UNIFORM PHOTO FRAME / NO SHADOW
+   The photos themselves are never cropped. Every card uses
+   one identical height, and the image is contained inside it.
+   ========================================================= */
+
+.gallery .track figure{
+  box-shadow:none!important;
+  background:transparent!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+
+.gallery .track figure::after{
+  display:none!important;
+  content:none!important;
+}
+
+.gallery .track figure img,
+.gallery .track figure.is-center img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+/* Desktop/tablet: one identical image height for every card */
+.gallery .track figure{
+  height:min(68vh,560px)!important;
+  min-height:min(68vh,560px)!important;
+  max-height:min(68vh,560px)!important;
+}
+
+/* Mobile: use the smaller, compact frame consistently for every image */
+@media (max-width:809.98px){
+  .gallery .track{
+    height:min(70vh,500px)!important;
+    min-height:0!important;
+  }
+
+  .gallery .track figure{
+    height:min(70vh,500px)!important;
+    min-height:min(70vh,500px)!important;
+    max-height:min(70vh,500px)!important;
+    aspect-ratio:auto!important;
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  .gallery .track figure img,
+  .gallery .track figure.is-center img{
+    width:100%!important;
+    height:100%!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+}
+
+
+/* =========================================================
+   OUR LITTLE WORLD — FINAL UNIFORM IMAGE SIZE
+   Use the smaller portrait proportion for EVERY photo.
+   No card/shadow/border layer. Photos are contained, never
+   cropped. Carousel positioning/JS is untouched.
+   ========================================================= */
+
+.gallery .track figure{
+  width:min(360px,72vw)!important;
+  flex:0 0 min(360px,72vw)!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:4 / 5!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+
+.gallery .track figure::before,
+.gallery .track figure::after{
+  display:none!important;
+  content:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+
+.gallery .track figure img,
+.gallery .track figure.is-center img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  aspect-ratio:4 / 5!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  transform:none!important;
+}
+
+/* Same smaller-image proportion on phones. */
+@media (max-width:809.98px){
+  .gallery .track figure{
+    width:78vw!important;
+    flex-basis:78vw!important;
+    height:auto!important;
+    aspect-ratio:4 / 5!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+  }
+
+  .gallery .track figure img,
+  .gallery .track figure.is-center img{
+    width:100%!important;
+    height:100%!important;
+    aspect-ratio:4 / 5!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+}
+
+
+/* =========================================================
+   GODS — "WITH DIVINE BLESSINGS" FINAL POSITION
+   Keep it above the deity artwork, centred on every viewport,
+   and readable against the floral background.
+   ========================================================= */
+
+.walk.gods .godsBlessingLabel{
+  left:50%!important;
+  right:auto!important;
+  top:clamp(72px,10vh,115px)!important;
+  transform:translateX(-50%)!important;
+  width:max-content!important;
+  max-width:calc(100% - 40px)!important;
+  box-sizing:border-box!important;
+  padding:8px 16px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  color:#8f5846!important;
+  background:rgba(250,244,232,.78)!important;
+  border:1px solid rgba(180,139,91,.18)!important;
+  border-radius:999px!important;
+  box-shadow:0 4px 16px rgba(91,67,49,.06)!important;
+  backdrop-filter:blur(4px)!important;
+  -webkit-backdrop-filter:blur(4px)!important;
+  opacity:1!important;
+  z-index:40!important;
+}
+
+@media(max-width:809.98px){
+  .walk.gods .godsBlessingLabel{
+    left:50%!important;
+    top:clamp(78px,11vh,120px)!important;
+    transform:translateX(-50%)!important;
+    padding:7px 14px!important;
+    font-size:9px!important;
+    line-height:1.25!important;
+    letter-spacing:.22em!important;
+  }
+}
+
+
+/* =========================================================
+   OUR LITTLE WORLD — EXACT EQUAL-SIZE FRAMES
+   Every carousel item and every photo occupies the exact same
+   width + height.  This removes the uneven white bands caused
+   by different source-image aspect ratios.
+   ========================================================= */
+
+.gallery .track{
+  align-items:stretch!important;
+}
+
+.gallery .track figure{
+  width:min(360px,72vw)!important;
+  flex:0 0 min(360px,72vw)!important;
+  height:min(540px,calc(72vw * 1.5))!important;
+  min-height:min(540px,calc(72vw * 1.5))!important;
+  max-height:min(540px,calc(72vw * 1.5))!important;
+  aspect-ratio:2 / 3!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+
+.gallery .track figure::before,
+.gallery .track figure::after{
+  display:none!important;
+  content:none!important;
+}
+
+.gallery .track figure img,
+.gallery .track figure.is-center img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  aspect-ratio:2 / 3!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+/* Mobile: same exact ratio, scaled down proportionally. */
+@media(max-width:809.98px){
+  .gallery .track figure{
+    width:78vw!important;
+    flex-basis:78vw!important;
+    height:117vw!important;
+    min-height:117vw!important;
+    max-height:117vw!important;
+    aspect-ratio:2 / 3!important;
+  }
+
+  .gallery .track figure img,
+  .gallery .track figure.is-center img{
+    width:100%!important;
+    height:100%!important;
+    min-width:100%!important;
+    min-height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+}
+
+
+/* =========================================================
+   BRIDE & GROOM — DESKTOP-REFERENCE PRESENTATION
+   The desktop appearance is the reference on every viewport.
+   Mobile keeps the same square frame, inner spacing and
+   complete transparent PNG presentation instead of enlarging
+   the subject to the edges.
+   ========================================================= */
+
+.couple .people .person .photo{
+  width:min(720px,82vw)!important;
+  height:min(720px,82vw)!important;
+  aspect-ratio:1 / 1!important;
+  padding:28px!important;
+  box-sizing:border-box!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  overflow:hidden!important;
+  background:#fffaf3!important;
+}
+
+.couple .people .person .photo img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  border-radius:18px!important;
+}
+
+/* Mobile: same desktop geometry, scaled proportionally to viewport. */
+@media(max-width:809.98px){
+  .couple{
+    padding-top:72px!important;
+  }
+
+  .couple .people .person .photo{
+    width:min(720px,82vw)!important;
+    height:min(720px,82vw)!important;
+    aspect-ratio:1 / 1!important;
+    padding:28px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  .couple .people .person .photo img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+}
+
+
+/* =========================================================
+   BRIDE & GROOM — FINAL RESPONSIVE FRAME
+   Desktop is the visual reference. The frame scales smoothly
+   on smaller screens instead of using the desktop 720px size.
+   Border treatment remains identical at every viewport.
+   ========================================================= */
+
+.couple .people .person .photo{
+  width:clamp(320px,42vw,720px)!important;
+  height:clamp(320px,42vw,720px)!important;
+  aspect-ratio:1 / 1!important;
+  padding:28px!important;
+  box-sizing:border-box!important;
+  margin:0 auto 24px!important;
+
+  border:2px solid #9f594c!important;
+  outline:2px solid #c69a5c!important;
+  outline-offset:5px!important;
+  border-radius:26px!important;
+
+  background:#fffaf3!important;
+  overflow:hidden!important;
+  box-shadow:0 18px 40px rgba(83,46,36,.14)!important;
+
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  mask:none!important;
+  -webkit-mask:none!important;
+}
+
+.couple .people .person .photo img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  display:block!important;
+  border-radius:19px!important;
+  background:transparent!important;
+}
+
+/* Mobile/tablet: same exact border geometry, proportionally smaller. */
+@media(max-width:809.98px){
+  .couple .people .person .photo{
+    width:clamp(300px,74vw,520px)!important;
+    height:clamp(300px,74vw,520px)!important;
+    padding:28px!important;
+    border:2px solid #9f594c!important;
+    outline:2px solid #c69a5c!important;
+    outline-offset:5px!important;
+    border-radius:26px!important;
+    box-shadow:0 18px 40px rgba(83,46,36,.14)!important;
+  }
+
+  .couple .people .person .photo img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+}
+
+
+/* =========================================================
+   BRIDE & GROOM — RESTORE ORIGINAL SCALE + ROUNDED BORDER
+   Reference: original elegant portrait cards (340 x 440).
+   Do NOT enlarge the portraits to viewport-sized squares.
+   The red border and gold outer line both follow the same
+   rounded corners on every device.
+   ========================================================= */
+
+.couple .people .person .photo{
+  width:min(340px,82vw)!important;
+  height:440px!important;
+  aspect-ratio:auto!important;
+  box-sizing:border-box!important;
+  padding:8px!important;
+  margin:0 auto 24px!important;
+
+  border:3px solid #9f594c!important;
+  border-radius:26px!important;
+
+  /* Gold outer border as a rounded ring, instead of outline
+     which can appear square on some mobile browsers. */
+  box-shadow:
+    0 0 0 2px #c69a5c,
+    0 18px 40px rgba(83,46,36,.14)!important;
+
+  outline:none!important;
+  background:#fffaf3!important;
+  overflow:hidden!important;
+
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  mask:none!important;
+  -webkit-mask:none!important;
+}
+
+.couple .people .person .photo img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  border-radius:18px!important;
+  background:transparent!important;
+  clip-path:none!important;
+  -webkit-clip-path:none!important;
+  mask:none!important;
+  -webkit-mask:none!important;
+}
+
+/* Mobile: preserve the SAME portrait-card proportions and
+   border treatment; only reduce width when the screen is narrow. */
+@media(max-width:809.98px){
+  .couple .people .person .photo{
+    width:min(340px,82vw)!important;
+    height:min(440px,106vw)!important;
+    aspect-ratio:17 / 22!important;
+    padding:8px!important;
+
+    border:3px solid #9f594c!important;
+    border-radius:26px!important;
+    box-shadow:
+      0 0 0 2px #c69a5c,
+      0 18px 40px rgba(83,46,36,.14)!important;
+    outline:none!important;
+  }
+
+  .couple .people .person .photo img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    border-radius:18px!important;
+  }
+}
+
+
+/* =========================================================
+   FINAL VISUAL CORRECTION
+   A) Bride/Groom: restore the visible gap between the gold
+      outer line and red inner border.
+   B) Our Little World: clean, equal carousel cards with
+      consistent outer/inner spacing. No source image is
+      stretched or cropped.
+   ========================================================= */
+
+/* A — Bride & Groom */
+.couple .people .person .photo{
+  width:min(340px,82vw)!important;
+  height:440px!important;
+  padding:10px!important;
+  box-sizing:border-box!important;
+
+  border:3px solid #9f594c!important;
+  border-radius:26px!important;
+
+  /* Cream breathing space, then the gold outer line. */
+  box-shadow:
+    0 0 0 7px #fffaf3,
+    0 0 0 9px #c69a5c,
+    0 18px 40px rgba(83,46,36,.14)!important;
+
+  outline:none!important;
+  background:#fffaf3!important;
+  overflow:hidden!important;
+}
+
+.couple .people .person .photo img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  display:block!important;
+  border-radius:18px!important;
+}
+
+@media(max-width:809.98px){
+  .couple .people .person .photo{
+    width:min(340px,82vw)!important;
+    height:min(440px,106vw)!important;
+    padding:10px!important;
+    border:3px solid #9f594c!important;
+    border-radius:26px!important;
+    box-shadow:
+      0 0 0 7px #fffaf3,
+      0 0 0 9px #c69a5c,
+      0 18px 40px rgba(83,46,36,.14)!important;
+  }
+}
+
+/* B — Our Little World
+   Fixed card size + equal padding. The photo is contained,
+   so the complete original photograph remains visible. */
+.gallery .track{
+  align-items:center!important;
+}
+
+.gallery .track figure{
+  width:min(300px,62vw)!important;
+  flex:0 0 min(300px,62vw)!important;
+  height:min(450px,93vw)!important;
+  min-height:min(450px,93vw)!important;
+  max-height:min(450px,93vw)!important;
+
+  box-sizing:border-box!important;
+  padding:12px!important;
+  margin:0!important;
+
+  border:0!important;
+  border-radius:22px!important;
+  background:#fffaf3!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+
+.gallery .track figure::before,
+.gallery .track figure::after{
+  display:none!important;
+  content:none!important;
+}
+
+.gallery .track figure img,
+.gallery .track figure.is-center img{
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:12px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+@media(max-width:809.98px){
+  .gallery .track figure{
+    width:78vw!important;
+    flex-basis:78vw!important;
+    height:117vw!important;
+    min-height:117vw!important;
+    max-height:117vw!important;
+    padding:10px!important;
+    border-radius:20px!important;
+  }
+
+  .gallery .track figure img,
+  .gallery .track figure.is-center img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    border-radius:11px!important;
+  }
+}
